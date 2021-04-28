@@ -113,7 +113,7 @@ export const Register = () => {
 							</div>
 							<div className="form-group">
 								<button type="submit" className="btn float-right login_btn">
-									Login
+									Register
 								</button>
 							</div>
 						</form>
