@@ -44,8 +44,9 @@ const handleSubmit = e => {
 		.catch(err => console.log(err));
 };
 
-export const Login = () => {
+export const Register = () => {
 	const { store, actions } = useContext(Context);
+	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [mensaje, setmensaje] = useState("");
@@ -58,10 +59,25 @@ export const Login = () => {
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
-						<h3>Sign In</h3>
+						<h3>Register</h3>
 					</div>
 					<div className="card-body">
 						<form onSubmit={handleSubmit} style={{ width: "500px" }}>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fas fa-user" />
+									</span>
+								</div>
+								<input
+									type="text"
+									className="form-control"
+									placeholder="Name"
+									onChange={e => {
+										setName(e.target.value);
+									}}
+								/>
+							</div>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
@@ -101,18 +117,7 @@ export const Login = () => {
 								</button>
 							</div>
 						</form>
-						{islogin ? <Redirect to="/" /> : null}
-					</div>
-					<div className="card-footer">
-						<div className="d-flex justify-content-center links">
-							Dont have an account?
-							<Link to="/register">
-								<a>Register</a>
-							</Link>
-						</div>
-						<div className="d-flex justify-content-center">
-							<a href="#">Forgot your password?</a>
-						</div>
+						{islogin ? <Redirect to="/login" /> : null}
 					</div>
 				</div>
 			</div>
