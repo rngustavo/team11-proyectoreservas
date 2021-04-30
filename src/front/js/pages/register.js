@@ -8,51 +8,40 @@ import { Context } from "../store/appContext";
 // import { propTypes } from "react-bootstrap/esm/Image";
 import { Redirect } from "react-router-dom";
 
-const handleSubmit = e => {
-	e.preventDefault();
-
-	const body = {
-		email: email,
-		password: password
-	};
-	//setLogin(true);
-	// fetch de LOGIN
-	fetch("https://3000-black-koala-jisgb2cv.ws-us03.gitpod.io/login", {
-		method: "POST",
-		body: JSON.stringify(body),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	})
-		.then(res => res.json())
-		.then(data => {
-			console.log(data);
-
-			// añadir token a session
-			//usuario valido
-			let token = data.token;
-			console.log(token);
-			if (token) {
-				sessionStorage.setItem("my_token", data.token);
-				setLogin(true);
-				console.log(islogin);
-				setmensaje("");
-			} else setmensaje(data.msg);
-
-			// let token = sessionStorage.getItem("my_token")
-		})
-		.catch(err => console.log(err));
-};
-
 export const Register = () => {
 	const { store, actions } = useContext(Context);
-	const [name, setName] = useState("");
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [mensaje, setmensaje] = useState("");
+	const [auth, setAuth] = useState(false);
 
-	const { islogin } = store;
-	const { setLogin } = actions;
+	const handleSubmit = e => {
+		e.preventDefault();
+		console.log(email, password);
+
+		const body = {
+			email: email,
+			password: password
+		};
+		//setLogin(true);
+		// fetch de LOGIN
+		fetch("https://3001-emerald-bat-9onafycu.ws-us04.gitpod.io/api/register", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(response => response.text())
+			.then(result => {
+				alert("Usuario Creado Correctamente", result);
+				setAuth(true);
+			})
+			.catch(error => {
+				Alert("error", error);
+				setAuth(false);
+			});
+	};
 
 	return (
 		<div className="container-fluid pos">
@@ -66,21 +55,6 @@ export const Register = () => {
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
-										<i className="fas fa-user" />
-									</span>
-								</div>
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Name"
-									onChange={e => {
-										setName(e.target.value);
-									}}
-								/>
-							</div>
-							<div className="input-group form-group">
-								<div className="input-group-prepend">
-									<span className="input-group-text">
 										<i className="fas fa-envelope" />
 									</span>
 								</div>
@@ -90,7 +64,7 @@ export const Register = () => {
 									placeholder="@"
 									onChange={e => {
 										setEmail(e.target.value);
-										setmensaje("");
+										//setmensaje("");
 									}}
 								/>
 							</div>
@@ -117,7 +91,7 @@ export const Register = () => {
 								</button>
 							</div>
 						</form>
-						{islogin ? <Redirect to="/login" /> : null}
+						{auth ? <Redirect to="/login" /> : null}
 					</div>
 				</div>
 			</div>

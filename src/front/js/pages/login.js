@@ -8,53 +8,57 @@ import { Context } from "../store/appContext";
 // import { propTypes } from "react-bootstrap/esm/Image";
 import { Redirect } from "react-router-dom";
 
-const handleSubmit = e => {
-	e.preventDefault();
-
-	const body = {
-		email: email,
-		password: password
-	};
-	//setLogin(true);
-	// fetch de LOGIN
-	fetch("https://3000-black-koala-jisgb2cv.ws-us03.gitpod.io/login", {
-		method: "POST",
-		body: JSON.stringify(body),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	})
-		.then(res => res.json())
-		.then(data => {
-			console.log(data);
-
-			// añadir token a session
-			//usuario valido
-			let token = data.token;
-			console.log(token);
-			if (token) {
-				sessionStorage.setItem("my_token", data.token);
-				setLogin(true);
-				console.log(islogin);
-				setmensaje("");
-			} else setmensaje(data.msg);
-
-			// let token = sessionStorage.getItem("my_token")
-		})
-		.catch(err => console.log(err));
-};
-
 export const Login = () => {
-	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [mensaje, setmensaje] = useState("");
+	const { store, actions } = useContext(Context);
+	const [islogin, setIsLogin] = useState(false);
 
-	const { islogin } = store;
-	const { setLogin } = actions;
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		const body = {
+			email: email,
+			password: password
+		};
+		//setLogin(true);
+		// fetch de LOGIN
+		fetch("https://3001-emerald-bat-9onafycu.ws-us04.gitpod.io/api/login", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+
+				// añadir token a session
+				//usuario valido
+				store.token = data.token;
+				console.log(store.token);
+				if (store.token != undefined) {
+					//sessionStorage.setItem("my_token", data.token);
+					setIsLogin(true);
+					console.log(islogin);
+					alert("Logeado Correctamente");
+					//setmensaje("");
+				} else {
+					alert(data.msg);
+					setIsLogin(false);
+					store.token = undefined;
+				}
+
+				// let token = sessionStorage.getItem("my_token")
+			})
+			.catch(err => console.log(err));
+	};
 
 	return (
 		<div className="container-fluid pos">
+			{console.log(store.token)}
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
