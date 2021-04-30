@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import "../../styles/index.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-// import DropdownButton from "react-bootstrap/DropdownButton";
-// import Dropdown from "react-bootstrap/Dropdown";
-// import { propTypes } from "react-bootstrap/esm/Image";
+import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
 
 export const Login = () => {
@@ -15,14 +13,16 @@ export const Login = () => {
 	const { store, actions } = useContext(Context);
 	const [islogin, setIsLogin] = useState(false);
 
+	//funcion de legeo
 	const handleSubmit = e => {
 		e.preventDefault();
 
+		//valores que se le enviara al api
 		const body = {
 			email: email,
 			password: password
 		};
-		//setLogin(true);
+
 		// fetch de LOGIN
 		fetch("https://3001-emerald-bat-9onafycu.ws-us04.gitpod.io/api/login", {
 			method: "POST",
@@ -33,22 +33,35 @@ export const Login = () => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				console.log(data);
-
-				// añadir token a session
 				//usuario valido
+				//variable token toma el valor que envia la api como resultado
 				store.token = data.token;
-				console.log(store.token);
+
+				//si la promesa del fetch trae un valor diferente a undefiend realice lo siguiente
 				if (store.token != undefined) {
 					//sessionStorage.setItem("my_token", data.token);
+					//Este hooks lo uilizo para direccionarme la pagina
 					setIsLogin(true);
-					console.log(islogin);
-					alert("Logeado Correctamente");
-					//setmensaje("");
+					//esta variable es para tenerla almacenada y utilizarla en otras paginas para verificar si esta logeado
+					store.login = true;
+
+					//alerta si fue exitosa
+					swal({
+						title: "Correcto!",
+						text: "Se ha Logeado Exitosamente",
+						icon: "success",
+						button: "Aceptar"
+					});
 				} else {
-					alert(data.msg);
+					swal({
+						title: "Incorrecto!",
+						text: "Email o Contraseña incorrecta, Intente Nuevamente",
+						icon: "error",
+						button: "Aceptar"
+					});
+
 					setIsLogin(false);
-					store.token = undefined;
+					store.login = false;
 				}
 
 				// let token = sessionStorage.getItem("my_token")
@@ -58,7 +71,6 @@ export const Login = () => {
 
 	return (
 		<div className="container-fluid pos">
-			{console.log(store.token)}
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
@@ -105,6 +117,7 @@ export const Login = () => {
 								</button>
 							</div>
 						</form>
+						{/* me direcciona la pagina */}
 						{islogin ? <Redirect to="/" /> : null}
 					</div>
 					<div className="card-footer">
