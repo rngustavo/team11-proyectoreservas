@@ -74,7 +74,7 @@ export const Login = () => {
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
-						<h3>Iniciar Sección</h3>
+						<h3>Iniciar Sesion</h3>
 					</div>
 					<div className="card-body">
 						<form onSubmit={handleSubmit} style={{ width: "500px" }}>
@@ -109,11 +109,11 @@ export const Login = () => {
 							</div>
 							<div className="row align-items-center remember">
 								<input type="checkbox" />
-								Remember Me
+								Recordarme
 							</div>
 							<div className="form-group">
 								<button type="submit" className="btn float-right login_btn">
-									Login
+									Aceptar
 								</button>
 							</div>
 						</form>
@@ -122,13 +122,13 @@ export const Login = () => {
 					</div>
 					<div className="card-footer">
 						<div className="d-flex justify-content-center links">
-							Dont have an account?
+							No tienes cuenta?
 							<Link to="/register">
-								<a>Register</a>
+								<a>Registarse</a>
 							</Link>
 						</div>
 						<div className="d-flex justify-content-center">
-							<a href="#">Forgot your password?</a>
+							<a href="#">Olvido su contraseña?</a>
 						</div>
 					</div>
 				</div>

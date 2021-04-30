@@ -83,15 +83,26 @@ export const Register = () => {
 							</div>
 							<div className="row align-items-center remember">
 								<input type="checkbox" />
-								Remember Me
+								Recordarme
 							</div>
 							<div className="form-group">
 								<button type="submit" className="btn float-right login_btn">
-									Register
+									Aceptar
 								</button>
 							</div>
 						</form>
 						{auth ? <Redirect to="/login" /> : null}
+					</div>
+					<div className="card-footer">
+						<div className="d-flex justify-content-center links">
+							Ya tienes cuenta?
+							<Link to="/login">
+								<a>Iniciar Sesion</a>
+							</Link>
+						</div>
+						<div className="d-flex justify-content-center">
+							<a href="#">Olvido su contraseña?</a>
+						</div>
 					</div>
 				</div>
 			</div>
