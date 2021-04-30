@@ -35,7 +35,7 @@ list_anuncios=[
         "ANUNCIO_NOMBRE" :"inicio de Yoga",
         "ANUNCIO_DESCRIPCION" :"gran apertura de yoga, primera clase gratis, costo por clase 5000 colones",
         "ANUNCIO_FOTO_FONDO": "..//fotos/anuncio_yoga.jpg",
-        "EMPRESA_ID" : 3
+        "EMPRESA_ID" : 1
       
     },
     {
@@ -43,7 +43,7 @@ list_anuncios=[
         "ANUNCIO_NOMBRE" :"inicio de Spinning",
         "ANUNCIO_DESCRIPCION" :" primera clase gratis, costo por clase 4000 colones",
         "ANUNCIO_FOTO_FONDO": "..//fotos/anuncio_spinning.jpg",
-        "EMPRESA_ID" : 3
+        "EMPRESA_ID" : 1
       
     }
 
@@ -65,7 +65,7 @@ list_actividades=[
         "ACTIVIDAD_HORA_INICIO" :"20:00",
         "ACTIVIDAD_DURACION" :60,
         "ACTIVIDAD_FOTO" :"..//fotos/actividad_kempo.jpg",
-        "EMPRESA_ID" :3
+        "EMPRESA_ID" :1
     },
   
     {
@@ -83,7 +83,7 @@ list_actividades=[
         "ACTIVIDAD_HORA_INICIO" :"19:00",
         "ACTIVIDAD_DURACION" :60,
         "ACTIVIDAD_FOTO" :"..//fotos/actividad_yoga.jpg",
-        "EMPRESA_ID" :3
+        "EMPRESA_ID" :1
     },
 
      {
@@ -101,6 +101,6 @@ list_actividades=[
         "ACTIVIDAD_HORA_INICIO" :"13:00",
         "ACTIVIDAD_DURACION" :90,
         "ACTIVIDAD_FOTO" :"..//fotos/actividad_Crossfit.jpg",
-        "EMPRESA_ID" :3
+        "EMPRESA_ID" :1
     },
 ]
