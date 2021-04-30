@@ -7,15 +7,15 @@ export const Navbar1 = () => {
 		<div className="container navpad">
 			<Navbar bg="light" expand="lg">
 				<Navbar.Brand href="#home">
-					<i className="fab fa-instagram fa-2x d-inline-block align-top" width="30" height="30" />
-					React Bootstrap
+					<i className="fas fa-dumbbell fa-2x d-inline-block align-top" width="30" height="30" />
 				</Navbar.Brand>
+				<Navbar.Brand href="#home">Kalendar-FIT</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
-						<Nav.Link href="/">Home</Nav.Link>
+						<Nav.Link href="/">Inicio</Nav.Link>
 						<Nav.Link href="#link">Clases</Nav.Link>
-						<Nav.Link href="#link">Contacto</Nav.Link>
+						<Nav.Link href="/contact">Contact</Nav.Link>
 					</Nav>
 					<DropdownButton inline id="dropdown-basic-button" title="Dropdown button">
 						<Dropdown.Item href="#/action-1">Action</Dropdown.Item>
