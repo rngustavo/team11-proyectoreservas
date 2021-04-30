@@ -32,15 +32,27 @@ export const Register = () => {
 				"Content-Type": "application/json"
 			}
 		})
-			.then(response => response.text())
-			.then(result => {
-				alert("Usuario Creado Correctamente", result);
-				setAuth(true);
+			.then(response => response.json())
+			.then(data => {
+				if (data.msg == "User created successfully") {
+					swal({
+						title: "Correcto!",
+						text: "Se ha Registardo Exitosamente",
+						icon: "success",
+						button: "Aceptar"
+					});
+					setAuth(true);
+				} else {
+					swal({
+						title: "Incorrecto!",
+						text: "Usuario ya tiene cuenta, Intente Nuevamente",
+						icon: "error",
+						button: "Aceptar"
+					});
+					setAuth(false);
+				}
 			})
-			.catch(error => {
-				Alert("error", error);
-				setAuth(false);
-			});
+			.catch(err => console.log(err));
 	};
 
 	return (

@@ -55,7 +55,7 @@ export const Login = () => {
 				} else {
 					swal({
 						title: "Incorrecto!",
-						text: "Email o Contraseña incorrecta, Intente Nuevamente",
+						text: "Email o Contraseña Incorrecta, Intente Nuevamente",
 						icon: "error",
 						button: "Aceptar"
 					});
