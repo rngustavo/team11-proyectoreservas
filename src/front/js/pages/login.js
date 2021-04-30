@@ -74,7 +74,7 @@ export const Login = () => {
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
-						<h3>Sign In</h3>
+						<h3>Iniciar Sección</h3>
 					</div>
 					<div className="card-body">
 						<form onSubmit={handleSubmit} style={{ width: "500px" }}>
