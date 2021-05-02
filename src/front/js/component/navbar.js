@@ -9,16 +9,15 @@ export const Navbar1 = () => {
 				<Navbar.Brand href="/">
 					<i className="fas fa-dumbbell fa-2x d-inline-block align-top" width="30" height="30" />
 				</Navbar.Brand>
-				<Navbar.Brand href="/">Kalendar-FIT</Navbar.Brand>
+				<Navbar.Brand> Kalendar-FIT</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
-						<Nav.Link href="/">Inicio</Nav.Link>
 						<Nav.Link href="#link">Clases</Nav.Link>
-						<Nav.Link href="/contact">Contact</Nav.Link>
+						<Nav.Link href="/contact">Contacto</Nav.Link>
 					</Nav>
-					<Link to="#link">
-						<Button variant="primary buttonspace">Registro</Button>{" "}
+					<Link to="/register">
+						<Button variant="primary buttonspace">Registrarme</Button>{" "}
 					</Link>
 					<Link to="/login">
 						<Button variant="primary buttonspace">Login</Button>{" "}

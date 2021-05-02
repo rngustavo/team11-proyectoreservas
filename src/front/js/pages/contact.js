@@ -35,7 +35,7 @@ export const Contact = () => {
 					<Container>
 						<Card style={{ width: "18rem" }}>
 							<Card.Body>
-								<Card.Title>KalendarFIT</Card.Title>
+								<Card.Title>Kalendar-FIT</Card.Title>
 								<Card.Subtitle className="mb-2 text-muted">Telefono 2299-05-06</Card.Subtitle>
 								<Card.Text>
 									Estamos ubicados en Desamparados. De la estación de servicio La Primavera, 300m
