@@ -6,10 +6,10 @@ export const Navbar1 = () => {
 	return (
 		<div className="container navpad">
 			<Navbar bg="light" expand="lg">
-				<Navbar.Brand href="#home">
+				<Navbar.Brand href="/">
 					<i className="fas fa-dumbbell fa-2x d-inline-block align-top" width="30" height="30" />
 				</Navbar.Brand>
-				<Navbar.Brand href="#home">Kalendar-FIT</Navbar.Brand>
+				<Navbar.Brand href="/">Kalendar-FIT</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
@@ -17,13 +17,11 @@ export const Navbar1 = () => {
 						<Nav.Link href="#link">Clases</Nav.Link>
 						<Nav.Link href="/contact">Contact</Nav.Link>
 					</Nav>
-					<DropdownButton inline id="dropdown-basic-button" title="Dropdown button">
-						<Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-						<Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-						<Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-					</DropdownButton>
+					<Link to="#link">
+						<Button variant="primary buttonspace">Registro</Button>{" "}
+					</Link>
 					<Link to="/login">
-						<Button variant="primary">Login</Button>{" "}
+						<Button variant="primary buttonspace">Login</Button>{" "}
 					</Link>
 				</Navbar.Collapse>
 			</Navbar>

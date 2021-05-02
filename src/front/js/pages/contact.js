@@ -9,18 +9,27 @@ export const Contact = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="container">
+		<div className="container contactcus">
 			<Row>
 				<Col>
-					<Form.Group>
-						<Form.Control type="text" placeholder="Nombre" />
-						<br />
-						<Form.Control type="text" placeholder="Correo" />
-						<br />
-						<Form.Control type="text" placeholder="Número de contacto" />
-						<br />
-						<Form.Control type="text" placeholder="Mensaje" />
-					</Form.Group>
+					<Container>
+						<div>
+							<h3>Contáctenos</h3>
+						</div>
+						<Card style={{ width: "40rem" }}>
+							<Card.Body>
+								<Form.Group>
+									<Form.Control type="text" placeholder="Nombre" />
+									<br />
+									<Form.Control type="text" placeholder="Correo" />
+									<br />
+									<Form.Control type="text" placeholder="Número de contacto" />
+									<br />
+									<Form.Control type="text" placeholder="Mensaje" />
+								</Form.Group>
+							</Card.Body>
+						</Card>
+					</Container>
 				</Col>
 				<Col>
 					<Container>
