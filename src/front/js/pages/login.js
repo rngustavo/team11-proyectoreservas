@@ -3,62 +3,78 @@ import PropTypes from "prop-types";
 import "../../styles/index.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-// import DropdownButton from "react-bootstrap/DropdownButton";
-// import Dropdown from "react-bootstrap/Dropdown";
-// import { propTypes } from "react-bootstrap/esm/Image";
+import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
 
-const handleSubmit = e => {
-	e.preventDefault();
-
-	const body = {
-		email: email,
-		password: password
-	};
-	//setLogin(true);
-	// fetch de LOGIN
-	fetch("https://3000-black-koala-jisgb2cv.ws-us03.gitpod.io/login", {
-		method: "POST",
-		body: JSON.stringify(body),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	})
-		.then(res => res.json())
-		.then(data => {
-			console.log(data);
-
-			// añadir token a session
-			//usuario valido
-			let token = data.token;
-			console.log(token);
-			if (token) {
-				sessionStorage.setItem("my_token", data.token);
-				setLogin(true);
-				console.log(islogin);
-				setmensaje("");
-			} else setmensaje(data.msg);
-
-			// let token = sessionStorage.getItem("my_token")
-		})
-		.catch(err => console.log(err));
-};
-
 export const Login = () => {
-	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [mensaje, setmensaje] = useState("");
+	const { store, actions } = useContext(Context);
+	const [islogin, setIsLogin] = useState(false);
 
-	const { islogin } = store;
-	const { setLogin } = actions;
+	//funcion de legeo
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		//valores que se le enviara al api
+		const body = {
+			email: email,
+			password: password
+		};
+
+		// fetch de LOGIN
+		fetch("https://3001-emerald-bat-9onafycu.ws-us04.gitpod.io/api/login", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				//usuario valido
+				//variable token toma el valor que envia la api como resultado
+				store.token = data.token;
+
+				//si la promesa del fetch trae un valor diferente a undefiend realice lo siguiente
+				if (store.token != undefined) {
+					//sessionStorage.setItem("my_token", data.token);
+					//Este hooks lo uilizo para direccionarme la pagina
+					setIsLogin(true);
+					//esta variable es para tenerla almacenada y utilizarla en otras paginas para verificar si esta logeado
+					store.login = true;
+
+					//alerta si fue exitosa
+					swal({
+						title: "Correcto!",
+						text: "Se ha Logeado Exitosamente",
+						icon: "success",
+						button: "Aceptar"
+					});
+				} else {
+					swal({
+						title: "Incorrecto!",
+						text: "Email o Contraseña Incorrecta, Intente Nuevamente",
+						icon: "error",
+						button: "Aceptar"
+					});
+
+					setIsLogin(false);
+					store.login = false;
+				}
+
+				// let token = sessionStorage.getItem("my_token")
+			})
+			.catch(err => console.log(err));
+	};
 
 	return (
 		<div className="container-fluid pos">
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
-						<h3>Sign In</h3>
+						<h3>Iniciar Sesion</h3>
 					</div>
 					<div className="card-body">
 						<form onSubmit={handleSubmit} style={{ width: "500px" }}>
@@ -71,7 +87,7 @@ export const Login = () => {
 								<input
 									type="email"
 									className="form-control"
-									placeholder="@"
+									placeholder="Email@.com"
 									onChange={e => {
 										setEmail(e.target.value);
 										setmensaje("");
@@ -87,31 +103,32 @@ export const Login = () => {
 								<input
 									type="password"
 									className="form-control"
-									placeholder="password"
+									placeholder="Contraseña"
 									onChange={e => setPassword(e.target.value)}
 								/>
 							</div>
 							<div className="row align-items-center remember">
 								<input type="checkbox" />
-								Remember Me
+								Recordarme
 							</div>
 							<div className="form-group">
 								<button type="submit" className="btn float-right login_btn">
-									Login
+									Aceptar
 								</button>
 							</div>
 						</form>
+						{/* me direcciona la pagina */}
 						{islogin ? <Redirect to="/" /> : null}
 					</div>
 					<div className="card-footer">
 						<div className="d-flex justify-content-center links">
-							Dont have an account?
+							No tienes cuenta?
 							<Link to="/register">
-								<a>Register</a>
+								<a>Registarse</a>
 							</Link>
 						</div>
 						<div className="d-flex justify-content-center">
-							<a href="#">Forgot your password?</a>
+							<a href="#">Olvido su contraseña?</a>
 						</div>
 					</div>
 				</div>
