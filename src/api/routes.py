@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Usuarios,Empresa, Empresa_Anuncios, Actividades, Actividades_Participantes
+from api.models import db, User, Usuarios, Empresa, Empresa_Anuncios, Actividades, Actividades_Participantes
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token 
 from api.dataload import list_usuarios,list_empresa,list_anuncios,list_actividades
@@ -233,6 +233,12 @@ def add_clases():
         db.session.commit()
         return jsonify({"msg": "Class created successfully"}), 200
 
+#retorna una empresa determinada
+@api.route('/empresa/<id>', methods=['GET'])
+def getempresa(id):    
+    empresa = Empresa.query.get(id) 
+    empresa = empresa.serialize()   
+    return jsonify(empresa), 200
 
 # ejemplo de test de token
 @api.route("/protected", methods=['GET', 'POST'])
