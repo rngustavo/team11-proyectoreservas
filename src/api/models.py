@@ -53,8 +53,6 @@ class Empresa(db.Model):
 
     def serialize(self):
         return {
-            "id": self.USUARIO_ID,
-            "email": self.USUARIO_EMAIL,
             # do not serialize the password, its a security breach
             "ID": self.EMPRESA_ID,
             "NOMBRE": self.EMPRESA_NOMBRE,
