@@ -49,9 +49,64 @@ export const Forgotpassword = () => {
 
 		//valores que se le enviara al api
 		const body = {
-			email: email,
-			password: password
+			email: email
 		};
+
+		fetch("https://3001-emerald-bat-9onafycu.ws-us03.gitpod.io/api/forgot", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				//si la promesa del fetch trae un valor diferente a undefiend realice lo siguiente
+				if (data.msg != "Not found Email") {
+					//alerta si fue exitosa
+					console.log(data);
+					let emai = data.email;
+
+					emailjs
+						.send(
+							"service_5nvjbjn",
+							"template_m7wvhrn",
+							{
+								to_name: "steven",
+								from_name: "khalendar",
+								message: emai,
+								to_email: email
+							},
+							"user_fxYYnkIXSTkQgA4JhUyfn"
+						)
+						.then(
+							result => {
+								swal({
+									title: "Exito!",
+									text: "Se ha Enviado su Contraseña a su Correo",
+									icon: "success",
+									button: "Aceptar"
+								});
+							},
+							error => {
+								console.log(error.text);
+							}
+						);
+				} else {
+					swal({
+						title: "Incorrecto!",
+						text: "Email No Existe, Intente Nuevamente",
+						icon: "error",
+						button: "Aceptar"
+					});
+
+					setIsLogin(false);
+					store.login = false;
+				}
+
+				// let token = sessionStorage.getItem("my_token")
+			})
+			.catch(err => console.log(err));
 	};
 
 	return (
@@ -62,7 +117,7 @@ export const Forgotpassword = () => {
 						<h3>Olvido de Contraseña</h3>
 					</div>
 					<div className="card-body">
-						<form onSubmit={sendEmail} style={{ width: "500px" }}>
+						<form onSubmit={handleSubmit} style={{ width: "500px" }}>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
