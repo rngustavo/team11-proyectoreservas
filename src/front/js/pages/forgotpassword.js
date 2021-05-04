@@ -14,34 +14,10 @@ export const Forgotpassword = () => {
 	const [password, setPassword] = useState("");
 	const [mensaje, setmensaje] = useState("");
 	const { store, actions } = useContext(Context);
-	const [islogin, setIsLogin] = useState(false);
+	const [forgot, setForgot] = useState(false);
 
 	// var crypto = require("crypto");
 	// var nodemailer = require("nodemailer");
-
-	const sendEmail = e => {
-		e.preventDefault();
-		emailjs
-			.send(
-				"service_5nvjbjn",
-				"template_m7wvhrn",
-				{
-					to_name: "steven",
-					from_name: "khalendar",
-					message: "enviado desde js en mi app",
-					to_email: email
-				},
-				"user_fxYYnkIXSTkQgA4JhUyfn"
-			)
-			.then(
-				result => {
-					console.log(result.text);
-				},
-				error => {
-					console.log(error.text);
-				}
-			);
-	};
 
 	//funcion de legeo
 	const handleSubmit = e => {
@@ -64,8 +40,8 @@ export const Forgotpassword = () => {
 				//si la promesa del fetch trae un valor diferente a undefiend realice lo siguiente
 				if (data.msg != "Not found Email") {
 					//alerta si fue exitosa
-					console.log(data);
-					let emai = data.email;
+
+					let link = "https://3000-emerald-bat-9onafycu.ws-us03.gitpod.io/resetpassword/" + data.id;
 
 					emailjs
 						.send(
@@ -74,7 +50,7 @@ export const Forgotpassword = () => {
 							{
 								to_name: "steven",
 								from_name: "khalendar",
-								message: emai,
+								message: link,
 								to_email: email
 							},
 							"user_fxYYnkIXSTkQgA4JhUyfn"
@@ -83,10 +59,11 @@ export const Forgotpassword = () => {
 							result => {
 								swal({
 									title: "Exito!",
-									text: "Se ha Enviado su Contraseña a su Correo",
+									text: "Se le ha Enviado un Correo para Cambiar su Contraseña",
 									icon: "success",
 									button: "Aceptar"
 								});
+								setForgot(true);
 							},
 							error => {
 								console.log(error.text);
@@ -99,9 +76,6 @@ export const Forgotpassword = () => {
 						icon: "error",
 						button: "Aceptar"
 					});
-
-					setIsLogin(false);
-					store.login = false;
 				}
 
 				// let token = sessionStorage.getItem("my_token")
@@ -134,10 +108,6 @@ export const Forgotpassword = () => {
 								/>
 							</div>
 
-							<div className="row align-items-center remember">
-								<input type="checkbox" />
-								Recordarme
-							</div>
 							<div className="form-group">
 								<button type="submit" className="btn float-right login_btn">
 									Aceptar
@@ -145,7 +115,7 @@ export const Forgotpassword = () => {
 							</div>
 						</form>
 						{/* me direcciona la pagina */}
-						{islogin ? <Redirect to="/" /> : null}
+						{forgot ? <Redirect to="/" /> : null}
 					</div>
 				</div>
 			</div>

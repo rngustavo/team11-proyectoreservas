@@ -14,6 +14,7 @@ import { Navbar1 } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Contact } from "./pages/contact";
 import { Forgotpassword } from "./pages/forgotpassword";
+import { Resetpassword } from "./pages/resetpassword";
 
 //create your first component
 const Layout = () => {
@@ -41,6 +42,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/forgotpassword">
 							<Forgotpassword />
+						</Route>
+						<Route exact path="/resetpassword/:theid">
+							<Resetpassword />
 						</Route>
 						<Route exact path="/contact">
 							<Contact />
