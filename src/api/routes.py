@@ -268,7 +268,8 @@ def send_password():
     if Email:
         clave="Kalendarfit"+str(random.randrange(1, 250))
         Email.USUARIO_PASSWORD=clave
-        db.session.commit()
+        db.session.commit() 
+        
            
         # return jsonify(my_token), 200
         return jsonify(clave), 200
