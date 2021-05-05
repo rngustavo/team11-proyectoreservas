@@ -258,8 +258,12 @@ def protected():
 @api.route("/forgot", methods=["POST"])
 def send_password():
     email = request.json.get("email", None)
-    Email =  Usuarios.query.filter_by(USUARIO_EMAIL=email).first()
     
+    
+    if not email:
+        return jsonify({"msg": "No email was provided"}), 400
+    
+    Email =  Usuarios.query.filter_by(USUARIO_EMAIL=email).first()
     
     if Email:
         clave="Kalendarfit"+str(random.randrange(1, 250))
