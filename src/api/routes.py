@@ -257,8 +257,7 @@ def protected():
 
 @api.route("/forgot", methods=["POST"])
 def send_password():
-    email = request.json.get("email", None)
-    
+    email = request.json.get("email", None)    
     
     if not email:
         return jsonify({"msg": "No email was provided"}), 400
@@ -269,14 +268,9 @@ def send_password():
         clave="Kalendarfit"+str(random.randrange(1, 250))
         Email.USUARIO_PASSWORD=clave
         db.session.commit() 
-        
-           
-        # return jsonify(my_token), 200
-        return jsonify(clave), 200
-        
-        # my_token = create_access_token(identity=Email.USUARIO_ID)
-        # return jsonify({"token": my_token}), 200
-        
+
+        return jsonify(clave), 200        
+       
     else:   
         return jsonify({"msg": "Not found Email"}), 404       
  
@@ -286,8 +280,7 @@ def send_password():
 def reset_password():
     email = request.json.get("email", None)
     password_temporal = request.json.get("password_temporal", None)
-    nuevo_password = request.json.get("nuevo_password", None)
-    
+    nuevo_password = request.json.get("nuevo_password", None)    
 
     # valida si estan vacios los ingresos
     if not email:
