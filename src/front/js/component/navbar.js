@@ -18,8 +18,9 @@ export const Navbar1 = () => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
-						<Nav.Link href="#link">Clases</Nav.Link>
+						<Nav.Link href="/clasesdisponibles">Clases</Nav.Link>
 						<Nav.Link href="/contact">Contacto</Nav.Link>
+						<Nav.Link href="/crearclase">Contacto</Nav.Link>
 					</Nav>
 
 					{islogin ? (
