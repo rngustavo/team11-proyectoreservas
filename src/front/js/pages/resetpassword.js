@@ -1,28 +1,58 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import "../../styles/index.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
-import emailjs from "emailjs-com";
 
-// import crypto from "crypto";
-// import nodemailer from "nodemailer";
-
-export const Resetpassword = props => {
+export const Resetpassword = () => {
+	const { store, actions } = useContext(Context);
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [password2, setPassword2] = useState("");
-	const [mensaje, setmensaje] = useState("");
-	const { store, actions } = useContext(Context);
 	const [islogin, setIsLogin] = useState(false);
-	const params = useParams();
 
-	// var crypto = require("crypto");
-	// var nodemailer = require("nodemailer");
+	const handleSubmit = e => {
+		e.preventDefault();
+		console.log(email, password);
 
-	//funcion de legeo
-	const handleSubmit = e => {};
+		const body = {
+			email: email,
+			password_temporal: password,
+			nuevo_password: password2
+		};
+		//setLogin(true);
+		// fetch de LOGIN
+		fetch("https://3001-emerald-bat-9onafycu.ws-us03.gitpod.io/api/reset", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.msg == "Password change successfully") {
+					swal({
+						title: "Correcto!",
+						text: "Se ha cambiado su contraseña Exitosamente",
+						icon: "success",
+						button: "Aceptar"
+					});
+					setIsLogin(true);
+				} else {
+					swal({
+						title: "Incorrecto!",
+						text: "Email o Contraseña Temporal Incorrecta, Intente Nuevamente",
+						icon: "error",
+						button: "Aceptar"
+					});
+					setIsLogin(false);
+				}
+			})
+			.catch(err => console.log(err));
+	};
 
 	return (
 		<div className="container-fluid pos">
@@ -36,13 +66,28 @@ export const Resetpassword = props => {
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
+										<i className="fas fa-envelope" />
+									</span>
+								</div>
+								<input
+									type="text"
+									className="form-control"
+									placeholder="Email"
+									onChange={e => {
+										setEmail(e.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
 										<i className="fas fa-key" />
 									</span>
 								</div>
 								<input
-									type="email"
+									type="text"
 									className="form-control"
-									placeholder="Contraseña"
+									placeholder="Contraseña Temporal"
 									onChange={e => {
 										setPassword(e.target.value);
 									}}
@@ -55,9 +100,9 @@ export const Resetpassword = props => {
 									</span>
 								</div>
 								<input
-									type="email"
+									type="text"
 									className="form-control"
-									placeholder="Confirmar Contraseña"
+									placeholder="Contraseña Nueva"
 									onChange={e => {
 										setPassword2(e.target.value);
 									}}
@@ -77,8 +122,4 @@ export const Resetpassword = props => {
 			</div>
 		</div>
 	);
-};
-
-Resetpassword.propTypes = {
-	match: PropTypes.object
 };

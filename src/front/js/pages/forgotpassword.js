@@ -6,6 +6,8 @@ import { Context } from "../store/appContext";
 import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
 import emailjs from "emailjs-com";
+// import JWTManager, { jwt_required, get_jwt_identity, create_access_token } from "flask_jwt_extended";
+
 // import crypto from "crypto";
 // import nodemailer from "nodemailer";
 
@@ -40,17 +42,21 @@ export const Forgotpassword = () => {
 				//si la promesa del fetch trae un valor diferente a undefiend realice lo siguiente
 				if (data.msg != "Not found Email") {
 					//alerta si fue exitosa
+					//let payload = data.token.substring(36, -44);
+					// var cadena1 = data.token;
+					// var payload = cadena1.slice(37, -44);
+					// var decoded = jwt.decode(payload, secret);
+					// console.log(decoded);
 
-					let link = "https://3000-emerald-bat-9onafycu.ws-us03.gitpod.io/resetpassword/" + data.id;
+					let link = "https://3000-emerald-bat-9onafycu.ws-us03.gitpod.io/resetpassword";
 
 					emailjs
 						.send(
 							"service_5nvjbjn",
 							"template_m7wvhrn",
 							{
-								to_name: "steven",
 								from_name: "khalendar",
-								message: link,
+								message: link + "\n" + "Su nueva Clave Temporal es: " + data,
 								to_email: email
 							},
 							"user_fxYYnkIXSTkQgA4JhUyfn"

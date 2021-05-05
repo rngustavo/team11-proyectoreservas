@@ -124,6 +124,7 @@ def login():
 
     
     # busca usuario en BBDD
+    
     user = Usuarios.query.filter_by(USUARIO_EMAIL=email, USUARIO_PASSWORD=password).first()
     if not user:
         return jsonify({"msg": "Invalid username or password"}), 401
@@ -251,3 +252,50 @@ def protected():
     user = Usuarios.query.get(current_id)
     print(user)
     return jsonify({"id": user.id, "email": user.email}), 200
+
+
+@api.route("/forgot", methods=["POST"])
+def send_password():
+    email = request.json.get("email", None)
+    Email =  Usuarios.query.filter_by(USUARIO_EMAIL=email).first()
+    
+    
+    if Email:
+        Email.USUARIO_PASSWORD="Kalendarfit123"
+        db.session.commit()
+           
+        # return jsonify(my_token), 200
+        return jsonify("Kalendarfit123"), 200
+        
+        # my_token = create_access_token(identity=Email.USUARIO_ID)
+        # return jsonify({"token": my_token}), 200
+        
+    else:   
+        return jsonify({"msg": "Not found Email"}), 404       
+ 
+ 
+
+@api.route("/reset", methods=["POST"])
+def reset_password():
+    email = request.json.get("email", None)
+    password_temporal = request.json.get("password_temporal", None)
+    nuevo_password = request.json.get("nuevo_password", None)
+    
+
+    # valida si estan vacios los ingresos
+    if not email:
+        return jsonify({"msg": "No email was provided"}), 400
+    if not password_temporal:
+        return jsonify({"msg": "No Temporal password was provided"}), 400
+    if not nuevo_password:
+        return jsonify({"msg": "No New password was provided"}), 400
+
+    user = Usuarios.query.filter_by(USUARIO_EMAIL=email, USUARIO_PASSWORD=password_temporal).first()
+    if not user:
+        return jsonify({"msg": "Invalid username or password"}), 401
+    else:
+        user.USUARIO_PASSWORD=nuevo_password
+        db.session.commit()
+        return jsonify({"msg": "Password change successfully"}), 200
+
+

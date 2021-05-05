@@ -43,7 +43,7 @@ const Layout = () => {
 						<Route exact path="/forgotpassword">
 							<Forgotpassword />
 						</Route>
-						<Route exact path="/resetpassword/:theid">
+						<Route exact path="/resetpassword">
 							<Resetpassword />
 						</Route>
 						<Route exact path="/contact">

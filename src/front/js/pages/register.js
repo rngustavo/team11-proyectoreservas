@@ -112,9 +112,6 @@ export const Register = () => {
 								<a>Iniciar Sesion</a>
 							</Link>
 						</div>
-						<div className="d-flex justify-content-center">
-							<a href="#">Olvido su contraseña?</a>
-						</div>
 					</div>
 				</div>
 			</div>
