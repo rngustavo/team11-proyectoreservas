@@ -124,7 +124,7 @@ export const Login = () => {
 							</Link>
 						</div>
 						<div className="d-flex justify-content-center">
-							<a href="#">Olvido su contraseña?</a>
+							<a href="/forgotpassword">Olvido su contraseña?</a>
 						</div>
 					</div>
 				</div>
