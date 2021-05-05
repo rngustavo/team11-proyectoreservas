@@ -7,6 +7,7 @@ from api.models import db, User, Usuarios, Empresa, Empresa_Anuncios, Actividade
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token 
 from api.dataload import list_usuarios,list_empresa,list_anuncios,list_actividades
+import random
 
 api = Blueprint('api', __name__)
 
@@ -261,11 +262,12 @@ def send_password():
     
     
     if Email:
-        Email.USUARIO_PASSWORD="Kalendarfit123"
+        clave="Kalendarfit"+str(random.randrange(1, 250))
+        Email.USUARIO_PASSWORD=clave
         db.session.commit()
            
         # return jsonify(my_token), 200
-        return jsonify("Kalendarfit123"), 200
+        return jsonify(clave), 200
         
         # my_token = create_access_token(identity=Email.USUARIO_ID)
         # return jsonify({"token": my_token}), 200
