@@ -77,6 +77,10 @@
 	},
 	"dependencies": {
 		"bootstrap": "^4.6.0",
+		"crypto": "^1.0.1",
+		"emailjs": "^3.4.0",
+		"emailjs-com": "^2.6.4",
+		"nodemailer": "^6.6.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-bootstrap": "^1.5.2",

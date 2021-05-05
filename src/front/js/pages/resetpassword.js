@@ -3,17 +3,15 @@ import PropTypes from "prop-types";
 import "../../styles/index.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-// import DropdownButton from "react-bootstrap/DropdownButton";
-// import Dropdown from "react-bootstrap/Dropdown";
-// import { propTypes } from "react-bootstrap/esm/Image";
+import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
 
-export const Register = () => {
+export const Resetpassword = () => {
 	const { store, actions } = useContext(Context);
-
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [auth, setAuth] = useState(false);
+	const [password2, setPassword2] = useState("");
+	const [islogin, setIsLogin] = useState(false);
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -21,11 +19,12 @@ export const Register = () => {
 
 		const body = {
 			email: email,
-			password: password
+			password_temporal: password,
+			nuevo_password: password2
 		};
 		//setLogin(true);
 		// fetch de LOGIN
-		fetch("https://3001-emerald-bat-9onafycu.ws-us03.gitpod.io/api/register", {
+		fetch("https://3001-emerald-bat-9onafycu.ws-us03.gitpod.io/api/reset", {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {
@@ -34,22 +33,22 @@ export const Register = () => {
 		})
 			.then(response => response.json())
 			.then(data => {
-				if (data.msg == "User created successfully") {
+				if (data.msg == "Password change successfully") {
 					swal({
 						title: "Correcto!",
-						text: "Se ha Registardo Exitosamente",
+						text: "Se ha cambiado su contraseña Exitosamente",
 						icon: "success",
 						button: "Aceptar"
 					});
-					setAuth(true);
+					setIsLogin(true);
 				} else {
 					swal({
 						title: "Incorrecto!",
-						text: "Usuario ya tiene cuenta, Intente Nuevamente",
+						text: "Email o Contraseña Temporal Incorrecta, Intente Nuevamente",
 						icon: "error",
 						button: "Aceptar"
 					});
-					setAuth(false);
+					setIsLogin(false);
 				}
 			})
 			.catch(err => console.log(err));
@@ -60,7 +59,7 @@ export const Register = () => {
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
-						<h3>Registrarse</h3>
+						<h3>Resetear Contraseña</h3>
 					</div>
 					<div className="card-body">
 						<form onSubmit={handleSubmit} style={{ width: "500px" }}>
@@ -71,12 +70,11 @@ export const Register = () => {
 									</span>
 								</div>
 								<input
-									type="email"
+									type="text"
 									className="form-control"
-									placeholder="Email@.com"
+									placeholder="Email"
 									onChange={e => {
 										setEmail(e.target.value);
-										//setmensaje("");
 									}}
 								/>
 							</div>
@@ -87,31 +85,38 @@ export const Register = () => {
 									</span>
 								</div>
 								<input
-									type="password"
+									type="text"
 									className="form-control"
-									placeholder="Contraseña"
-									onChange={e => setPassword(e.target.value)}
+									placeholder="Contraseña Temporal"
+									onChange={e => {
+										setPassword(e.target.value);
+									}}
 								/>
 							</div>
-							<div className="row align-items-center remember">
-								<input type="checkbox" />
-								Recordarme
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fas fa-key" />
+									</span>
+								</div>
+								<input
+									type="text"
+									className="form-control"
+									placeholder="Contraseña Nueva"
+									onChange={e => {
+										setPassword2(e.target.value);
+									}}
+								/>
 							</div>
+
 							<div className="form-group">
 								<button type="submit" className="btn float-right login_btn">
 									Aceptar
 								</button>
 							</div>
 						</form>
-						{auth ? <Redirect to="/login" /> : null}
-					</div>
-					<div className="card-footer">
-						<div className="d-flex justify-content-center links">
-							Ya tienes cuenta?
-							<Link to="/login">
-								<a>Iniciar Sesion</a>
-							</Link>
-						</div>
+						{/* me direcciona la pagina */}
+						{islogin ? <Redirect to="/" /> : null}
 					</div>
 				</div>
 			</div>
