@@ -238,7 +238,7 @@ def add_clases():
 def getempresa(id):    
     empresa = Empresa.query.get(id) 
     empresa = empresa.serialize()   
-    return jsonify(empresa), 200
+    return jsonify({"result": empresa}), 200
 
 # ejemplo de test de token
 @api.route("/protected", methods=['GET', 'POST'])

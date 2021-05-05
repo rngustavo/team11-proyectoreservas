@@ -4,9 +4,12 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
 import { Row, Col, Form, Container, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Contactinfo } from "../component/Contactinfo";
+import PropTypes from "prop-types";
 
 export const Contact = () => {
-	const { store, actions } = useContext(Context);
+	const { Contactinfo } = useContext(Context);
+	console.log("data", store.Contactinfo);
 
 	return (
 		<div className="container contactcus">
@@ -16,7 +19,7 @@ export const Contact = () => {
 						<div>
 							<h3>Contáctenos</h3>
 						</div>
-						<Card style={{ width: "40rem" }}>
+						<Card>
 							<Card.Body>
 								<Form.Group>
 									<Form.Control type="text" placeholder="Nombre" />
@@ -33,14 +36,17 @@ export const Contact = () => {
 				</Col>
 				<Col>
 					<Container>
-						<Card style={{ width: "18rem" }}>
+						<Card>
 							<Card.Body>
-								<Card.Title>Kalendar-FIT</Card.Title>
-								<Card.Subtitle className="mb-2 text-muted">Telefono 2299-05-06</Card.Subtitle>
-								<Card.Text>
-									Estamos ubicados en Desamparados. De la estación de servicio La Primavera, 300m
-									Norte y 75m Este. Local esquinero de color blanco con verde.{" "}
-								</Card.Text>
+								<Card.Title>{Contactinfo.EMPRESA_NOMBRE}</Card.Title>
+								<Card.Text>Ubicación {Contactinfo.EMPRESA_DESCRIPCION}</Card.Text>
+								<Card.Subtitle className="mb-2 text-muted">
+									Telefono: {Contactinfo.EMPRESA_TELEFONO}
+								</Card.Subtitle>
+								<Card.Subtitle className="mb-2 text-muted">
+									Celular: {Contactinfo.EMPRESA_CELULAR}
+								</Card.Subtitle>
+								<Card.Text>Ubicación {Contactinfo.EMPRESA_UBICACION};</Card.Text>
 								<p>Buscanos en nuestras redes sociales</p>
 								<Card.Link href="#">
 									<i
@@ -64,4 +70,18 @@ export const Contact = () => {
 			<Row />
 		</div>
 	);
+
+	Contactinfo.propTypes = {
+		EMPRESA_ID: PropTypes.integrer,
+		EMPRESA_NOMBRE: PropTypes.string,
+		EMPRESA_UBICACION: PropTypes.string,
+		EMPRESA_TELEFONO: PropTypes.string,
+		EMPRESA_CELULAR: PropTypes.string,
+		EMPRESA_DESCRIPCION: PropTypes.string,
+		EMPRESA_LATITUD: PropTypes.string,
+		EMPRESA_LONGITUD: PropTypes.string,
+		EMPRESA_OTROS: PropTypes.string,
+		EMPRESA_FOTO_FONDO: PropTypes.string,
+		EMPRESA_LOGO: PropTypes.string
+	};
 };
