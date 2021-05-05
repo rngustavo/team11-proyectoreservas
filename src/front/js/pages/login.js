@@ -11,7 +11,8 @@ export const Login = () => {
 	const [password, setPassword] = useState("");
 	const [mensaje, setmensaje] = useState("");
 	const { store, actions } = useContext(Context);
-	const [islogin, setIsLogin] = useState(false);
+	const { islogin } = store;
+	const { setLogin } = actions;
 
 	//funcion de legeo
 	const handleSubmit = e => {
@@ -24,7 +25,7 @@ export const Login = () => {
 		};
 
 		// fetch de LOGIN
-		fetch("https://3001-azure-coral-29ca4b2d.ws-us04.gitpod.io/api/login", {
+		fetch("https://3001-blue-sawfish-cwmyk3c9.ws-us03.gitpod.io/api/login", {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {
@@ -33,17 +34,12 @@ export const Login = () => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				//usuario valido
-				//variable token toma el valor que envia la api como resultado
-				store.token = data.token;
-
-				//si la promesa del fetch trae un valor diferente a undefiend realice lo siguiente
-				if (store.token != undefined) {
-					//sessionStorage.setItem("my_token", data.token);
-					//Este hooks lo uilizo para direccionarme la pagina
-					setIsLogin(true);
-					//esta variable es para tenerla almacenada y utilizarla en otras paginas para verificar si esta logeado
-					store.login = true;
+				let token = data.token;
+				console.log(token);
+				if (token) {
+					sessionStorage.setItem("my_token", token);
+					setLogin(true);
+					console.log("login es ", islogin);
 
 					//alerta si fue exitosa
 					swal({
@@ -60,7 +56,7 @@ export const Login = () => {
 						button: "Aceptar"
 					});
 
-					setIsLogin(false);
+					setLogin(false);
 					store.login = false;
 				}
 

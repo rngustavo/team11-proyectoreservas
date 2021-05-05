@@ -13,8 +13,12 @@ import injectContext from "./store/appContext";
 import { Navbar1 } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Contact } from "./pages/contact";
+
 import { Forgotpassword } from "./pages/forgotpassword";
 import { Resetpassword } from "./pages/resetpassword";
+
+import { Vistaclasedisponibilidad } from "./pages/vistaclasedisponibilidad";
+import { Classview } from "./pages/classview";
 
 //create your first component
 const Layout = () => {
@@ -51,6 +55,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
+						</Route>
+						<Route exact path="/clasesdisponibles">
+							<Vistaclasedisponibilidad />
+						</Route>
+						<Route exact path="/crearclase">
+							<Classview />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
