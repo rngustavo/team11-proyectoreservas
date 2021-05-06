@@ -2,9 +2,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			classRegistration: [],
+			classParticipants: [],
 			token: [],
 			login: false,
-
+			islogin: false,
 			demo: [
 				{
 					title: "FIRST",
@@ -20,8 +22,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			updateClassRegistration: newClass => {
+				const store = getStore();
+				store.classRegistration.push(newClass);
+			},
+
+			registerToClass: index => {
+				const store = getStore();
+				const actions = getActions();
+
+				const classRegistration = store.classRegistration.map((elm, i) => {
+					if (i === index) elm.cupo = elm.cupo - 1;
+					return elm;
+				});
+
+				setStore({ classRegistration: classRegistration });
+
+				actions.updateRegisteredClasses(classRegistration, index);
+			},
+
+			updateRegisteredClasses: (inArr, idx) => {
+				const store = getStore();
+
+				const registeredClass = (({ nombreClase, fechaIni }) => ({ nombreClase, fechaIni }))(inArr[idx]);
+
+				store.classParticipants.push(registeredClass);
+			},
+
+			dropFromClass: toRemove => {
+				const store = getStore();
+
+				const myUpdatedClasses = store.classParticipants.filter((item, index) => index !== toRemove);
+
+				setStore({ classParticipants: myUpdatedClasses });
 			},
 
 			getMessage: () => {
@@ -44,6 +77,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			setLogin: loggin => {
+				const store = getStore();
+				setStore({ islogin: loggin });
 			}
 		}
 	};
