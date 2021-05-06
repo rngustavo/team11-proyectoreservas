@@ -10,10 +10,10 @@ import { Redirect } from "react-router-dom";
 
 export const Register = () => {
 	const { store, actions } = useContext(Context);
-
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [auth, setAuth] = useState(false);
+	const url_api = process.env.BACKEND_URL + "/api/register";
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -25,7 +25,7 @@ export const Register = () => {
 		};
 		//setLogin(true);
 		// fetch de LOGIN
-		fetch("https://3001-emerald-bat-9onafycu.ws-us03.gitpod.io/api/register", {
+		fetch(url_api, {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {

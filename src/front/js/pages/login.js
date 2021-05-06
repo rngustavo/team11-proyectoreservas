@@ -13,6 +13,7 @@ export const Login = () => {
 	const { store, actions } = useContext(Context);
 	const { islogin } = store;
 	const { setLogin } = actions;
+	const url_api = process.env.BACKEND_URL + "/api/login";
 
 	//funcion de legeo
 	const handleSubmit = e => {
@@ -25,7 +26,7 @@ export const Login = () => {
 		};
 
 		// fetch de LOGIN
-		fetch("https://3001-blue-sawfish-cwmyk3c9.ws-us03.gitpod.io/api/login", {
+		fetch(url_api, {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {
@@ -35,7 +36,7 @@ export const Login = () => {
 			.then(res => res.json())
 			.then(data => {
 				let token = data.token;
-				console.log(token);
+				//console.log(token);
 				if (token) {
 					sessionStorage.setItem("my_token", token);
 					setLogin(true);
@@ -57,7 +58,6 @@ export const Login = () => {
 					});
 
 					setLogin(false);
-					store.login = false;
 				}
 
 				// let token = sessionStorage.getItem("my_token")
