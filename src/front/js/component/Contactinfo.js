@@ -1,20 +1,30 @@
-import React, { useContext, setStore } from "react";
+import React, { useContext, setStore, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
 import { Container, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-export const Contactinfo = props => {
-	fetch("https://3001-chocolate-vole-475nxa2x.ws-us03.gitpod.io/api/empresa/1", {
+export const Contactinfo = () => {
+    const url = "https://3001-tomato-alligator-a2sk5gwn.ws-us03.gitpod.io/api/empresa/1";
+    const [store, setStore] = useStore();
+
+    fetch(url, {
 		method: "GET"
 	})
-		.then(res => res.json())
+		.then(respose => respose.json(data))
 		.then(data => {
 			setStore({ Contactinfo: data.results });
 		})
 		.catch(err => console.log(err));
+
+
+	.then(respose => respose.json())
+		.then(data => response.json.stringify({ result: [data] }))
+		.catch(err => console.log("Hay un error"));
+	console.log(data);
+
+}
 	return (
 		<Container>
 			<Card>

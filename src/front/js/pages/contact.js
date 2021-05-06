@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
 import { Row, Col, Form, Container, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Contactinfo } from "../component/Contactinfo";
-import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 
-export const Contact = () => {
-	const { Contactinfo } = useContext(Context);
-	console.log("data", store.Contactinfo);
+export const Contact = props => {
+	const { store, actions } = useContext(Context);
+	const { dataempresa } = useParams();
+	console.log(dataempresa);
+	const selected = store.dataempresa;
+	console.log(selected);
 
 	return (
 		<div className="container contactcus">
@@ -38,15 +39,15 @@ export const Contact = () => {
 					<Container>
 						<Card>
 							<Card.Body>
-								<Card.Title>{Contactinfo.EMPRESA_NOMBRE}</Card.Title>
-								<Card.Text>Ubicación {Contactinfo.EMPRESA_DESCRIPCION}</Card.Text>
+								<Card.Title>{selected.EMPRESA_NOMBRE}</Card.Title>
+								<Card.Text>Ubicación {selected.EMPRESA_UBICACION}</Card.Text>
 								<Card.Subtitle className="mb-2 text-muted">
-									Telefono: {Contactinfo.EMPRESA_TELEFONO}
+									Telefono: {selected.EMPRESA_TELEFONO}
 								</Card.Subtitle>
 								<Card.Subtitle className="mb-2 text-muted">
-									Celular: {Contactinfo.EMPRESA_CELULAR}
+									Celular: {selected.EMPRESA_CELULAR}
 								</Card.Subtitle>
-								<Card.Text>Ubicación {Contactinfo.EMPRESA_UBICACION};</Card.Text>
+								<Card.Text>Ubicación {selected.EMPRESA_UBICACION};</Card.Text>
 								<p>Buscanos en nuestras redes sociales</p>
 								<Card.Link href="#">
 									<i

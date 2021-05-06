@@ -81,6 +81,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setLogin: loggin => {
 				const store = getStore();
 				setStore({ islogin: loggin });
+			},
+
+			getempresainfo: async () => {
+				const url = "https://3001-tomato-alligator-a2sk5gwn.ws-us03.gitpod.io/api/empresa/1";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ dataempresa: data.results });
 			}
 		}
 	};
