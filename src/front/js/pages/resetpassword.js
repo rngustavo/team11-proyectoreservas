@@ -12,6 +12,7 @@ export const Resetpassword = () => {
 	const [password, setPassword] = useState("");
 	const [password2, setPassword2] = useState("");
 	const [islogin, setIsLogin] = useState(false);
+	const url_api = process.env.BACKEND_URL + "/api/reset";
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -24,7 +25,7 @@ export const Resetpassword = () => {
 		};
 		//setLogin(true);
 		// fetch de LOGIN
-		fetch("https://3001-emerald-bat-9onafycu.ws-us03.gitpod.io/api/reset", {
+		fetch(url_api, {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {
