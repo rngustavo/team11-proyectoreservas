@@ -7,6 +7,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: [],
 			login: false,
 			islogin: false,
+			dataempresa: {
+				CELULAR: "9999 8888",
+				DESCRIPCION: "del palo de cas 500 varas",
+				FOTO_FONDO: ".//fotos/principal.jpg",
+				ID: 1,
+				LATITUD: "10 10 10",
+				LOGO: "..//fotos/logo.jpg",
+				LONGITUD: "20 20 20",
+				NOMBRE: "compania demo",
+				OTROS: "por si acaso",
+				TELEFONO: "8888 9999",
+				UBICACION: "provincia demo"
+			},
 			demo: [
 				{
 					title: "FIRST",
@@ -81,6 +94,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setLogin: loggin => {
 				const store = getStore();
 				setStore({ islogin: loggin });
+			},
+
+			getempresainfo: () => {
+				fetch(process.env.BACKEND_URL + "/api/empresa/1") //trae el api
+					.then(resp => resp.json()) //llama  en json
+					.then(data => setStore({ dataempresa: data.result })) //asigna el "result" en "dataempresa"
+					.catch(error => console.log("Error loading message from backend", error));
 			}
 		}
 	};
