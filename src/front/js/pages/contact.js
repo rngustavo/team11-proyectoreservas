@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 import { Row, Col, Form, Container, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-export const Contact = props => {
+export const Contact = () => {
 	const { store, actions } = useContext(Context);
-	const { dataempresa } = useParams();
+	const { dataempresa } = store;
+	const { getempresainfo } = actions;
+	useEffect(() => {
+		getempresainfo();
+	}, []);
 	console.log(dataempresa);
-	const selected = store.dataempresa;
-	console.log(selected);
 
 	return (
 		<div className="container contactcus">
@@ -39,15 +41,15 @@ export const Contact = props => {
 					<Container>
 						<Card>
 							<Card.Body>
-								<Card.Title>{selected.EMPRESA_NOMBRE}</Card.Title>
-								<Card.Text>Ubicación {selected.EMPRESA_UBICACION}</Card.Text>
+								<Card.Title>{dataempresa.NOMBRE}</Card.Title>
+								<Card.Text>Descripción: {dataempresa.DESCRIPCION}</Card.Text>
 								<Card.Subtitle className="mb-2 text-muted">
-									Telefono: {selected.EMPRESA_TELEFONO}
+									Telefono: {dataempresa.TELEFONO}
 								</Card.Subtitle>
 								<Card.Subtitle className="mb-2 text-muted">
-									Celular: {selected.EMPRESA_CELULAR}
+									Celular: {dataempresa.CELULAR}
 								</Card.Subtitle>
-								<Card.Text>Ubicación {selected.EMPRESA_UBICACION};</Card.Text>
+								<Card.Text>Ubicación {dataempresa.UBICACION};</Card.Text>
 								<p>Buscanos en nuestras redes sociales</p>
 								<Card.Link href="#">
 									<i
@@ -71,18 +73,4 @@ export const Contact = props => {
 			<Row />
 		</div>
 	);
-
-	Contactinfo.propTypes = {
-		EMPRESA_ID: PropTypes.integrer,
-		EMPRESA_NOMBRE: PropTypes.string,
-		EMPRESA_UBICACION: PropTypes.string,
-		EMPRESA_TELEFONO: PropTypes.string,
-		EMPRESA_CELULAR: PropTypes.string,
-		EMPRESA_DESCRIPCION: PropTypes.string,
-		EMPRESA_LATITUD: PropTypes.string,
-		EMPRESA_LONGITUD: PropTypes.string,
-		EMPRESA_OTROS: PropTypes.string,
-		EMPRESA_FOTO_FONDO: PropTypes.string,
-		EMPRESA_LOGO: PropTypes.string
-	};
 };
