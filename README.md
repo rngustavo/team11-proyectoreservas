@@ -18,6 +18,7 @@ Para el backend:
 Para el frontend:
 1. npm install react-bootstrap
 2. npm install sweetalert --save
+3. npm start
 
 
 
