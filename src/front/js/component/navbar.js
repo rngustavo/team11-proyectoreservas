@@ -17,13 +17,14 @@ export const Navbar1 = () => {
 				<Navbar.Brand> Kalendar-FIT</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
+					<Nav className="mr-auto">
+						<Nav.Link href="/crearclase">Crear clase</Nav.Link>
+						<Nav.Link href="/contact">Contacto</Nav.Link>
+						<Nav.Link href="/clasesdisponibles"> Nuestras clases</Nav.Link>
+						<Nav.Link href="#link"> Nuestras clases</Nav.Link>
+					</Nav>
 					{islogin ? (
 						<>
-							<Nav className="mr-auto">
-								<Nav.Link href="/crearclase">Crear clase</Nav.Link>
-								<Nav.Link href="/clasesdisponibles">Mis clases</Nav.Link>
-								<Nav.Link href="/contact">Contacto</Nav.Link>
-							</Nav>
 							<Button
 								variant="primary buttonspace"
 								onClick={() => {
@@ -35,10 +36,6 @@ export const Navbar1 = () => {
 						</>
 					) : (
 						<>
-							<Nav className="mr-auto">
-								<Nav.Link href="/clasesdisponibles"> Nuestras clases</Nav.Link>
-								<Nav.Link href="/contact">Contacto</Nav.Link>
-							</Nav>
 							<Link to="/register">
 								<Button variant="primary buttonspace">Registrarme</Button>
 							</Link>
