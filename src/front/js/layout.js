@@ -17,8 +17,8 @@ import { Contact } from "./pages/contact";
 import { Forgotpassword } from "./pages/forgotpassword";
 import { Resetpassword } from "./pages/resetpassword";
 
-import { Vistaclasedisponibilidad } from "./pages/vistaclasedisponibilidad";
 import { Classview } from "./pages/classview";
+import { Myclasedispo } from "./pages/vistaclasedispo";
 
 //create your first component
 const Layout = () => {
@@ -56,11 +56,11 @@ const Layout = () => {
 						<Route exact path="/single/:theid">
 							<Single />
 						</Route>
-						<Route exact path="/clasesdisponibles">
-							<Vistaclasedisponibilidad />
-						</Route>
 						<Route exact path="/crearclase">
 							<Classview />
+						</Route>
+						<Route exact path="/clasedispo">
+							<Myclasedispo />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
