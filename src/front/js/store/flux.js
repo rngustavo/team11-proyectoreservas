@@ -31,6 +31,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
+			],
+			clasesdisponibles: [
+				{
+					DESCRIPCION: "conozca las ultimas tecnicas sagradas de kami",
+					DIA_SEMANA: "Miercoles",
+					DURACION: 60,
+					ENTRENADOR: "mr Popo",
+					ESPACIOS: 10,
+					ESPACIOS_DISPONIBLES: 10,
+					ESTADO: "Publicada",
+					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT",
+					FOTO: "..//fotos/actividad_kempo.jpg",
+					HORA_INICIO: "20:00",
+					ID: 1,
+					LUGAR: "templo sagrada kamizama",
+					NOMBRE: "kempo",
+					PRECIO: 0
+				}
 			]
 		},
 		actions: {
@@ -100,6 +118,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + "/api/empresa/1") //trae el api
 					.then(resp => resp.json()) //llama  en json
 					.then(data => setStore({ dataempresa: data.result })) //asigna el "result" en "dataempresa"
+					.catch(error => console.log("Error loading message from backend", error));
+			},
+
+			getclases: () => {
+				fetch(process.env.BACKEND_URL + "/api/clases") //trae el api
+					.then(resp => resp.json()) //llama  en json
+					.then(data => setStore({ clasesdisponibles: data.results })) //asigna el "result" en "dataempresa"
 					.catch(error => console.log("Error loading message from backend", error));
 			}
 		}
