@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Button, Dropdown, DropdownButton, FormControl } from "react-bootstrap";
+import { Navbar, Nav, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
 export const Navbar1 = () => {
@@ -18,20 +18,21 @@ export const Navbar1 = () => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
-						<Nav.Link href="/clasesdisponibles">Clases</Nav.Link>
+						<Nav.Link href="/crearclase">Crear clase</Nav.Link>
+						<Nav.Link href="/clasedispo"> Mis clases</Nav.Link>
 						<Nav.Link href="/contact">Contacto</Nav.Link>
-						<Nav.Link href="/crearclase">Contacto</Nav.Link>
 					</Nav>
-
 					{islogin ? (
-						<Button
-							variant="primary buttonspace"
-							onClick={() => {
-								setLogin(false);
-								console.log("login es ", islogin);
-							}}>
-							Logout
-						</Button>
+						<>
+							<Button
+								variant="primary buttonspace"
+								onClick={() => {
+									setLogin(false);
+									console.log("login es ", islogin);
+								}}>
+								Logout
+							</Button>
+						</>
 					) : (
 						<>
 							<Link to="/register">

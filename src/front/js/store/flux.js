@@ -7,6 +7,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: [],
 			login: false,
 			islogin: false,
+			dataempresa: {
+				CELULAR: "9999 8888",
+				DESCRIPCION: "del palo de cas 500 varas",
+				FOTO_FONDO: ".//fotos/principal.jpg",
+				ID: 1,
+				LATITUD: "10 10 10",
+				LOGO: "..//fotos/logo.jpg",
+				LONGITUD: "20 20 20",
+				NOMBRE: "compania demo",
+				OTROS: "por si acaso",
+				TELEFONO: "8888 9999",
+				UBICACION: "provincia demo"
+			},
 			demo: [
 				{
 					title: "FIRST",
@@ -17,6 +30,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					title: "SECOND",
 					background: "white",
 					initial: "white"
+				}
+			],
+			clasesdisponibles: [
+				{
+					DESCRIPCION: "conozca las ultimas tecnicas sagradas de kami",
+					DIA_SEMANA: "Miercoles",
+					DURACION: 60,
+					ENTRENADOR: "mr Popo",
+					ESPACIOS: 10,
+					ESPACIOS_DISPONIBLES: 10,
+					ESTADO: "Publicada",
+					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT",
+					FOTO: "..//fotos/actividad_kempo.jpg",
+					HORA_INICIO: "20:00",
+					ID: 1,
+					LUGAR: "templo sagrada kamizama",
+					NOMBRE: "kempo",
+					PRECIO: 0
 				}
 			]
 		},
@@ -81,6 +112,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setLogin: loggin => {
 				const store = getStore();
 				setStore({ islogin: loggin });
+			},
+
+			getempresainfo: () => {
+				fetch(process.env.BACKEND_URL + "/api/empresa/1") //trae el api
+					.then(resp => resp.json()) //llama  en json
+					.then(data => setStore({ dataempresa: data.result })) //asigna el "result" en "dataempresa"
+					.catch(error => console.log("Error loading message from backend", error));
+			},
+
+			getclases: () => {
+				fetch(process.env.BACKEND_URL + "/api/clases") //trae el api
+					.then(resp => resp.json()) //llama  en json
+					.then(data => setStore({ clasesdisponibles: data.results })) //asigna el "result" en "dataempresa"
+					.catch(error => console.log("Error loading message from backend", error));
 			}
 		}
 	};
