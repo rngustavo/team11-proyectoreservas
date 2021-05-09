@@ -31,7 +31,7 @@ export const Clasedispo = () => {
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Nombre</th>
-							<th scope="col">Fecha</th>
+							<th scope="col">Día/Hora</th>
 							<th scope="col">Duración</th>
 							<th scope="col">Fecha</th>
 							<th scope="col">Entrenador</th>

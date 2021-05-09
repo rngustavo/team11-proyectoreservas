@@ -19,6 +19,7 @@ import { Resetpassword } from "./pages/resetpassword";
 
 import { Classview } from "./pages/classview";
 import { Myclasedispo } from "./pages/vistaclasedispo";
+import { Dispoview } from "./pages/dispoview";
 
 //create your first component
 const Layout = () => {
@@ -59,8 +60,11 @@ const Layout = () => {
 						<Route exact path="/crearclase">
 							<Classview />
 						</Route>
-						<Route exact path="/clasedispo">
+						<Route exact path="/misclases">
 							<Myclasedispo />
+						</Route>
+						<Route exact path="/clasedisponibles">
+							<Dispoview />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
