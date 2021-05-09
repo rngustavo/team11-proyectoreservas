@@ -28,7 +28,12 @@ export const Navbar1 = () => {
 								variant="primary buttonspace"
 								onClick={() => {
 									setLogin(false);
-									console.log("login es ", islogin);
+									swal({
+										title: "Sesion Cerrada!",
+										text: "Ha cerrado sesion correctamente",
+										icon: "info",
+										button: "Aceptar"
+									});
 								}}>
 								Logout
 							</Button>
