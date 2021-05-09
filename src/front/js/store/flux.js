@@ -55,7 +55,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			updateClassRegistration: newClass => {
 				const store = getStore();
+				const actions = getActions();
 				store.classRegistration.push(newClass);
+				actions.updateClassRegistrationApi(newClass);
+			},
+			nombreDelDiaSegunFecha: fecha => {
+				const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
+				return dias[fecha.getDay()];
+			},
+
+			updateClassRegistrationApi: Class => {
+				const actions = getActions();
+				//ISO dates can be written with added hours, minutes, and seconds (YYYY-MM-DDTHH:MM:SSZ):
+				console.log("fecha original", Class.fechaIni);
+				let fechaInicio = `${Class.fechaIni.substring(6, 10)}-${Class.fechaIni.substring(
+					3,
+					5
+				)}-${Class.fechaIni.substring(0, 2)}T${Class.fechaIni.substring(11, 13)}:${Class.fechaIni.substring(
+					14,
+					16
+				)}:00Z`;
+				console.log("fecha original", fechaInicio);
+				fechaInicio = new Date(fechaInicio);
+				console.log("fecha convertida", fechaInicio);
+				const dia = actions.nombreDelDiaSegunFecha(fechaInicio);
+
+				var myHeaders = new Headers();
+				/* myHeaders.append(
+					"Authorization",
+					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDQzMTE5OCwianRpIjoiZDllYjU1NDAtZTU4MS00NTk4LWE3NzYtMDkzOTM3NWM2ZDEzIiwibmJmIjoxNjIwNDMxMTk4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxLCJleHAiOjE2MjA0MzIwOTh9.thRcfOORtgkTarTFo6AbBmGGpVmC9eWZIMWcg_9rCbo"
+				); */
+				myHeaders.append("Content-Type", "application/json");
+				const jsonClase = {
+					NOMBRE: Class.nombreClase,
+					ENTRENADOR: Class.instructor,
+					LUGAR: Class.lugar,
+					PRECIO: Class.precio,
+					ESPACIOS: Class.cupo,
+					DESCRIPCION: Class.descripcion,
+					ESTADO: Class.estado,
+					DIA_SEMANA: dia, // "Lunes",
+					FECHA_INICIO: fechaInicio, //"Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
+					HORA_INICIO: fechaInicio.toLocaleTimeString().substring(0, 5), //`${f.getHours()}:${f.getMinutes()}`, //"20:00",
+					DURACION: Class.duracion,
+					FOTO: "..//fotos/actividad_kempo.jpg",
+					EMPRESA_ID: 1 // por el momento es solo una empresa se debe cambiar a variable de empresa
+				};
+				console.log("ruta", process.env.BACKEND_URL);
+				console.log("jsonClase", jsonClase);
+				fetch(process.env.BACKEND_URL + "/api/clases", {
+					method: "POST",
+					body: JSON.stringify(jsonClase),
+					headers: myHeaders
+				})
+					.then(resp => {
+						console.log("respuesta SubirClase ", resp.ok); // will be true if the response is successfull
+						console.log("status SubirClase", resp.status); // the status code = 200 or code = 400 etc.
+						console.log("texto SubirClase", resp.text()); // will try return the exact result as string
+						return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+					})
+					.then(data => setStore({ message: data.msg }))
+					.catch(error => {
+						console.log("Error SubirClase", error);
+					});
 			},
 
 			registerToClass: index => {
