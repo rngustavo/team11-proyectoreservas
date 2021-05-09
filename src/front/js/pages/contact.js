@@ -1,12 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
 import { Row, Col, Form, Container, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export const Contact = () => {
 	const { store, actions } = useContext(Context);
+	const { dataempresa } = store;
+	const { getempresainfo } = actions;
+	useEffect(() => {
+		getempresainfo();
+	}, []);
+	console.log(dataempresa);
 
 	return (
 		<div className="container contactcus">
@@ -16,7 +22,7 @@ export const Contact = () => {
 						<div>
 							<h3>Contáctenos</h3>
 						</div>
-						<Card style={{ width: "40rem" }}>
+						<Card>
 							<Card.Body>
 								<Form.Group>
 									<Form.Control type="text" placeholder="Nombre" />
@@ -33,14 +39,17 @@ export const Contact = () => {
 				</Col>
 				<Col>
 					<Container>
-						<Card style={{ width: "18rem" }}>
+						<Card>
 							<Card.Body>
-								<Card.Title>Kalendar-FIT</Card.Title>
-								<Card.Subtitle className="mb-2 text-muted">Telefono 2299-05-06</Card.Subtitle>
-								<Card.Text>
-									Estamos ubicados en Desamparados. De la estación de servicio La Primavera, 300m
-									Norte y 75m Este. Local esquinero de color blanco con verde.{" "}
-								</Card.Text>
+								<Card.Title>{dataempresa.NOMBRE}</Card.Title>
+								<Card.Text>Descripción: {dataempresa.DESCRIPCION}</Card.Text>
+								<Card.Subtitle className="mb-2 text-muted">
+									Telefono: {dataempresa.TELEFONO}
+								</Card.Subtitle>
+								<Card.Subtitle className="mb-2 text-muted">
+									Celular: {dataempresa.CELULAR}
+								</Card.Subtitle>
+								<Card.Text>Ubicación {dataempresa.UBICACION};</Card.Text>
 								<p>Buscanos en nuestras redes sociales</p>
 								<Card.Link href="#">
 									<i
