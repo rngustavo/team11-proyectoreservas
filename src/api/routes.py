@@ -368,3 +368,18 @@ def reset_password():
         return jsonify({"msg": "Password change successfully"}), 200
 
 
+#retorna total de clases reservadas
+@api.route('/clasesreservadas', methods=['GET'])
+@jwt_required()
+def getclasesreservadas( ): 
+    #clases_usuario = []
+    infoclases = []
+    current_id = get_jwt_identity()
+    clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id)
+    clasesreservadas = list(map(lambda x: x.serialize(), clases_usuario)) 
+    for clasesporusuario in clasesreservadas:
+        informacionactividad = Actividades.query.filter_by(ACTIVIDAD_ID=clasesporusuario['ACTIVIDAD'])
+        item=list(map(lambda x: x.serialize(), informacionactividad))
+        infoclases.append(item)
+    return jsonify({"result":infoclases}), 200
+
