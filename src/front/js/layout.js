@@ -21,6 +21,9 @@ import { Classview } from "./pages/classview";
 import { Myclasedispo } from "./pages/vistaclasedispo";
 import { Dispoview } from "./pages/dispoview";
 
+import { Misclasescreadas } from "./pages/clasescreadas";
+import { Updateclass } from "./pages/updateclass";
+
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -65,6 +68,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/clasedisponibles">
 							<Dispoview />
+						</Route>
+						<Route exact path="/clasescreadas">
+							<Misclasescreadas />
+						</Route>
+						<Route exact path="/updateclass/:theid">
+							<Updateclass />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

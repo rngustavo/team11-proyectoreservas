@@ -266,6 +266,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(resp => resp.json()) //llama  en json
 					.then(data => setStore({ misclasesreservadas: data.result }))
 					.catch(error => console.log("Error loading message from backend", error));
+			},
+			getclasstoupdate: index => {
+				const store = getStore();
+				const actions = getActions();
+
+				store.clasesdisponibles.map((elm, i) => {
+					if (i === index) setStore({ classupdate: elm });
+				});
+
+				// actions.updateRegisteredClasses(classRegistration, index);
+			},
+			updatetoClass: Class => {
+				const store = getStore();
+				const actions = getActions();
+
+				const body = {
+					NOMBRE: Class.nombreClase,
+					ENTRENADOR: Class.instructor,
+					LUGAR: Class.lugar,
+					PRECIO: Class.precio,
+					ESPACIOS: Class.cupo,
+					DESCRIPCION: Class.descripcion,
+					ESTADO: Class.estado,
+					DIA_SEMANA: "lunes", // "Lunes",
+					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
+					HORA_INICIO: "20:00",
+					DURACION: Class.duracion,
+					FOTO: "..//fotos/actividad_kempo.jpg",
+					EMPRESA_ID: 1
+				};
+
+				fetch(process.env.BACKEND_URL + "/api/actualizarclase/" + Class.id, {
+					method: "PUT",
+					body: JSON.stringify(body),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						actions.getclases();
+					})
+					.catch(err => console.log(err));
+			},
+			deleteclasscreate: index => {
+				const store = getStore();
+				const actions = getActions();
+
+				fetch(process.env.BACKEND_URL + "/api/eliminarclase/" + index, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						actions.getclases();
+					})
+					.catch(err => console.log(err));
+
+				// actions.updateRegisteredClasses(classRegistration, index);
 			}
 		}
 	};
