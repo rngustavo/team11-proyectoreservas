@@ -2,11 +2,14 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export const Updateclasscomp = props => {
 	const { actions, store } = useContext(Context);
 	const { classupdate } = store;
 	const params = useParams();
+	const [upd, setUpd] = useState(false);
+
 	const [classes, setNewClass] = useState({
 		id: classupdate.ID,
 		nombreClase: classupdate.NOMBRE,
@@ -249,13 +252,15 @@ export const Updateclasscomp = props => {
 							<button type="button" className="btn btn-secondary" data-dismiss="modal">
 								Cerrar
 							</button>
+
 							<button
 								type="button"
 								className="btn btn-primary"
 								data-dismiss="modal"
-								onClick={() => actions.updatetoClass(classes)}>
+								onClick={() => actions.updatetoClass(classes) + setUpd(true)}>
 								Esta Seguro de los cambios?
 							</button>
+							{upd ? <Redirect to="/clasescreadas" /> : null}
 						</div>
 					</div>
 				</div>
