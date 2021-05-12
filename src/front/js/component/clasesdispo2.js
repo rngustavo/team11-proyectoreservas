@@ -5,10 +5,18 @@ export const Clasedispo = () => {
 	const { store, actions } = useContext(Context);
 	const { clasesdisponibles } = store;
 	const { getclases } = actions;
+	//useEffect(() => {
+	//getclases();
+	//}, []);
+	//console.log(clasesdisponibles);
+
+	//trae las calses reservadas
+	const { misclasesreservadas } = store;
+	const { getmisclasesreservadas } = actions;
 	useEffect(() => {
 		getclases();
+		getmisclasesreservadas();
 	}, []);
-	//console.log(clasesdisponibles);
 
 	const nombreDelDiaSegunFecha = fecha => {
 		const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
@@ -43,11 +51,6 @@ export const Clasedispo = () => {
 						{store.clasesdisponibles.map((classEl, index) => {
 							const f = new Date(classEl.FECHA_INICIO);
 							const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
-							console.log("fecha pura", f);
-							console.log("dia", f.getDay()); // 2 (Martes)
-							console.log("nose", f.getDate()); // 30
-							console.log("mes", f.getMonth()); // 0 (Enero)
-							console.log("year", f.getFullYear());
 							const dia = nombreDelDiaSegunFecha(f);
 
 							return (
@@ -84,17 +87,23 @@ export const Clasedispo = () => {
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Nombre de la Clase</th>
-							<th scope="col">Fecha y Hora</th>
+							<th scope="col">Día/Hora</th>
+							<th scope="col">Duración</th>
+							<th scope="col">Entrenador</th>
 							<th scope="col">Clase Reservada</th>
 						</tr>
 					</thead>
 					<tbody>
-						{store.classParticipants.map((classEl, index) => {
+						{store.misclasesreservadas.map((classRl, index) => {
 							return (
 								<tr key={index}>
 									<th scope="row">{index}</th>
-									<td>{classEl.nombreClase}</td>
-									<td>{classEl.fechaIni}</td>
+									<td>{classRl.NOMBRE}</td>
+									<td>
+										{classRl.DIA_SEMANA} / {classRl.HORA_INICIO}
+									</td>
+									<td>{classRl.DURACION}</td>
+									<td>{classRl.ENTRENADOR}</td>
 									<td>
 										<button
 											type="button"

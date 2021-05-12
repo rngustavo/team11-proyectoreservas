@@ -49,6 +49,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					NOMBRE: "kempo",
 					PRECIO: 0
 				}
+			],
+			misclasesreservadas: [
+				{
+					DESCRIPCION: "conozca las ultimas tecnicas sagradas de kami",
+					DIA_SEMANA: "Miercoles",
+					DURACION: 60,
+					ENTRENADOR: "Mr. Satán ",
+					ESPACIOS: 10,
+					ESPACIOS_DISPONIBLES: 10,
+					ESTADO: "Publicada",
+					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT",
+					FOTO: "..//fotos/actividad_kempo.jpg",
+					HORA_INICIO: "20:00",
+					ID: 1,
+					LUGAR: "templo sagrada kamizama",
+					NOMBRE: "kempo",
+					PRECIO: 0
+				}
 			]
 		},
 		actions: {
@@ -187,6 +205,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + "/api/clases") //trae el api
 					.then(resp => resp.json()) //llama  en json
 					.then(data => setStore({ clasesdisponibles: data.results })) //asigna el "result" en "dataempresa"
+					.catch(error => console.log("Error loading message from backend", error));
+			},
+
+			getmisclasesreservadas: () => {
+				const token = sessionStorage.getItem("my_token");
+				console.log("entré");
+				let myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+				fetch(process.env.BACKEND_URL + "/api/clasesreservadas", {
+					method: "GET",
+					//body: JSON.stringify(jsonClase),
+					headers: myHeaders
+				})
+					.then(resp => resp.json()) //llama  en json
+					.then(data => setStore({ misclasesreservadas: data.result }))
 					.catch(error => console.log("Error loading message from backend", error));
 			}
 		}
