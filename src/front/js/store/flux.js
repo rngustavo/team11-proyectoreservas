@@ -2,8 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			classRegistration: [],
-			classParticipants: [],
+			//classRegistration: [],
+			//classParticipants: [],
 			token: [],
 			login: false,
 			islogin: false,
@@ -71,6 +71,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			ErrorApi: status => {
+				if (status > 200) alert("error: " + status);
+			},
+
 			updateClassRegistration: newClass => {
 				const store = getStore();
 				const actions = getActions();
@@ -138,7 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			registerToClass: index => {
+			/* registerToClass: index => {
 				const store = getStore();
 				const actions = getActions();
 
@@ -150,14 +154,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ classRegistration: classRegistration });
 
 				actions.updateRegisteredClasses(classRegistration, index);
-			},
+			}, */
 
-			updateRegisteredClasses: (inArr, idx) => {
+			/* updateRegisteredClasses: (inArr, idx) => {
 				const store = getStore();
 
 				const registeredClass = (({ nombreClase, fechaIni }) => ({ nombreClase, fechaIni }))(inArr[idx]);
 
 				store.classParticipants.push(registeredClass);
+			}, */
+
+			//clase matriculada por el usuario
+			updateRegisteredClassesAPI: registeredClass => {
+				const actions = getActions();
+
+				const token = sessionStorage.getItem("my_token");
+				let myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+				//console.log("headers", myHeaders.get("Authorization"));
+				fetch(process.env.BACKEND_URL + "/api/matricularclase/" + registeredClass, {
+					method: "POST",
+					body: JSON.stringify(jsonClase),
+					headers: myHeaders
+				})
+					.then(resp => {
+						/* console.log("respuesta MatricularClase ", resp.ok);
+						console.log("status MatricularClase", resp.status);
+						console.log("texto MatricularClase", resp.text()); */
+						actions.ErrorApi(resp.status);
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ message: data.msg });
+						actions.getclases();
+						actions.getmisclasesreservadas();
+						//alerta si fue exitosa
+						swal({
+							title: "Correcto!",
+							text: "Se ha matriculado Exitosamente",
+							icon: "success",
+							button: "Aceptar"
+						});
+					})
+					.catch(error => {
+						console.log("Error MatricularClase", error);
+					});
 			},
 
 			dropFromClass: toRemove => {
