@@ -400,6 +400,77 @@ def matricularclases(id):
             return jsonify({"msg": "Matricula created successfully"}), 200
 
 
+@api.route('/actualizarclase/<id>', methods=['PUT'])
+def updateclass(id):
+    NOMBRE =request.json.get("NOMBRE", None) 
+    ENTRENADOR =request.json.get("ENTRENADOR", None) 
+    LUGAR = request.json.get("LUGAR", None) 
+    PRECIO = request.json.get("PRECIO", None) 
+    ESPACIOS = request.json.get("ESPACIOS", None) 
+    #al crear la capacidad es la misma que los disponibles
+    ESPACIOS_DISPONIBLES = request.json.get("ESPACIOS", None) 
+    #ESPACIOS_DISPONIBLES = request.json.get("ESPACIOS_DISPONIBLES", None) 
+    DESCRIPCION = request.json.get("DESCRIPCION", None) 
+    ESTADO = request.json.get("ESTADO", None) 
+    DIA_SEMANA = request.json.get("DIA_SEMANA", None) 
+    FECHA_INICIO = request.json.get("FECHA_INICIO", None) 
+    HORA_INICIO =request.json.get("HORA_INICIO", None) 
+    DURACION = request.json.get("DURACION", None) 
+    FOTO = request.json.get("FOTO", None) 
+    EMPRESA_ID = request.json.get("EMPRESA_ID", None) 
+
+    if not NOMBRE:
+        return jsonify({"msg": "No NOMBRE was provided"}), 400
+    if not ENTRENADOR:
+        return jsonify({"msg": "No ENTRENADOR was provided"}), 400
+    if not LUGAR:
+        return jsonify({"msg": "No LUGAR was provided"}), 400
+    if PRECIO is None:
+        return jsonify({"msg": "No PRECIO was provided"}), 400
+    if not ESPACIOS:
+        return jsonify({"msg": "No ESPACIOS was provided"}), 400
+    if not DESCRIPCION:
+        return jsonify({"msg": "No DESCRIPCION was provided"}), 400
+    if not ESTADO:
+        return jsonify({"msg": "No ESTADO was provided"}), 400
+    if not DIA_SEMANA:
+        return jsonify({"msg": "No DIA_SEMANA was provided"}), 400
+    if not FECHA_INICIO:
+        return jsonify({"msg": "No FECHA_INICIO was provided"}), 400
+    if not HORA_INICIO:
+        return jsonify({"msg": "No HORA_INICIO was provided"}), 400
+    if not DURACION:
+        return jsonify({"msg": "No DURACION was provided"}), 400    
+    if not FOTO:
+        return jsonify({"msg": "No FOTO was provided"}), 400
+    if not EMPRESA_ID:
+        return jsonify({"msg": "No EMPRESA_ID was provided"}), 400 
+
+    clase =  Actividades.query.filter_by(ACTIVIDAD_ID=id).first()
+    clase.ACTIVIDAD_NOMBRE=NOMBRE
+    clase.ACTIVIDAD_ENTRENADOR=ENTRENADOR
+    clase.ACTIVIDAD_LUGAR = LUGAR
+    clase.ACTIVIDAD_PRECIO = PRECIO
+    clase.ACTIVIDAD_ESPACIOS = ESPACIOS
+    clase.ACTIVIDAD_ESPACIOS_DISPONIBLES = ESPACIOS_DISPONIBLES
+    clase.ACTIVIDAD_DESCRIPCION = DESCRIPCION
+    clase.ACTIVIDAD_ESTADO = ESTADO
+    clase.ACTIVIDAD_DIA_SEMANA = DIA_SEMANA
+    clase.ACTIVIDAD_FECHA_INICIO = FECHA_INICIO
+    clase.ACTIVIDAD_HORA_INICIO = HORA_INICIO
+    clase.ACTIVIDAD_DURACION = DURACION
+    db.session.commit() 
+    return jsonify("ok"), 200
+
+@api.route('/eliminarclase/<id>', methods=['DELETE'])
+def deleteclasscreate(id):
+    clase =  Actividades.query.get(id)
+    if clase is None:
+      raise APIException('User not found', status_code=404)
+
+    db.session.delete(clase)
+    db.session.commit() 
+    return jsonify("ok"), 200
 
 # ejemplo de test de token
 @api.route("/protected", methods=['GET', 'POST'])
