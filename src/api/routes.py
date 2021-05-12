@@ -140,7 +140,7 @@ def login():
 #retorna las clases
 @api.route('/clases', methods=['GET'])
 def clases():    
-    all_clases = Actividades.query.all()   
+    all_clases = Actividades.query.order_by(Actividades.ACTIVIDAD_NOMBRE).all() 
     all_clases = list(map(lambda x: x.serialize(), all_clases))
     return jsonify({"results":all_clases, "message":"Class's List"}), 200
 
@@ -311,18 +311,6 @@ def getempresa(id):
     empresa = empresa.serialize()   
     return jsonify({"result": empresa}), 200
 
-# ejemplo de test de token
-@api.route("/protected", methods=['GET', 'POST'])
-# protege ruta con esta funcion
-@jwt_required()
-def protected():
-    # busca la identidad del token
-    current_id = get_jwt_identity()
-    # busca usuarios en base de datos
-    user = Usuarios.query.get(current_id)
-    print(user)
-    return jsonify({"id": user.id, "email": user.email}), 200
-
 
 @api.route("/forgot", methods=["POST"])
 def send_password():
@@ -383,8 +371,45 @@ def getclasesreservadas():
         infoclases.append(item[0])
     return jsonify({"result":infoclases}), 200
 
-#@api.route('/clases', methods=['GET'])
-#def clases():    
-  #  all_clases = Actividades.query.all()   
-   # all_clases = list(map(lambda x: x.serialize(), all_clases))
-    #return jsonify({"results":all_clases, "message":"Class's List"}), 200
+
+
+#matricular la clase x en un usuario x
+@api.route('/matricularclase/<id>', methods=['POST'])
+@jwt_required()
+def matricularclases(id):
+    # busca la identidad del token
+    current_id = get_jwt_identity()
+    # busca usuario en base de datos
+    user = Usuarios.query.get(current_id)
+    print(user.USUARIO_ID)
+    if not user:
+        # the user was not found on the database
+        return jsonify({"msg": "Invalid Token"}), 400
+    else:        
+        matricula= Actividades_Participantes()
+        matricula.ACTIVIDAD_ID=id
+        matricula.PERSONA_ID=user.USUARIO_ID       
+        db.session.add(matricula)
+        db.session.commit()
+        actividad=Actividades.query.filter_by(ACTIVIDAD_ID=id).first()        
+        if not actividad:
+            return jsonify({"msg": "Actividad Not Found"}), 401
+        else:
+            actividad.ACTIVIDAD_ESPACIOS_DISPONIBLES-=1
+            db.session.commit()
+            return jsonify({"msg": "Matricula created successfully"}), 200
+
+
+
+# ejemplo de test de token
+@api.route("/protected", methods=['GET', 'POST'])
+# protege ruta con esta funcion
+@jwt_required()
+def protected():
+    # busca la identidad del token
+    current_id = get_jwt_identity()
+    # busca usuarios en base de datos
+    user = Usuarios.query.get(current_id)
+    print(user)
+    return jsonify({"id": user.id, "email": user.email}), 200
+

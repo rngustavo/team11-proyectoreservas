@@ -3,24 +3,24 @@ import { Context } from "../store/appContext";
 
 export const Clasedispo = () => {
 	const { store, actions } = useContext(Context);
-	const { clasesdisponibles } = store;
-	const { getclases } = actions;
-	//useEffect(() => {
-	//getclases();
-	//}, []);
-	//console.log(clasesdisponibles);
+	const { clasesdisponibles, misclasesreservadas } = store;
+	const {
+		getclases,
+		updateRegisteredClassesAPI,
+		registerToClass,
+		nombreDelDiaSegunFecha,
+		getmisclasesreservadas
+	} = actions;
 
-	//trae las calses reservadas
-	const { misclasesreservadas } = store;
-	const { getmisclasesreservadas } = actions;
+	/* 
 	useEffect(() => {
 		getclases();
 		getmisclasesreservadas();
-	}, []);
-
-	const nombreDelDiaSegunFecha = fecha => {
-		const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
-		return dias[fecha.getDay()];
+	}, []); */
+	const reservar = (id, index) => {
+		updateRegisteredClassesAPI(id);
+		//getclases();
+		//registerToClass(index);
 	};
 
 	return (
@@ -44,17 +44,17 @@ export const Clasedispo = () => {
 							<th scope="col">Fecha</th>
 							<th scope="col">Entrenador</th>
 							<th scope="col">Cupo</th>
+							<th scope="col">Disponibles</th>
 							<th scope="col">Reservar Clase</th>
 						</tr>
 					</thead>
 					<tbody>
 						{store.clasesdisponibles.map((classEl, index) => {
 							const f = new Date(classEl.FECHA_INICIO);
-							const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
+							const date = f.toLocaleDateString();
 							const dia = nombreDelDiaSegunFecha(f);
-
 							return (
-								<tr key={index}>
+								<tr key={classEl.ID}>
 									<th scope="row">{index}</th>
 									<td>{classEl.NOMBRE}</td>
 									<td>
@@ -64,15 +64,16 @@ export const Clasedispo = () => {
 									<td>{date}</td>
 									<td>{classEl.ENTRENADOR}</td>
 									<td>{classEl.ESPACIOS}</td>
+									<td>{classEl.ESPACIOS_DISPONIBLES}</td>
 									<td>
 										<button
 											type="button"
 											className="btn btn-outline-success"
 											disabled={
-												classEl.ESPACIOS > 0 && classEl.ESTADO === "Activo" ? false : true
+												classEl.ESPACIOS > 0 && classEl.ESTADO === "Publicada" ? false : true
 											}
 											onClick={() => {
-												actions.registerToClass(index);
+												reservar(classEl.ID, index);
 											}}>
 											Reservar
 										</button>
