@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
@@ -6,18 +6,17 @@ import { Jumbotron, Carousel, Button } from "react-bootstrap";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const { dataempresa } = store;
+	const { getempresainfo } = actions;
+	useEffect(() => {
+		getempresainfo();
+	}, []);
 
 	return (
 		<div className="container">
 			<Jumbotron>
-				<h1>Hello, world!</h1>
-				<p>
-					This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-					featured content or information.{" "}
-				</p>
-				<p>
-					<Button variant="primary">Learn more</Button>
-				</p>
+				<h1>Somos Kalendar Fit</h1>
+				<p>{dataempresa.OTROS} </p>
 			</Jumbotron>
 			<Carousel>
 				<Carousel.Item>
