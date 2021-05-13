@@ -1,26 +1,33 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
-import es from "date-fns/locale/es";
-import "react-datepicker/dist/react-datepicker.css";
+import PropTypes from "prop-types";
+import { Link, useParams } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
-export const Class = () => {
-	registerLocale("es", es);
-	const { actions } = useContext(Context);
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(new Date());
+export const Updateclasscomp = props => {
+	const { actions, store } = useContext(Context);
+	const { classupdate } = store;
+	const params = useParams();
+	const [upd, setUpd] = useState(false);
+
 	const [classes, setNewClass] = useState({
-		nombreClase: "",
-		instructor: "",
-		lugar: "",
-		cupo: "",
-		duracion: "",
-		estado: "",
-		descripcion: "",
-		precio: "",
-		horaIni: "",
-		horaFin: ""
+		id: classupdate.ID,
+		nombreClase: classupdate.NOMBRE,
+		instructor: classupdate.ENTRENADOR,
+		lugar: classupdate.LUGAR,
+		cupo: classupdate.ESPACIOS,
+		duracion: classupdate.DURACION,
+		estado: classupdate.ESTADO,
+		descripcion: classupdate.DESCRIPCION,
+		precio: classupdate.PRECIO,
+		fechaIni: classupdate.FECHA_INICIO,
+		fechaFin: classupdate.FECHA_INICIO
 	});
+
+	// const { getclases } = actions;
+	// useEffect(() => {
+	// 	getclases();
+	// }, []);
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -46,6 +53,7 @@ export const Class = () => {
 						id="exampleFormControlInput1"
 						placeholder="Nombre de la clase"
 						name="nombreClase"
+						value={classes.nombreClase}
 						required
 					/>
 				</div>
@@ -58,6 +66,7 @@ export const Class = () => {
 						id="exampleFormControlInput1"
 						placeholder="Nombre del Instructor"
 						name="instructor"
+						value={classes.instructor}
 						required
 					/>
 				</div>
@@ -69,7 +78,7 @@ export const Class = () => {
 						name="lugar"
 						id="exampleFormControlSelect1"
 						required>
-						<option />
+						<option selected="selected">{classupdate.LUGAR}</option>
 						<option>San José</option>
 						<option>Alajuela</option>
 						<option>Cartago</option>
@@ -88,6 +97,7 @@ export const Class = () => {
 						onChange={handleChange}
 						name="cupo"
 						placeholder="Cupo"
+						value={classes.cupo}
 						required
 					/>
 				</div>
@@ -100,6 +110,7 @@ export const Class = () => {
 						onChange={handleChange}
 						name="duracion"
 						placeholder="Tiempo de duracion"
+						value={classes.duracion}
 						required
 					/>
 				</div>
@@ -112,7 +123,7 @@ export const Class = () => {
 						name="estado"
 						id="exampleFormControlSelect1"
 						required>
-						<option />
+						<option selected="selected">{classupdate.ESTADO}</option>
 						<option>Activo</option>
 						<option>Inactivo</option>
 					</select>
@@ -125,6 +136,7 @@ export const Class = () => {
 						name="descripcion"
 						id="exampleFormControlTextarea1"
 						rows="3"
+						value={classes.descripcion}
 						required
 					/>
 				</div>
@@ -138,40 +150,35 @@ export const Class = () => {
 						onChange={handleChange}
 						name="precio"
 						placeholder="Precio"
+						value={classes.precio}
 						required
 					/>
 				</div>
 				<div className="form-group">
-					<h6>Fecha y hora de Inicio</h6>
-					<div className="row">
-						<div className="col-4">
-							<DatePicker
-								timeInputLabel="Hora:"
-								dateFormat="dd/MM/yyyy h:mm aa"
-								showTimeInput
-								className="form-control"
-								selected={startDate}
-								onChange={date => setStartDate(date)}
-								locale="es"
-							/>
-						</div>
-					</div>
+					<h6>Fecha y Hora de Inicio</h6>
+					<input
+						type="text"
+						className="form-control"
+						id="exampleFormControlInput2"
+						onChange={handleChange}
+						name="fechaIni"
+						placeholder="DD/MM/YYYY HH:MM AM/PM"
+						value={classes.fechaIni}
+						required
+					/>
 				</div>
 				<div className="form-group">
-					<h6>Fecha y hora de finalizacion</h6>
-					<div className="row">
-						<div className="col-4">
-							<DatePicker
-								timeInputLabel="Hora:"
-								dateFormat="dd/MM/yyyy h:mm aa"
-								showTimeInput
-								className="form-control"
-								selected={endDate}
-								onChange={date => setEndDate(date)}
-								locale="es"
-							/>
-						</div>
-					</div>
+					<h6>Fecha y Hora de Finalizacion</h6>
+					<input
+						type="text"
+						className="form-control"
+						id="exampleFormControlInput2"
+						onChange={handleChange}
+						name="fechaFin"
+						placeholder="DD/MM/YYYY HH:MM AM/PM"
+						value={classes.fechaFin}
+						required
+					/>
 				</div>
 
 				<button
@@ -181,7 +188,7 @@ export const Class = () => {
 					onClick={handleChange}
 					data-toggle="modal"
 					data-target="#exampleModal">
-					Registrar Clase
+					Actualizar Clase
 				</button>
 			</form>
 			<div
@@ -233,11 +240,11 @@ export const Class = () => {
 									<strong>Precio: </strong> {classes.precio}
 								</li>
 								<li>
-									<strong>Fecha y hora de Inicio: </strong>
-									{"'" + startDate + "'"}
+									<strong>Fecha y Hora Inicio: </strong>
+									{classes.fechaIni}
 								</li>
 								<li>
-									<strong>Fecha y Hora de Finalizacion: </strong> {"'" + endDate + "'"}
+									<strong>Fecha y Hora Finalizacion: </strong> {classes.fechaFin}
 								</li>
 							</ul>
 						</div>
@@ -245,17 +252,22 @@ export const Class = () => {
 							<button type="button" className="btn btn-secondary" data-dismiss="modal">
 								Cerrar
 							</button>
+
 							<button
 								type="button"
 								className="btn btn-primary"
 								data-dismiss="modal"
-								onClick={() => actions.updateClassRegistration(classes)}>
+								onClick={() => actions.updatetoClass(classes) + setUpd(true)}>
 								Esta Seguro de los cambios?
 							</button>
+							{upd ? <Redirect to="/clasescreadas" /> : null}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
+};
+Updateclasscomp.propTypes = {
+	match: PropTypes.object
 };

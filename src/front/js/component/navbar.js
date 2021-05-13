@@ -19,7 +19,8 @@ export const Navbar1 = () => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
 						<Nav.Link href="/crearclase">Crear clase</Nav.Link>
-						<Nav.Link href="/clasedispo"> Mis clases</Nav.Link>
+						<Nav.Link href="/clasedisponibles"> Clases disponibles</Nav.Link>
+						<Nav.Link href="/misclases"> Mis clases</Nav.Link>
 						<Nav.Link href="/contact">Contacto</Nav.Link>
 					</Nav>
 					{islogin ? (

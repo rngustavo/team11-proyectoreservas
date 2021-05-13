@@ -140,7 +140,7 @@ def login():
 #retorna las clases
 @api.route('/clases', methods=['GET'])
 def clases():    
-    all_clases = Actividades.query.all()   
+    all_clases = Actividades.query.order_by(Actividades.ACTIVIDAD_NOMBRE).all() 
     all_clases = list(map(lambda x: x.serialize(), all_clases))
     return jsonify({"results":all_clases, "message":"Class's List"}), 200
 
@@ -311,18 +311,6 @@ def getempresa(id):
     empresa = empresa.serialize()   
     return jsonify({"result": empresa}), 200
 
-# ejemplo de test de token
-@api.route("/protected", methods=['GET', 'POST'])
-# protege ruta con esta funcion
-@jwt_required()
-def protected():
-    # busca la identidad del token
-    current_id = get_jwt_identity()
-    # busca usuarios en base de datos
-    user = Usuarios.query.get(current_id)
-    print(user)
-    return jsonify({"id": user.id, "email": user.email}), 200
-
 
 @api.route("/forgot", methods=["POST"])
 def send_password():
@@ -367,4 +355,132 @@ def reset_password():
         db.session.commit()
         return jsonify({"msg": "Password change successfully"}), 200
 
+
+#retorna total de clases reservadas
+@api.route('/clasesreservadas', methods=['GET'])
+@jwt_required()
+def getclasesreservadas(): 
+    clases_usuario = []
+    infoclases = []
+    current_id = get_jwt_identity()
+    clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id)
+    clasesreservadas = list(map(lambda x: x.serialize(), clases_usuario)) 
+    for clasesporusuario in clasesreservadas:
+        informacionactividad = Actividades.query.filter_by(ACTIVIDAD_ID=clasesporusuario['ACTIVIDAD'])
+        item=list(map(lambda x: x.serialize(), informacionactividad))
+        infoclases.append(item[0])
+    return jsonify({"result":infoclases}), 200
+
+
+
+#matricular la clase x en un usuario x
+@api.route('/matricularclase/<id>', methods=['POST'])
+@jwt_required()
+def matricularclases(id):
+    # busca la identidad del token
+    current_id = get_jwt_identity()
+    # busca usuario en base de datos
+    user = Usuarios.query.get(current_id)
+    print(user.USUARIO_ID)
+    if not user:
+        # the user was not found on the database
+        return jsonify({"msg": "Invalid Token"}), 400
+    else:        
+        matricula= Actividades_Participantes()
+        matricula.ACTIVIDAD_ID=id
+        matricula.PERSONA_ID=user.USUARIO_ID       
+        db.session.add(matricula)
+        db.session.commit()
+        actividad=Actividades.query.filter_by(ACTIVIDAD_ID=id).first()        
+        if not actividad:
+            return jsonify({"msg": "Actividad Not Found"}), 401
+        else:
+            actividad.ACTIVIDAD_ESPACIOS_DISPONIBLES-=1
+            db.session.commit()
+            return jsonify({"msg": "Matricula created successfully"}), 200
+
+
+@api.route('/actualizarclase/<id>', methods=['PUT'])
+def updateclass(id):
+    NOMBRE =request.json.get("NOMBRE", None) 
+    ENTRENADOR =request.json.get("ENTRENADOR", None) 
+    LUGAR = request.json.get("LUGAR", None) 
+    PRECIO = request.json.get("PRECIO", None) 
+    ESPACIOS = request.json.get("ESPACIOS", None) 
+    #al crear la capacidad es la misma que los disponibles
+    ESPACIOS_DISPONIBLES = request.json.get("ESPACIOS", None) 
+    #ESPACIOS_DISPONIBLES = request.json.get("ESPACIOS_DISPONIBLES", None) 
+    DESCRIPCION = request.json.get("DESCRIPCION", None) 
+    ESTADO = request.json.get("ESTADO", None) 
+    DIA_SEMANA = request.json.get("DIA_SEMANA", None) 
+    FECHA_INICIO = request.json.get("FECHA_INICIO", None) 
+    HORA_INICIO =request.json.get("HORA_INICIO", None) 
+    DURACION = request.json.get("DURACION", None) 
+    FOTO = request.json.get("FOTO", None) 
+    EMPRESA_ID = request.json.get("EMPRESA_ID", None) 
+
+    if not NOMBRE:
+        return jsonify({"msg": "No NOMBRE was provided"}), 400
+    if not ENTRENADOR:
+        return jsonify({"msg": "No ENTRENADOR was provided"}), 400
+    if not LUGAR:
+        return jsonify({"msg": "No LUGAR was provided"}), 400
+    if PRECIO is None:
+        return jsonify({"msg": "No PRECIO was provided"}), 400
+    if not ESPACIOS:
+        return jsonify({"msg": "No ESPACIOS was provided"}), 400
+    if not DESCRIPCION:
+        return jsonify({"msg": "No DESCRIPCION was provided"}), 400
+    if not ESTADO:
+        return jsonify({"msg": "No ESTADO was provided"}), 400
+    if not DIA_SEMANA:
+        return jsonify({"msg": "No DIA_SEMANA was provided"}), 400
+    if not FECHA_INICIO:
+        return jsonify({"msg": "No FECHA_INICIO was provided"}), 400
+    if not HORA_INICIO:
+        return jsonify({"msg": "No HORA_INICIO was provided"}), 400
+    if not DURACION:
+        return jsonify({"msg": "No DURACION was provided"}), 400    
+    if not FOTO:
+        return jsonify({"msg": "No FOTO was provided"}), 400
+    if not EMPRESA_ID:
+        return jsonify({"msg": "No EMPRESA_ID was provided"}), 400 
+
+    clase =  Actividades.query.filter_by(ACTIVIDAD_ID=id).first()
+    clase.ACTIVIDAD_NOMBRE=NOMBRE
+    clase.ACTIVIDAD_ENTRENADOR=ENTRENADOR
+    clase.ACTIVIDAD_LUGAR = LUGAR
+    clase.ACTIVIDAD_PRECIO = PRECIO
+    clase.ACTIVIDAD_ESPACIOS = ESPACIOS
+    clase.ACTIVIDAD_ESPACIOS_DISPONIBLES = ESPACIOS_DISPONIBLES
+    clase.ACTIVIDAD_DESCRIPCION = DESCRIPCION
+    clase.ACTIVIDAD_ESTADO = ESTADO
+    clase.ACTIVIDAD_DIA_SEMANA = DIA_SEMANA
+    clase.ACTIVIDAD_FECHA_INICIO = FECHA_INICIO
+    clase.ACTIVIDAD_HORA_INICIO = HORA_INICIO
+    clase.ACTIVIDAD_DURACION = DURACION
+    db.session.commit() 
+    return jsonify("ok"), 200
+
+@api.route('/eliminarclase/<id>', methods=['DELETE'])
+def deleteclasscreate(id):
+    clase =  Actividades.query.get(id)
+    if clase is None:
+      raise APIException('User not found', status_code=404)
+
+    db.session.delete(clase)
+    db.session.commit() 
+    return jsonify("ok"), 200
+
+# ejemplo de test de token
+@api.route("/protected", methods=['GET', 'POST'])
+# protege ruta con esta funcion
+@jwt_required()
+def protected():
+    # busca la identidad del token
+    current_id = get_jwt_identity()
+    # busca usuarios en base de datos
+    user = Usuarios.query.get(current_id)
+    print(user)
+    return jsonify({"id": user.id, "email": user.email}), 200
 

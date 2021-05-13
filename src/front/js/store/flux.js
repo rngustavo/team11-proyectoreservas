@@ -2,8 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			classRegistration: [],
-			classParticipants: [],
+			//classRegistration: [],
+			//classParticipants: [],
 			token: [],
 			login: false,
 			islogin: false,
@@ -49,10 +49,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 					NOMBRE: "kempo",
 					PRECIO: 0
 				}
+			],
+			misclasesreservadas: [
+				{
+					DESCRIPCION: "conozca las ultimas tecnicas sagradas de kami",
+					DIA_SEMANA: "Miercoles",
+					DURACION: 60,
+					ENTRENADOR: "Mr. Satán ",
+					ESPACIOS: 10,
+					ESPACIOS_DISPONIBLES: 10,
+					ESTADO: "Publicada",
+					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT",
+					FOTO: "..//fotos/actividad_kempo.jpg",
+					HORA_INICIO: "20:00",
+					ID: 1,
+					LUGAR: "templo sagrada kamizama",
+					NOMBRE: "kempo",
+					PRECIO: 0
+				}
 			]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			ErrorApi: status => {
+				if (status > 200) alert("error: " + status);
+			},
+
 			updateClassRegistration: newClass => {
 				const store = getStore();
 				const actions = getActions();
@@ -120,7 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			registerToClass: index => {
+			/* registerToClass: index => {
 				const store = getStore();
 				const actions = getActions();
 
@@ -132,14 +154,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ classRegistration: classRegistration });
 
 				actions.updateRegisteredClasses(classRegistration, index);
-			},
+			}, */
 
-			updateRegisteredClasses: (inArr, idx) => {
+			/* updateRegisteredClasses: (inArr, idx) => {
 				const store = getStore();
 
 				const registeredClass = (({ nombreClase, fechaIni }) => ({ nombreClase, fechaIni }))(inArr[idx]);
 
 				store.classParticipants.push(registeredClass);
+			}, */
+
+			//clase matriculada por el usuario
+			updateRegisteredClassesAPI: registeredClass => {
+				const actions = getActions();
+
+				const token = sessionStorage.getItem("my_token");
+				let myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+				//console.log("headers", myHeaders.get("Authorization"));
+				fetch(process.env.BACKEND_URL + "/api/matricularclase/" + registeredClass, {
+					method: "POST",
+					body: JSON.stringify(jsonClase),
+					headers: myHeaders
+				})
+					.then(resp => {
+						/* console.log("respuesta MatricularClase ", resp.ok);
+						console.log("status MatricularClase", resp.status);
+						console.log("texto MatricularClase", resp.text()); */
+						actions.ErrorApi(resp.status);
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ message: data.msg });
+						actions.getclases();
+						actions.getmisclasesreservadas();
+						//alerta si fue exitosa
+						swal({
+							title: "Correcto!",
+							text: "Se ha matriculado Exitosamente",
+							icon: "success",
+							button: "Aceptar"
+						});
+					})
+					.catch(error => {
+						console.log("Error MatricularClase", error);
+					});
 			},
 
 			dropFromClass: toRemove => {
@@ -188,6 +249,86 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(resp => resp.json()) //llama  en json
 					.then(data => setStore({ clasesdisponibles: data.results })) //asigna el "result" en "dataempresa"
 					.catch(error => console.log("Error loading message from backend", error));
+			},
+
+			getmisclasesreservadas: () => {
+				const token = sessionStorage.getItem("my_token");
+				console.log("entré");
+				let myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+				fetch(process.env.BACKEND_URL + "/api/clasesreservadas", {
+					method: "GET",
+					//body: JSON.stringify(jsonClase),
+					headers: myHeaders
+				})
+					.then(resp => resp.json()) //llama  en json
+					.then(data => setStore({ misclasesreservadas: data.result }))
+					.catch(error => console.log("Error loading message from backend", error));
+			},
+			getclasstoupdate: index => {
+				const store = getStore();
+				const actions = getActions();
+
+				store.clasesdisponibles.map((elm, i) => {
+					if (i === index) setStore({ classupdate: elm });
+				});
+
+				// actions.updateRegisteredClasses(classRegistration, index);
+			},
+			updatetoClass: Class => {
+				const store = getStore();
+				const actions = getActions();
+
+				const body = {
+					NOMBRE: Class.nombreClase,
+					ENTRENADOR: Class.instructor,
+					LUGAR: Class.lugar,
+					PRECIO: Class.precio,
+					ESPACIOS: Class.cupo,
+					DESCRIPCION: Class.descripcion,
+					ESTADO: Class.estado,
+					DIA_SEMANA: "lunes", // "Lunes",
+					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
+					HORA_INICIO: "20:00",
+					DURACION: Class.duracion,
+					FOTO: "..//fotos/actividad_kempo.jpg",
+					EMPRESA_ID: 1
+				};
+
+				fetch(process.env.BACKEND_URL + "/api/actualizarclase/" + Class.id, {
+					method: "PUT",
+					body: JSON.stringify(body),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						actions.getclases();
+					})
+					.catch(err => console.log(err));
+			},
+			deleteclasscreate: index => {
+				const store = getStore();
+				const actions = getActions();
+
+				fetch(process.env.BACKEND_URL + "/api/eliminarclase/" + index, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						actions.getclases();
+					})
+					.catch(err => console.log(err));
+
+				// actions.updateRegisteredClasses(classRegistration, index);
 			}
 		}
 	};
