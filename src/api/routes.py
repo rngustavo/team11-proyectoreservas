@@ -480,18 +480,10 @@ def deletereservedclass(id):
     claseporid = []
     current_id = get_jwt_identity()
     clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id)
-    clasesreservadas = list(map(lambda x: x.serialize(), clases_usuario)) 
-    for clasesporusuario in clasesreservadas:
-        informacionactividad = Actividades.query.filter_by(ACTIVIDAD_ID=clasesporusuario['ACTIVIDAD'])
-        item=list(map(lambda x: x.serialize(), informacionactividad))
-        infoclases.append(item[0])
-    for seleccionarclase in clasesporusuario:
-        filtroporid=Actividades.query.get(id)
-        actividadinfo= Actividades.query.filter_by(ACTIVIDAD_ID=filtroporid['ACTIVIDAD'])
-        #nuevoitem=list(map(lambda x: x.serialize(), filtroporid))
-        #claseporid.append(item[0])
-        print(filtroporid)
-    return jsonify({"result": "ok"}), 200
+    clases_usuario = Actividades_Participantes.query.get(id)
+    db.session.delete(clases_usuario)
+    db.session.commit()    
+    return jsonify("succesSfully deleted"), 200
 
 
 # ejemplo de test de token
