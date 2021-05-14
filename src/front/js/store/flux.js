@@ -102,33 +102,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (status > 200) alert("error: " + status);
 			},
 
-			updateClassRegistration: newClass => {
+			/* updateClassRegistration: (newClass, horaIni) => {
+				console.log("primera clase", newClass);
 				const store = getStore();
 				const actions = getActions();
-				store.classRegistration.push(newClass);
-				actions.updateClassRegistrationApi(newClass);
+				//store.classRegistration.push(newClass);
+				actions.updateClassRegistrationApi(newClass.horaIni);
 			},
+ */
 			nombreDelDiaSegunFecha: fecha => {
 				const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
 				return dias[fecha.getDay()];
 			},
 
-			updateClassRegistrationApi: Class => {
+			updateClassRegistrationApi: (Class, fechaini) => {
 				const actions = getActions();
 				//ISO dates can be written with added hours, minutes, and seconds (YYYY-MM-DDTHH:MM:SSZ):
-				console.log("fecha original", Class.fechaIni);
-				let fechaInicio = `${Class.fechaIni.substring(6, 10)}-${Class.fechaIni.substring(
+				console.log("hora", fechaini);
+				const fechaInicio = new Date(fechaini);
+
+				console.log("hora date lista", fechaInicio);
+				/* 
+				let fechaInicio = `${fechaini.substring(6, 10)}-${Class.fechaIni.substring(
 					3,
 					5
 				)}-${Class.fechaIni.substring(0, 2)}T${Class.fechaIni.substring(11, 13)}:${Class.fechaIni.substring(
 					14,
 					16
 				)}:00Z`;
-				console.log("fecha original", fechaInicio);
-				fechaInicio = new Date(fechaInicio);
-				console.log("fecha convertida", fechaInicio);
-				const dia = actions.nombreDelDiaSegunFecha(fechaInicio);
 
+				fechaInicio = new Date(fechaInicio); */
+				const dia = actions.nombreDelDiaSegunFecha(fechaInicio);
 				var myHeaders = new Headers();
 				/* myHeaders.append(
 					"Authorization",
@@ -169,32 +173,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			/* registerToClass: index => {
-				const store = getStore();
-				const actions = getActions();
-
-				const classRegistration = store.classRegistration.map((elm, i) => {
-					if (i === index) elm.cupo = elm.cupo - 1;
-					return elm;
-				});
-
-				setStore({ classRegistration: classRegistration });
-
-				actions.updateRegisteredClasses(classRegistration, index);
-			}, */
-
-			/* updateRegisteredClasses: (inArr, idx) => {
-				const store = getStore();
-
-				const registeredClass = (({ nombreClase, fechaIni }) => ({ nombreClase, fechaIni }))(inArr[idx]);
-
-				store.classParticipants.push(registeredClass);
-			}, */
-
 			//clase matriculada por el usuario
 			updateRegisteredClassesAPI: registeredClass => {
 				const actions = getActions();
-
 				const token = sessionStorage.getItem("my_token");
 				let myHeaders = new Headers();
 				const jsonClase = "";
@@ -215,8 +196,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then(data => {
 						setStore({ message: data.msg });
-						actions.getclases();
 						actions.getmisclasesreservadas();
+						actions.getclases();
+
 						//alerta si fue exitosa
 						swal({
 							title: "Correcto!",
@@ -245,6 +227,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => setStore({ message: data.message }))
 					.catch(error => console.log("Error loading message from backend", error));
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
@@ -259,6 +242,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
 			setLogin: loggin => {
 				const store = getStore();
 				setStore({ islogin: loggin });
@@ -357,7 +341,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// actions.updateRegisteredClasses(classRegistration, index);
 			},
-			getarticulosmerclib: () => {
+
+			deletereservedclass: index => {
+				const actions = getActions();
+				const token = sessionStorage.getItem("my_token");
+				let myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+				console.log("entré");
+				console.log(index);
+
+				fetch(process.env.BACKEND_URL + "/api/clasereservada/" + index, {
+					method: "DELETE",
+					headers: myHeaders
+				})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						actions.getmisclasesreservadas();
+						actions.getclases();
+					})
+					.catch(err => console.log(err));
+
+			},
+      getarticulosmerclib: () => {
 				fetch("https://api.mercadolibre.com/categories/MLA438176", {
 					method: "GET"
 					//body: JSON.stringify(jsonClase),
@@ -367,7 +375,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ articulos: data.children_categories });
 					})
 					.catch(error => console.log("Error loading message from backend", error));
-			}
+      }
 		}
 	};
 };
