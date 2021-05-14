@@ -12,15 +12,30 @@ export const Clasedispo = () => {
 		getmisclasesreservadas
 	} = actions;
 
-	/* 
-	useEffect(() => {
-		getclases();
+	/* useEffect(() => {
+		//getclases();
 		getmisclasesreservadas();
-	}, []); */
+    }, []); */
+
 	const reservar = (id, index) => {
 		updateRegisteredClassesAPI(id);
 		//getclases();
-		//registerToClass(index);
+	};
+
+	/* const isreservada = clase => {
+		
+		return misclasesreservadas.includes(clase);
+    }; */
+
+	const isreservada = clase => {
+		let existeclase = misclasesreservadas.map(function(obj) {
+			if (clase.ID == obj.ID) {
+				return true;
+			} else return false;
+		});
+
+		return existeclase.includes(true);
+		//return misclasesreservadas.includes(clase);
 	};
 
 	return (
@@ -49,7 +64,7 @@ export const Clasedispo = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{store.clasesdisponibles.map((classEl, index) => {
+						{clasesdisponibles.map((classEl, index) => {
 							const f = new Date(classEl.FECHA_INICIO);
 							const date = f.toLocaleDateString();
 							const dia = nombreDelDiaSegunFecha(f);
@@ -69,13 +84,11 @@ export const Clasedispo = () => {
 										<button
 											type="button"
 											className="btn btn-outline-success"
-											disabled={
-												classEl.ESPACIOS > 0 && classEl.ESTADO === "Publicada" ? false : true
-											}
+											disabled={isreservada(classEl) ? true : false}
 											onClick={() => {
 												reservar(classEl.ID, index);
 											}}>
-											Reservar
+											{isreservada(classEl) ? "Reservada " : "Reservar"}
 										</button>
 									</td>
 								</tr>

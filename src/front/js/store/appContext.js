@@ -23,6 +23,7 @@ const injectContext = PassedComponent => {
 
 		useEffect(() => {
 			state.actions.getempresainfo();
+			state.actions.getmisclasesreservadas();
 			state.actions.getclases();
 			/**
 			 * EDIT THIS!
