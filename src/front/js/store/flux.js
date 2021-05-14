@@ -313,6 +313,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(err => console.log(err));
 
 				// actions.updateRegisteredClasses(classRegistration, index);
+			},
+			deletereservedclass: index => {
+				const actions = getActions();
+				const token = sessionStorage.getItem("my_token");
+				let myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+				console.log("entré");
+				console.log(index);
+
+				fetch(process.env.BACKEND_URL + "/api/clasereservada/" + index, {
+					method: "DELETE",
+					headers: myHeaders
+				})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						actions.getmisclasesreservadas();
+						actions.getclases();
+					})
+					.catch(err => console.log(err));
 			}
 		}
 	};

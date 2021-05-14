@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 
 export const Clasedispo = () => {
@@ -9,7 +9,8 @@ export const Clasedispo = () => {
 		updateRegisteredClassesAPI,
 		registerToClass,
 		nombreDelDiaSegunFecha,
-		getmisclasesreservadas
+		getmisclasesreservadas,
+		deletereservedclass
 	} = actions;
 
 	/* useEffect(() => {
@@ -36,6 +37,10 @@ export const Clasedispo = () => {
 
 		return existeclase.includes(true);
 		//return misclasesreservadas.includes(clase);
+	};
+
+	const borrarclase = id => {
+		deletereservedclass(id);
 	};
 
 	return (
@@ -123,7 +128,7 @@ export const Clasedispo = () => {
 											type="button"
 											className="btn btn-outline-success"
 											onClick={() => {
-												actions.dropFromClass(index);
+												actions.deletereservedclass(classRl.ID);
 											}}>
 											Eliminar
 										</button>
