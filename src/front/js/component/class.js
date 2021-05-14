@@ -157,22 +157,6 @@ export const Class = () => {
 						</div>
 					</div>
 				</div>
-				<div className="form-group">
-					<h6>Fecha y hora de finalizacion</h6>
-					<div className="row">
-						<div className="col-4">
-							<DatePicker
-								timeInputLabel="Hora:"
-								dateFormat="dd/MM/yyyy h:mm aa"
-								showTimeInput
-								className="form-control"
-								selected={endDate}
-								onChange={date => setEndDate(date)}
-								locale="es"
-							/>
-						</div>
-					</div>
-				</div>
 
 				<button
 					formMethod="submit"
@@ -234,10 +218,7 @@ export const Class = () => {
 								</li>
 								<li>
 									<strong>Fecha y hora de Inicio: </strong>
-									{"'" + startDate + "'"}
-								</li>
-								<li>
-									<strong>Fecha y Hora de Finalizacion: </strong> {"'" + endDate + "'"}
+									{"'" + startDate.toLocaleDateString() + " " + startDate.toLocaleTimeString() + "'"}
 								</li>
 							</ul>
 						</div>
