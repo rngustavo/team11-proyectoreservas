@@ -1,8 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
+import es from "date-fns/locale/es";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const Class = () => {
+	registerLocale("es", es);
 	const { actions } = useContext(Context);
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(new Date());
 	const [classes, setNewClass] = useState({
 		nombreClase: "",
 		instructor: "",
@@ -12,8 +18,7 @@ export const Class = () => {
 		estado: "",
 		descripcion: "",
 		precio: "",
-		fechaIni: "",
-		fechaFin: ""
+		horaIni: startDate.toLocaleDateString() + " " + startDate.toLocaleTimeString()
 	});
 
 	const handleChange = e => {
@@ -22,6 +27,8 @@ export const Class = () => {
 			...classes,
 			[name]: value
 		}));
+
+		setNewClass[(classes.horaIni, startDate)];
 	};
 
 	const registerData = () => {
@@ -136,28 +143,22 @@ export const Class = () => {
 					/>
 				</div>
 				<div className="form-group">
-					<h6>Fecha y Hora de Inicio</h6>
-					<input
-						type="text"
-						className="form-control"
-						id="exampleFormControlInput2"
-						onChange={handleChange}
-						name="fechaIni"
-						placeholder="DD/MM/YYYY HH:MM AM/PM"
-						required
-					/>
-				</div>
-				<div className="form-group">
-					<h6>Fecha y Hora de Finalizacion</h6>
-					<input
-						type="text"
-						className="form-control"
-						id="exampleFormControlInput2"
-						onChange={handleChange}
-						name="fechaFin"
-						placeholder="DD/MM/YYYY HH:MM AM/PM"
-						required
-					/>
+					<h6>Fecha y hora de Inicio</h6>
+					<div className="row">
+						<div className="col-4">
+							<DatePicker
+								timeInputLabel="Hora:"
+								dateFormat="dd/MM/yyyy h:mm aa"
+								showTimeInput
+								className="form-control"
+								selected={startDate}
+								name="horaIni"
+								//onChange={handleChange}
+								onChange={date => setStartDate(date)}
+								locale="es"
+							/>
+						</div>
+					</div>
 				</div>
 
 				<button
@@ -219,11 +220,8 @@ export const Class = () => {
 									<strong>Precio: </strong> {classes.precio}
 								</li>
 								<li>
-									<strong>Fecha y Hora Inicio: </strong>
-									{classes.fechaIni}
-								</li>
-								<li>
-									<strong>Fecha y Hora Finalizacion: </strong> {classes.fechaFin}
+									<strong>Fecha y hora de Inicio: </strong>
+									{"'" + startDate.toLocaleDateString() + " " + startDate.toLocaleTimeString() + "'"}
 								</li>
 							</ul>
 						</div>
@@ -235,7 +233,7 @@ export const Class = () => {
 								type="button"
 								className="btn btn-primary"
 								data-dismiss="modal"
-								onClick={() => actions.updateClassRegistration(classes)}>
+								onClick={() => actions.updateClassRegistrationApi(classes, startDate)}>
 								Esta Seguro de los cambios?
 							</button>
 						</div>
