@@ -475,15 +475,11 @@ def deleteclasscreate(id):
 @api.route('/clasereservada/<id>', methods=['DELETE', 'GET'])
 @jwt_required()
 def deletereservedclass(id):
-    clases_usuario = []
-    infoclases = []
-    claseporid = []
     current_id = get_jwt_identity()
-    clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id)
-    clases_usuario = Actividades_Participantes.query.get(id)
+    clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id, ACTIVIDAD_ID=id).first()
     db.session.delete(clases_usuario)
     db.session.commit()    
-    return jsonify("succesSfully deleted"), 200
+    return jsonify("successfully deleted"), 200
 
 
 # ejemplo de test de token
