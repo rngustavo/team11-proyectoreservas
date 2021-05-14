@@ -67,6 +67,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 					NOMBRE: "kempo",
 					PRECIO: 0
 				}
+			],
+			articulos: [],
+			imagen: [
+				"https://www.tecnosports.com/img/tecno/1194/1569082152/anillas-de-madera-para-gimnasia-deportiva.jpg",
+				"https://images-na.ssl-images-amazon.com/images/I/51QAoL7N7CL._AC_SX466_.jpg",
+				"https://plussport.cl/wp-content/uploads/2020/05/banda-suspencion-trx-set.jpg",
+				"https://www.mideporte.pe/wp-content/uploads/2020/07/pack-5-bandas-elasticas-de-resistencia-gimnasia-fitness-yoga-05.png",
+				"https://images-na.ssl-images-amazon.com/images/I/51KQMjlRGUL._AC_SY355_.jpg",
+				"https://sdmed.cl/wp-content/uploads/2019/08/2-15-600x600.jpg",
+				"https://i.pinimg.com/originals/95/d0/57/95d05733e6624ae0d149cd979efd04e7.webp",
+				"https://sportcornermv.com/wp-content/uploads/2020/05/EDUCACION-FISICA-MOTRICIDAD-COLCHONETA-INFANTIL-202068-202069-202070-202071-B-scaled.jpg",
+				"https://www.lifefitness-latinamerica.com/resource/image/783210/landscape_ratio4x3/400/300/850d599d68924ce43e931543bca4476f/EY/lf-core-bags7-mr.jpg",
+				"https://www.webconsultas.com/sites/default/files/styles/wc_adaptive_image__small/public/temas/rope_training_p.jpg",
+				"https://www.medicaltex.pe/wp-content/uploads/2018/07/Disco-de-Equilibrio-Disco-Balance-Board-MEDICALTEX-SAC.jpg",
+				"https://cdn.sportadictos.com/files/2014/03/escalera-de-coordinacion-8598-MLC20005148882_112013-F.jpg?w=1200&auto=format,compress",
+				"https://www.carreraspormontana.com/images/sites/2/2016/05/foam-roller-exercises-660x300.jpg",
+				"https://dojiw2m9tvv09.cloudfront.net/14107/product/X_ladrillogomaeva9437.jpg?105",
+				"https://cdn11.bigcommerce.com/s-rtjifcqsd2/images/stencil/original/products/117/1469/MultipurposeEVA_Parent_2_sm__68648.1598033929.jpg?c=2",
+				"https://jukeperformance.com/wp-content/uploads/2017/09/Medicine-Balls-01-1.jpg",
+				"https://images-na.ssl-images-amazon.com/images/I/71KwPy8BPiL._AC_SX425_.jpg",
+				"https://images-na.ssl-images-amazon.com/images/I/51RdNc%2Brq5L._AC_SX425_.jpg",
+				"https://falabella.scene7.com/is/image/FalabellaPE/881734454_1?wid=800&hei=800&qlt=70",
+				"https://www.ictiva.com/blog/wp-content/uploads/2015/07/steps-para-adelgazar-5.jpg",
+				"https://images-na.ssl-images-amazon.com/images/I/61-gEJjwuoL._AC_SX425_.jpg",
+				"https://m.media-amazon.com/images/I/61PHiY62BdL._AC_SX425_.jpg",
+				"https://salud10.top/imagenes/2019/09/los-mejores-zafus.jpg",
+				"https://cicadex.com/wp-content/uploads/2016/05/implementos-deportivos.png"
 			]
 		},
 		actions: {
@@ -329,6 +356,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(err => console.log(err));
 
 				// actions.updateRegisteredClasses(classRegistration, index);
+			},
+			getarticulosmerclib: () => {
+				fetch("https://api.mercadolibre.com/categories/MLA438176", {
+					method: "GET"
+					//body: JSON.stringify(jsonClase),
+				})
+					.then(resp => resp.json()) //llama  en json
+					.then(data => {
+						setStore({ articulos: data.children_categories });
+					})
+					.catch(error => console.log("Error loading message from backend", error));
 			}
 		}
 	};

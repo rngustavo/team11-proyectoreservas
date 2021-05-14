@@ -1,0 +1,50 @@
+.titmerc{
+    display: flex !important;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    justify-content: center;
+    
+}
+
+.titmerc h2{
+   float: left !important;
+   margin-top: 18px;
+   text-align: center;
+}
+
+.titmerc img{
+   float: right !important;
+  
+   margin-right:25px;
+}
+.paginationBttns {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #2b2eff;
+  color: #2b2eff;
+  cursor: pointer;
+}
+
+.paginationBttns a:hover {
+  color: white;
+  background-color: #2b2eff;
+}
+
+.paginationActive a {
+  color: white;
+  background-color: #2b2eff;
+}
+
+.paginationDisabled a {
+  color: grey;
+  background-color: grey;
+}
