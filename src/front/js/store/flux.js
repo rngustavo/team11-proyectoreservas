@@ -75,23 +75,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (status > 200) alert("error: " + status);
 			},
 
-			updateClassRegistration: newClass => {
+			/* updateClassRegistration: (newClass, horaIni) => {
+				console.log("primera clase", newClass);
 				const store = getStore();
 				const actions = getActions();
-				store.classRegistration.push(newClass);
-				actions.updateClassRegistrationApi(newClass);
+				//store.classRegistration.push(newClass);
+				actions.updateClassRegistrationApi(newClass.horaIni);
 			},
-
+ */
 			nombreDelDiaSegunFecha: fecha => {
 				const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
 				return dias[fecha.getDay()];
 			},
 
-			updateClassRegistrationApi: Class => {
+			updateClassRegistrationApi: (Class, fechaini) => {
 				const actions = getActions();
 				//ISO dates can be written with added hours, minutes, and seconds (YYYY-MM-DDTHH:MM:SSZ):
+				console.log("hora", fechaini);
+				const fechaInicio = new Date(fechaini);
 
-				let fechaInicio = `${Class.fechaIni.substring(6, 10)}-${Class.fechaIni.substring(
+				console.log("hora date lista", fechaInicio);
+				/* 
+				let fechaInicio = `${fechaini.substring(6, 10)}-${Class.fechaIni.substring(
 					3,
 					5
 				)}-${Class.fechaIni.substring(0, 2)}T${Class.fechaIni.substring(11, 13)}:${Class.fechaIni.substring(
@@ -99,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					16
 				)}:00Z`;
 
-				fechaInicio = new Date(fechaInicio);
+				fechaInicio = new Date(fechaInicio); */
 				const dia = actions.nombreDelDiaSegunFecha(fechaInicio);
 				var myHeaders = new Headers();
 				/* myHeaders.append(

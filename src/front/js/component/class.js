@@ -18,8 +18,7 @@ export const Class = () => {
 		estado: "",
 		descripcion: "",
 		precio: "",
-		horaIni: "",
-		horaFin: ""
+		horaIni: startDate.toLocaleDateString() + " " + startDate.toLocaleTimeString()
 	});
 
 	const handleChange = e => {
@@ -28,6 +27,8 @@ export const Class = () => {
 			...classes,
 			[name]: value
 		}));
+
+		setNewClass[(classes.horaIni, startDate)];
 	};
 
 	const registerData = () => {
@@ -151,6 +152,8 @@ export const Class = () => {
 								showTimeInput
 								className="form-control"
 								selected={startDate}
+								name="horaIni"
+								//onChange={handleChange}
 								onChange={date => setStartDate(date)}
 								locale="es"
 							/>
@@ -230,7 +233,7 @@ export const Class = () => {
 								type="button"
 								className="btn btn-primary"
 								data-dismiss="modal"
-								onClick={() => actions.updateClassRegistration(classes)}>
+								onClick={() => actions.updateClassRegistrationApi(classes, startDate)}>
 								Esta Seguro de los cambios?
 							</button>
 						</div>
