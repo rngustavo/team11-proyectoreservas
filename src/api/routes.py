@@ -472,6 +472,16 @@ def deleteclasscreate(id):
     db.session.commit() 
     return jsonify("ok"), 200
 
+@api.route('/clasereservada/<id>', methods=['DELETE', 'GET'])
+@jwt_required()
+def deletereservedclass(id):
+    current_id = get_jwt_identity()
+    clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id, ACTIVIDAD_ID=id).first()
+    db.session.delete(clases_usuario)
+    db.session.commit()    
+    return jsonify("successfully deleted"), 200
+
+
 # ejemplo de test de token
 @api.route("/protected", methods=['GET', 'POST'])
 # protege ruta con esta funcion
@@ -483,4 +493,5 @@ def protected():
     user = Usuarios.query.get(current_id)
     print(user)
     return jsonify({"id": user.id, "email": user.email}), 200
+
 
