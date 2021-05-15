@@ -23,6 +23,7 @@ import { Dispoview } from "./pages/dispoview";
 
 import { Misclasescreadas } from "./pages/clasescreadas";
 import { Updateclass } from "./pages/updateclass";
+import { Tienda } from "./pages/tienda";
 
 //create your first component
 const Layout = () => {
@@ -74,6 +75,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/updateclass/:theid">
 							<Updateclass />
+						</Route>
+						<Route exact path="/tienda">
+							<Tienda />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
