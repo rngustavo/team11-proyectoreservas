@@ -3,8 +3,12 @@ import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Redirect } from "react-router-dom";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
+import es from "date-fns/locale/es";
 
 export const Updateclasscomp = props => {
+	registerLocale("es", es);
 	const { actions, store } = useContext(Context);
 	const { classupdate } = store;
 	const params = useParams();
@@ -19,15 +23,13 @@ export const Updateclasscomp = props => {
 		duracion: classupdate.DURACION,
 		estado: classupdate.ESTADO,
 		descripcion: classupdate.DESCRIPCION,
-		precio: classupdate.PRECIO,
-		fechaIni: classupdate.FECHA_INICIO,
-		fechaFin: classupdate.FECHA_INICIO
+		precio: classupdate.PRECIO
 	});
 
-	// const { getclases } = actions;
-	// useEffect(() => {
-	// 	getclases();
-	// }, []);
+	var fech = classupdate.FECHA_INICIO.slice(0, -13);
+	fech = fech + " " + classupdate.HORA_INICIO;
+
+	const [startDate, setStartDate] = useState(new Date(fech));
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -155,30 +157,22 @@ export const Updateclasscomp = props => {
 					/>
 				</div>
 				<div className="form-group">
-					<h6>Fecha y Hora de Inicio</h6>
-					<input
-						type="text"
-						className="form-control"
-						id="exampleFormControlInput2"
-						onChange={handleChange}
-						name="fechaIni"
-						placeholder="DD/MM/YYYY HH:MM AM/PM"
-						value={classes.fechaIni}
-						required
-					/>
-				</div>
-				<div className="form-group">
-					<h6>Fecha y Hora de Finalizacion</h6>
-					<input
-						type="text"
-						className="form-control"
-						id="exampleFormControlInput2"
-						onChange={handleChange}
-						name="fechaFin"
-						placeholder="DD/MM/YYYY HH:MM AM/PM"
-						value={classes.fechaFin}
-						required
-					/>
+					<h6>Fecha y hora de Inicio</h6>
+					<div className="row">
+						<div className="col-4">
+							<DatePicker
+								timeInputLabel="Hora:"
+								dateFormat="dd/MM/yyyy h:mm aa"
+								showTimeInput
+								className="form-control"
+								selected={startDate}
+								name="horaIni"
+								//onChange={handleChange}
+								onChange={date => setStartDate(date)}
+								locale="es"
+							/>
+						</div>
+					</div>
 				</div>
 
 				<button
@@ -239,12 +233,10 @@ export const Updateclasscomp = props => {
 								<li>
 									<strong>Precio: </strong> {classes.precio}
 								</li>
+
 								<li>
-									<strong>Fecha y Hora Inicio: </strong>
-									{classes.fechaIni}
-								</li>
-								<li>
-									<strong>Fecha y Hora Finalizacion: </strong> {classes.fechaFin}
+									<strong>Fecha y hora de Inicio: </strong>
+									{"'" + startDate.toLocaleDateString() + " " + startDate.toLocaleTimeString() + "'"}
 								</li>
 							</ul>
 						</div>
@@ -257,7 +249,7 @@ export const Updateclasscomp = props => {
 								type="button"
 								className="btn btn-primary"
 								data-dismiss="modal"
-								onClick={() => actions.updatetoClass(classes) + setUpd(true)}>
+								onClick={() => actions.updatetoClass(classes, startDate) + setUpd(true)}>
 								¿Desea mantener los cambios?
 							</button>
 							{upd ? <Redirect to="/clasescreadas" /> : null}

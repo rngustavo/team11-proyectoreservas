@@ -118,10 +118,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			updateClassRegistrationApi: (Class, fechaini) => {
 				const actions = getActions();
 				//ISO dates can be written with added hours, minutes, and seconds (YYYY-MM-DDTHH:MM:SSZ):
-				console.log("hora", fechaini);
-				const fechaInicio = new Date(fechaini);
 
-				console.log("hora date lista", fechaInicio);
+				let fech = fechaini.toString();
+				fech = fech.slice(0, -42);
+
+				const fechaInicio = new Date(fech).toISOString();
 				/* 
 				let fechaInicio = `${fechaini.substring(6, 10)}-${Class.fechaIni.substring(
 					3,
@@ -132,7 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				)}:00Z`;
 
 				fechaInicio = new Date(fechaInicio); */
-				const dia = actions.nombreDelDiaSegunFecha(fechaInicio);
+				const dia = actions.nombreDelDiaSegunFecha(fechaini);
 				var myHeaders = new Headers();
 				/* myHeaders.append(
 					"Authorization",
@@ -149,7 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					ESTADO: Class.estado,
 					DIA_SEMANA: dia, // "Lunes",
 					FECHA_INICIO: fechaInicio, //"Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
-					HORA_INICIO: fechaInicio.toLocaleTimeString().substring(0, 5), //`${f.getHours()}:${f.getMinutes()}`, //"20:00",
+					HORA_INICIO: fechaini.toLocaleTimeString(), //`${f.getHours()}:${f.getMinutes()}`, //"20:00",
 					DURACION: Class.duracion,
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1 // por el momento es solo una empresa se debe cambiar a variable de empresa
@@ -288,9 +289,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// actions.updateRegisteredClasses(classRegistration, index);
 			},
-			updatetoClass: Class => {
+			updatetoClass: (Class, fechaini) => {
 				const store = getStore();
 				const actions = getActions();
+				let fech = fechaini.toString();
+				fech = fech.slice(0, -42);
+
+				const fechaInicio = new Date(fech).toISOString();
+
+				const dia = actions.nombreDelDiaSegunFecha(fechaini);
+				var myHeaders = new Headers();
+
+				myHeaders.append("Content-Type", "application/json");
 
 				const body = {
 					NOMBRE: Class.nombreClase,
@@ -300,9 +310,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					ESPACIOS: Class.cupo,
 					DESCRIPCION: Class.descripcion,
 					ESTADO: Class.estado,
-					DIA_SEMANA: "lunes", // "Lunes",
-					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
-					HORA_INICIO: "20:00",
+					DIA_SEMANA: dia, // "Lunes",
+					FECHA_INICIO: fechaInicio, //"Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
+					HORA_INICIO: fechaini.toLocaleTimeString(),
 					DURACION: Class.duracion,
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1
