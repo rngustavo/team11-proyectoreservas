@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
-import { Jumbotron, Carousel, Button } from "react-bootstrap";
+import { Jumbotron, Carousel } from "react-bootstrap";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -13,24 +12,26 @@ export const Home = () => {
 	}, []);
 
 	return (
-		<div className="container">
+		<div className="container homecus">
 			<Jumbotron>
-				<h1>Somos Kalendar Fit</h1>
+				<h1>Kalendar-Fit</h1>
 				<p>{dataempresa.OTROS} </p>
 			</Jumbotron>
 			<Carousel>
-				<Carousel.Item>
+				<Carousel.Item className="carrouselcust">
 					<img
 						className="d-block w-100"
-						src="https://shop.textalk.se/shop/ws91/83391/files/3_1%20Mat%20Girl.jpg?max-width=1140&max-height=380&quality=85&resize=crop"
+						src="https://yoga-fit.cmsmasters.net/wp-content/uploads/2015/04/photodune-11523136-exercise-on-mat-s1.jpg"
 						alt="First slide"
 					/>
 					<Carousel.Caption>
-						<h3>First slide label</h3>
-						<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+						<div className="carrinfo">
+							<h3>¿Están preparadas (os)?</h3>
+							<p>La primer clase de yoga... !ES GRATIS!</p>
+						</div>
 					</Carousel.Caption>
 				</Carousel.Item>
-				<Carousel.Item>
+				<Carousel.Item className="carrouselcust">
 					<img
 						className="d-block w-100"
 						src="https://trackstore.qodeinteractive.com/wp-content/uploads/2017/10/carousel-slider-img-2.jpg"
@@ -38,20 +39,23 @@ export const Home = () => {
 					/>
 
 					<Carousel.Caption>
-						<h3>Second slide label</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<div className="carrinfo">
+							<h3>Estás a un paso de tu siguiente gran reto.</h3>
+							<p>En Kalendar-Fit tenemos todo lo que necesitas.</p>
+						</div>
 					</Carousel.Caption>
 				</Carousel.Item>
-				<Carousel.Item>
+				<Carousel.Item className="carrouselcust">
 					<img
 						className="d-block w-100"
-						src="https://i.pinimg.com/originals/b4/e2/7f/b4e27f3edfe479bf504d1bb08ab70f5f.jpg"
+						src="https://www.karateymas.com/wp-content/uploads/2020/07/artes-marciales-menos-conocidas.jpg"
 						alt="Third slide"
 					/>
-
 					<Carousel.Caption>
-						<h3>Third slide label</h3>
-						<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+						<div className="carrinfo">
+							<h3>Y vos... ¿ya entrenaste?</h3>
+							<p>En KalendarFit no cobramos matrícula, preguntá por nuestas ofertas.</p>
+						</div>
 					</Carousel.Caption>
 				</Carousel.Item>
 			</Carousel>

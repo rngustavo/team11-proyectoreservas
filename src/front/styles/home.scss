@@ -1,11 +1,36 @@
+
+.jumbotron {
+    //background-color:#3F6FD9 ;
+    background-image: url("https://i1.wp.com/www.opportimes.com/wp-content/uploads/2019/11/Powerade-Powerade.jpg?w=1280&ssl=1");
+    object-fit: cover;
+    display: block;
+
+}
+
 .jumbotron p{
 font-size: 27px;
+color: white;
 }
 
 .jumbotron h1{
 font-size: 40px;
 text-align: center;
+color: white;
 }
-// .jumbotron{
-//     background-color: green;
-// }
+
+.homecus {
+     background-image: url();
+     object-fit: cover;
+     display: block;
+}
+
+.carrouselcust {
+    width: 1250px;
+    height: 625px;
+    object-fit: cover;
+}
+.carrinfo {
+background-color: #3F6FD9;
+border-radius: 15px;
+opacity: 85%;
+}
