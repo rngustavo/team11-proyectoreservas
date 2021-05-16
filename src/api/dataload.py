@@ -5,12 +5,14 @@ list_usuarios=[
     {        
         "USUARIO_EMAIL" : "prueba1@gmail.com",
         "USUARIO_PASSWORD":"123",
-        "USUARIO_IS_ACTIVE": "True" 
+        "USUARIO_IS_ACTIVE": "True",
+        "USUARIO_IS_ADMIN": "False" 
         },
     {        
         "USUARIO_EMAIL" : "prueba2@gmail.com",
         "USUARIO_PASSWORD": "123",
-        "USUARIO_IS_ACTIVE": "True"
+        "USUARIO_IS_ACTIVE": "True",
+        "USUARIO_IS_ADMIN": "False"
         },
 ]
 

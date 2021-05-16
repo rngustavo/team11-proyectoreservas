@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: [],
 			login: false,
 			islogin: false,
+			isadmin: false,
 			dataempresa: {
 				CELULAR: "9999 8888",
 				DESCRIPCION: "del palo de cas 500 varas",
@@ -118,10 +119,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			updateClassRegistrationApi: (Class, fechaini) => {
 				const actions = getActions();
 				//ISO dates can be written with added hours, minutes, and seconds (YYYY-MM-DDTHH:MM:SSZ):
-				console.log("hora", fechaini);
-				const fechaInicio = new Date(fechaini);
 
-				console.log("hora date lista", fechaInicio);
+				let fech = fechaini.toString();
+				fech = fech.slice(0, -42);
+
+				const fechaInicio = new Date(fech).toISOString();
 				/* 
 				let fechaInicio = `${fechaini.substring(6, 10)}-${Class.fechaIni.substring(
 					3,
@@ -132,7 +134,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				)}:00Z`;
 
 				fechaInicio = new Date(fechaInicio); */
-				const dia = actions.nombreDelDiaSegunFecha(fechaInicio);
+				const dia = actions.nombreDelDiaSegunFecha(fechaini);
 				var myHeaders = new Headers();
 				/* myHeaders.append(
 					"Authorization",
@@ -149,22 +151,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					ESTADO: Class.estado,
 					DIA_SEMANA: dia, // "Lunes",
 					FECHA_INICIO: fechaInicio, //"Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
-					HORA_INICIO: fechaInicio.toLocaleTimeString().substring(0, 5), //`${f.getHours()}:${f.getMinutes()}`, //"20:00",
+					HORA_INICIO: fechaini.toLocaleTimeString(), //`${f.getHours()}:${f.getMinutes()}`, //"20:00",
 					DURACION: Class.duracion,
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1 // por el momento es solo una empresa se debe cambiar a variable de empresa
 				};
-				console.log("ruta", process.env.BACKEND_URL);
-				console.log("jsonClase", jsonClase);
+				//console.log("ruta", process.env.BACKEND_URL);
+				//console.log("jsonClase", jsonClase);
 				fetch(process.env.BACKEND_URL + "/api/clases", {
 					method: "POST",
 					body: JSON.stringify(jsonClase),
 					headers: myHeaders
 				})
 					.then(resp => {
-						console.log("respuesta SubirClase ", resp.ok); // will be true if the response is successfull
-						console.log("status SubirClase", resp.status); // the status code = 200 or code = 400 etc.
-						console.log("texto SubirClase", resp.text()); // will try return the exact result as string
+						//	console.log("respuesta SubirClase ", resp.ok); // will be true if the response is successfull
+						//	console.log("status SubirClase", resp.status); // the status code = 200 or code = 400 etc.
+						//	console.log("texto SubirClase", resp.text()); // will try return the exact result as string
 						return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
 					})
 					.then(data => setStore({ message: data.msg }))
@@ -248,6 +250,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ islogin: loggin });
 			},
 
+			setIsadmin: tipo => {
+				const store = getStore();
+				console.log("el flux dice que admin es ", tipo);
+				setStore({ isadmin: tipo });
+			},
+
 			getempresainfo: () => {
 				fetch(process.env.BACKEND_URL + "/api/empresa/1") //trae el api
 					.then(resp => resp.json()) //llama  en json
@@ -288,9 +296,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// actions.updateRegisteredClasses(classRegistration, index);
 			},
-			updatetoClass: Class => {
+			updatetoClass: (Class, fechaini) => {
 				const store = getStore();
 				const actions = getActions();
+				let fech = fechaini.toString();
+				fech = fech.slice(0, -42);
+
+				const fechaInicio = new Date(fech).toISOString();
+
+				const dia = actions.nombreDelDiaSegunFecha(fechaini);
+				var myHeaders = new Headers();
+
+				myHeaders.append("Content-Type", "application/json");
 
 				const body = {
 					NOMBRE: Class.nombreClase,
@@ -300,9 +317,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					ESPACIOS: Class.cupo,
 					DESCRIPCION: Class.descripcion,
 					ESTADO: Class.estado,
-					DIA_SEMANA: "lunes", // "Lunes",
-					FECHA_INICIO: "Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
-					HORA_INICIO: "20:00",
+					DIA_SEMANA: dia, // "Lunes",
+					FECHA_INICIO: fechaInicio, //"Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
+					HORA_INICIO: fechaini.toLocaleTimeString(),
 					DURACION: Class.duracion,
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1
