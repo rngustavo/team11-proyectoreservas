@@ -24,7 +24,8 @@ class Usuarios(db.Model):
     USUARIO_ID = db.Column(db.Integer, primary_key=True)
     USUARIO_EMAIL = db.Column(db.String(120), unique=True, nullable=False)
     USUARIO_PASSWORD = db.Column(db.String(80), unique=False, nullable=False)
-    USUARIO_IS_ACTIVE = db.Column(db.Boolean(), unique=False, nullable=False)
+    USUARIO_IS_ACTIVE = db.Column(db.Boolean(), unique=False, nullable=True)
+    USUARIO_IS_ADMIN = db.Column(db.Boolean(), unique=False, nullable=True)
     def __repr__(self):
         return '<Usuario %r>' % self.USUARIO_EMAIL
 
@@ -32,6 +33,8 @@ class Usuarios(db.Model):
         return {
             "id": self.USUARIO_ID,
             "email": self.USUARIO_EMAIL,
+            "activo": self.USUARIO_IS_ACTIVE,
+            "admin": self.USUARIO_IS_ADMIN,
             # do not serialize the password, its a security breach
         }
 
