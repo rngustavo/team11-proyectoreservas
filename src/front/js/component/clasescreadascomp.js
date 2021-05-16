@@ -38,13 +38,15 @@ export const Clasescreadascomp = () => {
 					</thead>
 					<tbody>
 						{store.clasesdisponibles.map((classEl, index) => {
-							const f = new Date(classEl.FECHA_INICIO);
-							const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
+							var fech = classEl.FECHA_INICIO.slice(0, -13);
+							fech = fech + " " + classEl.HORA_INICIO;
 
+							const f = new Date(fech);
+							const date = f.toLocaleDateString();
 							const dia = nombreDelDiaSegunFecha(f);
 
 							return (
-								<tr key={index}>
+								<tr key={classEl.ID}>
 									<th scope="row">{index}</th>
 									<td>{classEl.NOMBRE}</td>
 									<td>
@@ -56,7 +58,7 @@ export const Clasescreadascomp = () => {
 									<td>{classEl.ESPACIOS}</td>
 									<td>{classEl.ESTADO}</td>
 									<td>
-										<Link to={"/updateclass/" + classEl.NOMBRE}>
+										<Link to={"/updateclass/" + classEl.ID}>
 											<button
 												type="button"
 												className="btn btn-outline-success"
