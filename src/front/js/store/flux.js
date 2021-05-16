@@ -363,9 +363,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						actions.getclases();
 					})
 					.catch(err => console.log(err));
-
 			},
-      getarticulosmerclib: () => {
+			getarticulosmerclib: () => {
 				fetch("https://api.mercadolibre.com/categories/MLA438176", {
 					method: "GET"
 					//body: JSON.stringify(jsonClase),
@@ -375,7 +374,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ articulos: data.children_categories });
 					})
 					.catch(error => console.log("Error loading message from backend", error));
-      }
+			}
 		}
 	};
 };
