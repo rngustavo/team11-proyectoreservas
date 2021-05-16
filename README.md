@@ -5,8 +5,6 @@
 <a href="https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b"><img src="https://github.com/4GeeksAcademy/flask-rest-hello/blob/main/docs/assets/how-to.png?raw=true?raw=true" /></a>
 </p>
 
-
-
 ### Comandos Importantes para team11
 Para el backend:
 1. pipenv install
@@ -19,7 +17,8 @@ Para el frontend:
 1. npm install react-bootstrap
 2. npm install sweetalert --save
 3. npm install react-datepicker --save
-4. npm start
+4. npm install emailjs
+5. npm start
 
 
 

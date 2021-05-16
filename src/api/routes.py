@@ -5,7 +5,16 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Usuarios, Empresa, Empresa_Anuncios, Actividades, Actividades_Participantes
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token 
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token,  create_refresh_token
+
+
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token
+)
+
+
+
 from api.dataload import list_usuarios,list_empresa,list_anuncios,list_actividades
 import random
 
@@ -87,8 +96,7 @@ def load_data():
 def register_user():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-   # print('email', email)
-   # print('pass', password)
+   
     # valida si estan vacios los ingresos
     if not email:
         return jsonify({"msg": "No email was provided"}), 400
@@ -105,7 +113,8 @@ def register_user():
         new_user=Usuarios()
         new_user.USUARIO_EMAIL=email
         new_user.USUARIO_PASSWORD=password  
-        new_user.USUARIO_IS_ACTIVE=True     
+        new_user.USUARIO_IS_ACTIVE=True 
+        new_user.USUARIO_IS_ADMIN=False        
         # crea registro nuevo en BBDD de 
         db.session.add(new_user)
         db.session.commit()
@@ -116,25 +125,38 @@ def register_user():
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-
     # valida si estan vacios los ingresos
     if not email:
         return jsonify({"msg": "No email was provided"}), 400
     if not password:
-        return jsonify({"msg": "No password was provided"}), 400
-
-    
-    # busca usuario en BBDD
-    
+        return jsonify({"msg": "No password was provided"}), 400    
+    # busca usuario en BBDD    
     user = Usuarios.query.filter_by(USUARIO_EMAIL=email, USUARIO_PASSWORD=password).first()
     if not user:
         return jsonify({"msg": "Invalid username or password"}), 401
     else:
         # crear token
         my_token = create_access_token(identity=user.USUARIO_ID)
-        return jsonify({"token": my_token}), 200
+        print(user.USUARIO_IS_ADMIN)
+        if user.USUARIO_IS_ADMIN:
+            return jsonify({"token": my_token, "tipoAdmin": 'true'}), 200
+        else:
+            return jsonify({"token": my_token, "tipoAdmin": 'false'}), 200
 
+""" 
+@app.route("/logout", methods=["POST"])
+def logout():
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response """
 
+#renovar el token de un usuario registrado  
+@api.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    current_user = get_jwt_identity()
+    my_token = create_access_token(identity=user.USUARIO_ID)
+    return jsonify({"token": my_token}), 200
 
 
 #retorna las clases
@@ -478,8 +500,16 @@ def deletereservedclass(id):
     current_id = get_jwt_identity()
     clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id, ACTIVIDAD_ID=id).first()
     db.session.delete(clases_usuario)
-    db.session.commit()    
-    return jsonify("successfully deleted"), 200
+    db.session.commit() 
+    actividad=Actividades.query.filter_by(ACTIVIDAD_ID=id).first()        
+    if not actividad:
+        return jsonify({"msg": "Actividad Not Found"}), 401
+    else:
+        actividad.ACTIVIDAD_ESPACIOS_DISPONIBLES+=1
+        db.session.commit()
+        return jsonify({"msg": "successfully deleted"}), 200   
+    #return jsonify("successfully deleted"), 200
+
 
 
 # ejemplo de test de token

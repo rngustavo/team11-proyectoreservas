@@ -12,7 +12,7 @@ export const Login = () => {
 	const [mensaje, setmensaje] = useState("");
 	const { store, actions } = useContext(Context);
 	const { islogin } = store;
-	const { setLogin } = actions;
+	const { setLogin, setIsadmin } = actions;
 	const url_api = process.env.BACKEND_URL + "/api/login";
 
 	//funcion de legeo
@@ -36,11 +36,14 @@ export const Login = () => {
 			.then(res => res.json())
 			.then(data => {
 				let token = data.token;
-				//console.log(token);
+				const tipoUserAdmin = data.tipoAdmin;
+				console.log("en el login el usuario es admin", tipoUserAdmin, data.tipoAdmin);
 				if (token) {
 					sessionStorage.setItem("my_token", token);
 					setLogin(true);
-					console.log("login es ", islogin);
+					if (tipoUserAdmin == "true") setIsadmin(true);
+					else setIsadmin(false);
+					//console.log("login es ", islogin);
 
 					//alerta si fue exitosa
 					swal({

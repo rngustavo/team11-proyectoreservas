@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: [],
 			login: false,
 			islogin: false,
+			isadmin: false,
 			dataempresa: {
 				CELULAR: "9999 8888",
 				DESCRIPCION: "del palo de cas 500 varas",
@@ -155,17 +156,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1 // por el momento es solo una empresa se debe cambiar a variable de empresa
 				};
-				console.log("ruta", process.env.BACKEND_URL);
-				console.log("jsonClase", jsonClase);
+				//console.log("ruta", process.env.BACKEND_URL);
+				//console.log("jsonClase", jsonClase);
 				fetch(process.env.BACKEND_URL + "/api/clases", {
 					method: "POST",
 					body: JSON.stringify(jsonClase),
 					headers: myHeaders
 				})
 					.then(resp => {
-						console.log("respuesta SubirClase ", resp.ok); // will be true if the response is successfull
-						console.log("status SubirClase", resp.status); // the status code = 200 or code = 400 etc.
-						console.log("texto SubirClase", resp.text()); // will try return the exact result as string
+						//	console.log("respuesta SubirClase ", resp.ok); // will be true if the response is successfull
+						//	console.log("status SubirClase", resp.status); // the status code = 200 or code = 400 etc.
+						//	console.log("texto SubirClase", resp.text()); // will try return the exact result as string
 						return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
 					})
 					.then(data => setStore({ message: data.msg }))
@@ -247,6 +248,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setLogin: loggin => {
 				const store = getStore();
 				setStore({ islogin: loggin });
+			},
+
+			setIsadmin: tipo => {
+				const store = getStore();
+				console.log("el flux dice que admin es ", tipo);
+				setStore({ isadmin: tipo });
 			},
 
 			getempresainfo: () => {
