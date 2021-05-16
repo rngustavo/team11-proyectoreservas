@@ -258,7 +258,7 @@ export const Updateclasscomp = props => {
 								className="btn btn-primary"
 								data-dismiss="modal"
 								onClick={() => actions.updatetoClass(classes) + setUpd(true)}>
-								Esta Seguro de los cambios?
+								¿Desea mantener los cambios?
 							</button>
 							{upd ? <Redirect to="/clasescreadas" /> : null}
 						</div>

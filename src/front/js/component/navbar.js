@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 import "../../styles/navbar.scss";
@@ -27,11 +27,17 @@ export const Navbar1 = () => {
 						<Nav.Link href="/clasedisponibles">
 							<p className=" botonesnav">Clases disponibles</p>
 						</Nav.Link>
+						<Nav.Link href="/clasescreadas">
+							<p className=" botonesnav">Clases creadas</p>
+						</Nav.Link>
 						<Nav.Link href="/misclases">
 							<p className=" botonesnav"> Mis clases</p>
 						</Nav.Link>
+						<Nav.Link href="/tienda">
+							<p className=" botonesnav">Tienda virtual</p>
+						</Nav.Link>
 						<Nav.Link href="/contact">
-							<p className=" botonesnav">Contacto</p>
+							<p className=" botonesnav">Nosotros</p>
 						</Nav.Link>
 					</Nav>
 					{islogin ? (

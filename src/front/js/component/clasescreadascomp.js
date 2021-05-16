@@ -101,6 +101,9 @@ export const Clasescreadascomp = () => {
 						})}
 					</tbody>
 				</table>
+				<Link to="/crearclase">
+					<button className="btn btn-primary">Crear una clase</button>
+				</Link>
 			</div>
 		</div>
 	);

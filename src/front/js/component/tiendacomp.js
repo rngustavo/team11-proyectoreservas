@@ -28,6 +28,8 @@ export const Tiendacomp = () => {
 							<Card.Body>
 								<Card.Title>{art.name}</Card.Title>
 								<a
+									target="_blank"
+									rel="noopener noreferrer"
 									href="https://www.mercadolibre.com.ar/c/deportes-y-fitness"
 									className="btn btn-warning"
 									role="button"

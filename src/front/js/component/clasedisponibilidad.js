@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link, Redirect } from "react-router-dom";
 
 export const Clasedisponibilidad = () => {
 	const { store, actions } = useContext(Context);
@@ -21,6 +22,7 @@ export const Clasedisponibilidad = () => {
 							<th scope="col">Nombre</th>
 							<th scope="col">Fecha y Hora</th>
 							<th scope="col">Cupo</th>
+							<th scope="col">Reservar Clase</th>
 							<th scope="col">Reservar Clase</th>
 						</tr>
 					</thead>
