@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
+import { Redirect } from "react-router-dom";
 
 export const Class = () => {
 	registerLocale("es", es);
@@ -34,6 +35,8 @@ export const Class = () => {
 	const registerData = () => {
 		handleChange();
 	};
+
+	const [upd, setUpd] = useState(false);
 
 	return (
 		<div className="container">
@@ -229,13 +232,15 @@ export const Class = () => {
 							<button type="button" className="btn btn-secondary" data-dismiss="modal">
 								Cerrar
 							</button>
+
 							<button
 								type="button"
 								className="btn btn-primary"
 								data-dismiss="modal"
-								onClick={() => actions.updateClassRegistrationApi(classes, startDate)}>
-								Esta Seguro de los cambios?
+								onClick={() => actions.updateClassRegistrationApi(classes, startDate) + setUpd(true)}>
+								¿Desea mantener los cambios?
 							</button>
+							{upd ? <Redirect to="/clasescreadas" /> : null}
 						</div>
 					</div>
 				</div>

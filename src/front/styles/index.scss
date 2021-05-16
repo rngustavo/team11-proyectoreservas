@@ -4,10 +4,44 @@
 .navpad {
     padding-bottom: 10px;
 }
+ 
+/* 
+    Vista contacto
+*/
 
-.contactcus {
-    padding-top: 5%;
+.cardformulario { 
+    background-color: #3f6fd9;
+    width: 250px;
+    height: 450px;
+    margin-left: 0;
+    color: white;
+
 }
+.cardinfo { 
+    background-color: white ;
+    width: 750px;
+    height: 450px;
+    color: #3f6fd9;
+    margin-left: 50px;
+
+}
+
+.buttforms {
+    background-color: white;
+    color: #3f6fd9;
+    margin: auto;
+    display: block;
+
+}
+.cardimg {
+    object-fit: cover;
+    display: block;
+    width: 700px;
+    height: 400px ;
+}
+/* 
+    Fin contacto
+*/
 
 .buttonspace {
     padding: 5px;

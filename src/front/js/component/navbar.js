@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
+import "../../styles/navbar.scss";
 
 export const Navbar1 = () => {
 	const { store, actions } = useContext(Context);
@@ -9,19 +10,35 @@ export const Navbar1 = () => {
 	const { setLogin } = actions;
 
 	return (
-		<div className="container navpad">
-			<Navbar bg="light" expand="lg">
+		<div className="container navpad ">
+			<Navbar bg="" expand="lg" className="navcus">
 				<Navbar.Brand href="/">
 					<i className="fas fa-dumbbell fa-2x d-inline-block align-top" width="30" height="30" />
 				</Navbar.Brand>
-				<Navbar.Brand> Kalendar-FIT</Navbar.Brand>
+				<Navbar.Brand className="colortexto">
+					<p className="colortexto"> Kalendar-FIT</p>
+				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="mr-auto">
-						<Nav.Link href="/crearclase">Crear clase</Nav.Link>
-						<Nav.Link href="/clasedisponibles"> Clases disponibles</Nav.Link>
-						<Nav.Link href="/misclases"> Mis clases</Nav.Link>
-						<Nav.Link href="/contact">Contacto</Nav.Link>
+					<Nav className="mr-auto colortexto">
+						<Nav.Link href="/crearclase">
+							<p className=" botonesnav">Crear clase </p>
+						</Nav.Link>
+						<Nav.Link href="/clasedisponibles">
+							<p className=" botonesnav">Clases disponibles</p>
+						</Nav.Link>
+						<Nav.Link href="/clasescreadas">
+							<p className=" botonesnav">Clases creadas</p>
+						</Nav.Link>
+						<Nav.Link href="/misclases">
+							<p className=" botonesnav"> Mis clases</p>
+						</Nav.Link>
+						<Nav.Link href="/tienda">
+							<p className=" botonesnav">Tienda virtual</p>
+						</Nav.Link>
+						<Nav.Link href="/contact">
+							<p className=" botonesnav">Nosotros</p>
+						</Nav.Link>
 					</Nav>
 					{islogin ? (
 						<>
@@ -42,10 +59,14 @@ export const Navbar1 = () => {
 					) : (
 						<>
 							<Link to="/register">
-								<Button variant="primary buttonspace">Registrarme</Button>
+								<Button variant="outline-light" className="botones">
+									Registrarme
+								</Button>
 							</Link>
 							<Link to="/login">
-								<Button variant="primary buttonspace">Login</Button>
+								<Button variant="outline-light" className="botones">
+									Login
+								</Button>
 							</Link>
 						</>
 					)}
