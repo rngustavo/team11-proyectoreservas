@@ -56,7 +56,7 @@ export const Clasescreadascomp = () => {
 									<td>{classEl.ESPACIOS}</td>
 									<td>{classEl.ESTADO}</td>
 									<td>
-										<Link to={"/updateclass/" + classEl.NOMBRE}>
+										<Link to={"/updateclass/" + classEl.ID}>
 											<button
 												type="button"
 												className="btn btn-outline-success"

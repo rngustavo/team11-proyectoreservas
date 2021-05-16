@@ -22,38 +22,25 @@ export const Disponibilidad = () => {
 					<i className="fas fa-calendar-alt" /> Clases Disponibles
 				</a>
 			</nav>
-			<div className="tab-content mt-4">
-				<table id="clasesDisp" className="table table-striped no-pad tab-pane active tabpadding">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Nombre de la Clase</th>
-							<th scope="col">Fecha y Hora</th>
-							<th scope="col">Cupo</th>
-						</tr>
-					</thead>
-					<tbody>
-						{store.clasesdisponibles.map((classEl, index) => {
-							const f = new Date(classEl.FECHA_INICIO);
-							const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
-							console.log("fecha pura", f);
-							console.log("dia", f.getDay()); // 2 (Martes)
-							console.log("nose", f.getDate()); // 30
-							console.log("mes", f.getMonth()); // 0 (Enero)
-							console.log("year", f.getFullYear());
-							const dia = nombreDelDiaSegunFecha(f);
+			<div>
+				{store.clasesdisponibles.map((classEl, index) => {
+					const f = new Date(classEl.FECHA_INICIO);
+					const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
+					const dia = nombreDelDiaSegunFecha(f);
 
-							return (
-								<tr key={index}>
-									<th scope="row">{index}</th>
-									<td>{classEl.NOMBRE}</td>
-									<td>{date}</td>
-									<td>{classEl.ESPACIOS}</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+					return (
+						<div className="card" style={{ width: "18rem" }} key={index}>
+							<div className="card-body">
+								<h5 className="card-title">
+									{index} {classEl.NOMBRE}
+								</h5>
+								<p className="card-text">Fecha: {date}</p>
+								<p className="card-text">Fecha: {date}</p>
+								<p className="card-text">Espcacios: {classEl.ESPACIOS}</p>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);
