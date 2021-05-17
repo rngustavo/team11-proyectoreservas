@@ -1,0 +1,40 @@
+.carta-box {
+  margin: 50px;
+  width: 200px;
+  height: 250px;
+  position: relative;
+  perspective: 1000px;
+  display: inline-block;
+}
+
+.carta-box:hover .carta {
+    transform: rotateY(180deg);
+}
+
+.carta {
+  transform-style: preserve-3d;
+  transition: all 0.5s linear;
+  //width: fit-content;
+  //height: fit-content;
+ 
+}
+
+.cara {
+  position: absolute;
+  backface-visibility: hidden;
+  border: 1px solid  #3F6FD9;
+  border-radius: 15px;
+}
+
+.cara.detras {
+  transform: rotateY(180deg);
+   border: 1px solid  #3F6FD9;
+   border-radius: 15px;
+}
+
+.titulo {
+    margin: auto;
+    color:  #3F6FD9;
+    padding: 25px;
+    padding-left: 25%;
+}
