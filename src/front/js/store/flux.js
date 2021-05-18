@@ -202,14 +202,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ message: data.msg });
 						actions.getmisclasesreservadas();
 						actions.getclases();
-
-						//alerta si fue exitosa
-						swal({
-							title: "Correcto!",
-							text: "Se ha matriculado Exitosamente",
-							icon: "success",
-							button: "Aceptar"
-						});
+						if (data.msg == "No hay espacios disponibles") {
+							//alerta si fue exitosa
+							swal({
+								title: "No hay espacio!",
+								text: "No hay espacios disponibles",
+								icon: "error",
+								button: "Aceptar"
+							});
+						} else {
+							//alerta si fue exitosa
+							swal({
+								title: "Correcto!",
+								text: "Se ha matriculado Exitosamente",
+								icon: "success",
+								button: "Aceptar"
+							});
+						}
 					})
 					.catch(error => {
 						console.log("Error MatricularClase", error);
