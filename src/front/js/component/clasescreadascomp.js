@@ -7,13 +7,8 @@ import "../../styles/index.scss";
 export const Clasescreadascomp = () => {
 	const { store, actions } = useContext(Context);
 	const { clasesdisponibles } = store;
-	const { getclases } = actions;
+	const { getclases, nombreDelDiaSegunFecha } = actions;
 	const [del, setDel] = useState(false);
-
-	const nombreDelDiaSegunFecha = fecha => {
-		const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
-		return dias[fecha.getDay()];
-	};
 
 	return (
 		<div className="container ">

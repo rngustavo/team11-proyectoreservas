@@ -5,15 +5,10 @@ import "../../styles/carta.scss";
 export const Disponibilidad = () => {
 	const { store, actions } = useContext(Context);
 	const { clasesdisponibles, imgdisponibles } = store;
-	const { getclases } = actions;
+	const { getclases, nombreDelDiaSegunFecha } = actions;
 	useEffect(() => {
 		getclases();
 	}, []);
-
-	const nombreDelDiaSegunFecha = fecha => {
-		const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
-		return dias[fecha.getDay()];
-	};
 
 	return (
 		<div className="container">
