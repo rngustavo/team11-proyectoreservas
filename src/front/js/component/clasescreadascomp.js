@@ -10,8 +10,6 @@ export const Clasescreadascomp = () => {
 	const { getclases } = actions;
 	const [del, setDel] = useState(false);
 
-	//console.log(clasesdisponibles);
-
 	const nombreDelDiaSegunFecha = fecha => {
 		const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
 		return dias[fecha.getDay()];

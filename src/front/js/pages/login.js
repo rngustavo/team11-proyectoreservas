@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
 import "../../styles/index.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -9,10 +8,10 @@ import { Redirect } from "react-router-dom";
 export const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [mensaje, setmensaje] = useState("");
+	//const [mensaje, setmensaje] = useState("");
 	const { store, actions } = useContext(Context);
 	const { islogin } = store;
-	const { setLogin, setIsadmin } = actions;
+	const { setLogin, setIsadmin, setEmailApi, getmisclasesreservadas } = actions;
 	const url_api = process.env.BACKEND_URL + "/api/login";
 
 	//funcion de legeo
@@ -25,7 +24,6 @@ export const Login = () => {
 			password: password
 		};
 
-		// fetch de LOGIN
 		fetch(url_api, {
 			method: "POST",
 			body: JSON.stringify(body),
@@ -37,14 +35,17 @@ export const Login = () => {
 			.then(data => {
 				let token = data.token;
 				const tipoUserAdmin = data.tipoAdmin;
-				console.log("en el login el usuario es admin", tipoUserAdmin, data.tipoAdmin);
+
 				if (token) {
 					sessionStorage.setItem("my_token", token);
-					setLogin(true);
-					if (tipoUserAdmin == "true") setIsadmin(true);
-					else setIsadmin(false);
-					//console.log("login es ", islogin);
 
+					setLogin(true);
+					setEmailApi(email);
+					if (tipoUserAdmin == "true") {
+						setIsadmin(true);
+					} else {
+						setIsadmin(false);
+					}
 					//alerta si fue exitosa
 					swal({
 						title: "Correcto!",
@@ -52,6 +53,7 @@ export const Login = () => {
 						icon: "success",
 						button: "Aceptar"
 					});
+					getmisclasesreservadas();
 				} else {
 					swal({
 						title: "Incorrecto!",
@@ -89,7 +91,6 @@ export const Login = () => {
 									placeholder="Email@.com"
 									onChange={e => {
 										setEmail(e.target.value);
-										setmensaje("");
 									}}
 								/>
 							</div>

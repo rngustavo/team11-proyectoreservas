@@ -1,27 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import "../../styles/index.scss";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
 import emailjs from "emailjs-com";
-// import JWTManager, { jwt_required, get_jwt_identity, create_access_token } from "flask_jwt_extended";
-
-// import crypto from "crypto";
-// import nodemailer from "nodemailer";
 
 export const Forgotpassword = () => {
 	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [mensaje, setmensaje] = useState("");
-	const { store, actions } = useContext(Context);
+	//const [password, setPassword] = useState("");
+	//const [mensaje, setmensaje] = useState("");
+	//const { store, actions } = useContext(Context);
 	const [forgot, setForgot] = useState(false);
 	const url_api = process.env.BACKEND_URL + "/api/forgot";
 	const url_front = window.location.origin + "/resetpassword";
-
-	// var crypto = require("crypto");
-	// var nodemailer = require("nodemailer");
 
 	const handleSubmit = e => {
 		e.preventDefault();

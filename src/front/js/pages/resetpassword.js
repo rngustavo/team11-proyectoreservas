@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
 import "../../styles/index.scss";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
@@ -16,15 +14,13 @@ export const Resetpassword = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		console.log(email, password);
 
 		const body = {
 			email: email,
 			password_temporal: password,
 			nuevo_password: password2
 		};
-		//setLogin(true);
-		// fetch de LOGIN
+
 		fetch(url_api, {
 			method: "POST",
 			body: JSON.stringify(body),

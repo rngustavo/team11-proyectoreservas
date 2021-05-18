@@ -3,10 +3,10 @@ import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { Row, Col, Form, Container, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import swal from "sweetalert";
-import emailjs from "emailjs-com";
+//import { Link } from "react-router-dom";
+//import { useParams } from "react-router-dom";
+//import swal from "sweetalert";
+//import emailjs from "emailjs-com";
 
 export const Contact = () => {
 	const { store, actions } = useContext(Context);

@@ -9,7 +9,7 @@ export const Class = () => {
 	registerLocale("es", es);
 	const { actions } = useContext(Context);
 	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(new Date());
+	//const [endDate, setEndDate] = useState(new Date());
 	const [classes, setNewClass] = useState({
 		nombreClase: "",
 		instructor: "",
@@ -156,7 +156,6 @@ export const Class = () => {
 								className="form-control"
 								selected={startDate}
 								name="horaIni"
-								//onChange={handleChange}
 								onChange={date => setStartDate(date)}
 								locale="es"
 							/>

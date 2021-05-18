@@ -9,7 +9,6 @@ export const Disponibilidad = () => {
 	useEffect(() => {
 		getclases();
 	}, []);
-	//console.log(clasesdisponibles);
 
 	const nombreDelDiaSegunFecha = fecha => {
 		const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
@@ -24,7 +23,7 @@ export const Disponibilidad = () => {
 			</div>
 
 			<div className="card-deck">
-				{store.clasesdisponibles.map((classEl, index) => {
+				{clasesdisponibles.map((classEl, index) => {
 					const f = new Date(classEl.FECHA_INICIO);
 					const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
 					const dia = nombreDelDiaSegunFecha(f);

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
