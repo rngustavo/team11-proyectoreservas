@@ -97,6 +97,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				"https://m.media-amazon.com/images/I/61PHiY62BdL._AC_SX425_.jpg",
 				"https://salud10.top/imagenes/2019/09/los-mejores-zafus.jpg",
 				"https://cicadex.com/wp-content/uploads/2016/05/implementos-deportivos.png"
+			],
+			imgdisponibles: [
+				"https://direct.rhapsody.com/imageserver/v2/playlists/pp.280540179/albums/images/500x500.jpeg?montage=3x1",
+				"https://e00-marca.uecdn.es/assets/multimedia/imagenes/2019/07/18/15634659732891.png",
+				"https://i0.wp.com/karateyalgomas.com/wp-content/uploads/2017/03/kiokushinkai.jpg?fit=1000%2C1077&ssl=1",
+				"https://i.pinimg.com/564x/0a/3a/25/0a3a253c83a2007edf99c39a77f8313a.jpg",
+				"https://www.webconsultas.com/sites/default/files/styles/wc_adaptive_image__small/public/articulos/pilates-maquina.jpg",
+				"https://www.gannett-cdn.com/presto/2020/04/09/USAT/9a900499-611d-4940-b9ee-4e5e6a664044-D4_1BILLY_BLANKS_26.JPG?crop=4079,2294,x1,y0&width=3200&height=1800&format=pjpg&auto=webp",
+				"https://www.cmdsport.com/app/uploads/2019/07/trx.jpg",
+				"https://images.sadhguru.org/sites/default/files/media_files/iso/en/64947-yoga-poem-20090502_tar_0162-ee.jpg",
+				"https://www.zumba.com/img/blt/about/about-video-xsmall.jpg"
 			]
 		},
 		actions: {
