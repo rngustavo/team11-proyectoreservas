@@ -1,3 +1,5 @@
+import emailjs from "emailjs-com";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -391,6 +393,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ articulos: data.children_categories });
 					})
 					.catch(error => console.log("Error loading message from backend", error));
+			},
+			sendemailcontact: (nombre, email, mensaje, contacto) => {
+				emailjs
+					.send(
+						"service_5nvjbjn",
+						"template_tlhp4ld",
+						{
+							from_name: nombre,
+							cc: email,
+							message: "Mensaje:" + mensaje + "." + "\nTeléfono:" + contacto,
+							from_email: "khalenderclass@gmail.com",
+							reply_to: email
+						},
+						"user_fxYYnkIXSTkQgA4JhUyfn"
+					)
+					.then(result => {
+						swal({
+							title: "Exito!",
+							text: "Se ha recibido su mensaje, se le respondera lo mas breve posible",
+							icon: "success",
+							button: "Aceptar"
+						});
+					});
 			}
 		}
 	};

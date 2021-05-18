@@ -16,6 +16,7 @@ export const Contact = () => {
 	const [nombre, setNombre] = useState("");
 	const [mensaje, setMensaje] = useState("");
 	const [contacto, setContacto] = useState("");
+	const { sendemailcontact } = actions;
 	useEffect(() => {
 		getempresainfo();
 	}, []);
@@ -23,30 +24,7 @@ export const Contact = () => {
 	const handleChange = e => {
 		e.preventDefault();
 		// emailcontact(email,nombre,mensaje,contacto)
-
-		emailjs
-			.send(
-				"service_5nvjbjn",
-				"template_tlhp4ld",
-				{
-					from_name: nombre,
-					cc: email,
-					message: "Mensaje:" + mensaje + "\n " + "Teléfono:" + contacto,
-					from_email: "khalenderclass@gmail.com",
-					reply_to: email
-				},
-				"user_fxYYnkIXSTkQgA4JhUyfn"
-			)
-			.then(result => {
-				swal({
-					title: "Exito!",
-					text: "Se ha recibido su mensaje, se le respondera lo mas breve posible",
-					icon: "success",
-					button: "Aceptar"
-				});
-			});
-		setNombre("");
-		// e.currentTarget.reset();
+		sendemailcontact(nombre, email, mensaje, contacto);
 	};
 
 	return (
