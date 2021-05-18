@@ -411,15 +411,17 @@ def matricularclases(id):
         matricula= Actividades_Participantes()
         matricula.ACTIVIDAD_ID=id
         matricula.PERSONA_ID=user.USUARIO_ID       
-        db.session.add(matricula)
-        db.session.commit()
+        db.session.add(matricula)      
         actividad=Actividades.query.filter_by(ACTIVIDAD_ID=id).first()        
         if not actividad:
             return jsonify({"msg": "Actividad Not Found"}), 401
         else:
-            actividad.ACTIVIDAD_ESPACIOS_DISPONIBLES-=1
-            db.session.commit()
-            return jsonify({"msg": "Matricula created successfully"}), 200
+            if actividad.ACTIVIDAD_ESPACIOS_DISPONIBLES>0:
+                actividad.ACTIVIDAD_ESPACIOS_DISPONIBLES-=1
+                db.session.commit()
+                return jsonify({"msg": "Matricula created successfully"}), 200
+            else:
+                  return jsonify({"msg": "No hay espacios disponibles"}), 403
 
 
 @api.route('/actualizarclase/<id>', methods=['PUT'])
