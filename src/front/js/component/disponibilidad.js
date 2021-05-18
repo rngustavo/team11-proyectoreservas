@@ -38,15 +38,17 @@ export const Disponibilidad = () => {
 										className="card-img-top"
 										alt="..."
 									/>
-									<h1 className="card-title">{classEl.NOMBRE}</h1>
+									<h1 className="card-title caratitulo">{classEl.NOMBRE}</h1>
 								</div>
 								<div className="card-body cara detras">
 									<h1 className="card-title">{classEl.NOMBRE}</h1>
 									<p className="card-text">Descripción: {classEl.DESCRIPCION}</p>
+									<p className="card-text">Día: {classEl.DIA_SEMANA}</p>
 									<p className="card-text">Fecha: {date}</p>
 									<p className="card-text">Duración: {classEl.DURACION}</p>
-
+									<p className="card-text">Entrenador: {classEl.ENTRENADOR}</p>
 									<p className="card-text">Espacios: {classEl.ESPACIOS}</p>
+									<p className="card-text">Precio: {classEl.PRECIO}</p>
 								</div>
 							</div>
 						</div>

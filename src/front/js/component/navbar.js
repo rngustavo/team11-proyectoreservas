@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 import "../../styles/navbar.scss";
+import LogoKF from "../../img/LogoKF2.png";
 
 export const Navbar1 = () => {
 	const { store, actions } = useContext(Context);
@@ -18,7 +19,7 @@ export const Navbar1 = () => {
 				</Navbar.Brand> */}
 				<Navbar.Brand href="/">
 					<Link to="/">
-						<i className="fas fa-dumbbell fa-2x d-inline-block align-top" width="30" height="30" />
+						<img src={LogoKF} width="100" height="100" />
 					</Link>
 				</Navbar.Brand>
 				<Navbar.Brand className="colortexto">

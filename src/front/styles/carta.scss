@@ -1,7 +1,7 @@
 .carta-box {
   margin: 50px;
   width: 200px;
-  height: 250px;
+  height: 400px;
   position: relative;
   perspective: 1000px;
   display: inline-block;
@@ -24,8 +24,14 @@
   backface-visibility: hidden;
   border: 1px solid  #3F6FD9;
   border-radius: 15px;
+  height: 400px;
 }
 
+.caratitulo {
+    margin-top: 25%;
+    margin-left: 25%;
+
+}
 .cara.detras {
   transform: rotateY(180deg);
    border: 1px solid  #3F6FD9;
