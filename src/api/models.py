@@ -48,7 +48,7 @@ class Empresa(db.Model):
     EMPRESA_DESCRIPCION= db.Column(db.String(200), unique=False, nullable=True)
     EMPRESA_LATITUD = db.Column(db.String(50), unique=False, nullable=True)
     EMPRESA_LONGITUD = db.Column(db.String(50), unique=False, nullable=True)
-    EMPRESA_OTROS = db.Column(db.String(120), unique=False, nullable=True)
+    EMPRESA_OTROS = db.Column(db.String(250), unique=False, nullable=True)
     EMPRESA_FOTO_FONDO = db.Column(db.String(120), unique=False, nullable=True)
     EMPRESA_LOGO = db.Column(db.String(120), unique=False, nullable=True)
     def __repr__(self):
