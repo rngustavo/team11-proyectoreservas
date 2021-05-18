@@ -61,7 +61,7 @@ export const Clasescreadascomp = () => {
 												type="button"
 												className="btn btn-outline-success"
 												onClick={() => {
-													actions.getclasstoupdate(index);
+													actions.getclasstoupdate(classEl);
 												}}>
 												Modificar
 											</button>
