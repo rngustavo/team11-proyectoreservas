@@ -25,7 +25,7 @@ list_empresa=[
         "EMPRESA_DESCRIPCION":"Aplicacion para reservar clases" ,
         "EMPRESA_LATITUD":"10 10 10" ,
         "EMPRESA_LONGITUD":"20 20 20" ,
-        "EMPRESA_OTROS":"¿Estás buscando en donde entrenar de forma segura? Nosotros tenemos la solución. Contamos con una aplicación en la cuál puedes reservar tus clases. Velamos por tu seguridad #NoCOVID. " ,
+        "EMPRESA_OTROS":"¿Estás buscando en donde entrenar de forma segura? Nosotros tenemos la solución." ,
         "EMPRESA_FOTO_FONDO":".//fotos/principal.jpg",
         "EMPRESA_LOGO":"..//fotos/logo.jpg" 
     }
