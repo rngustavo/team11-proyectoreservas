@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/carta.scss";
 
 export const Disponibilidad = () => {
 	const { store, actions } = useContext(Context);
@@ -17,43 +18,42 @@ export const Disponibilidad = () => {
 
 	return (
 		<div className="container">
-			<nav className="nav nav-pills justify-content-center">
-				<a className="nav-item nav-link active" href="#clasesDisp" data-toggle="tab">
-					<i className="fas fa-calendar-alt" /> Clases Disponibles
-				</a>
-			</nav>
-			<div className="tab-content mt-4">
-				<table id="clasesDisp" className="table table-striped no-pad tab-pane active tabpadding">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Nombre de la Clase</th>
-							<th scope="col">Fecha y Hora</th>
-							<th scope="col">Cupo</th>
-						</tr>
-					</thead>
-					<tbody>
-						{store.clasesdisponibles.map((classEl, index) => {
-							const f = new Date(classEl.FECHA_INICIO);
-							const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
-							console.log("fecha pura", f);
-							console.log("dia", f.getDay()); // 2 (Martes)
-							console.log("nose", f.getDate()); // 30
-							console.log("mes", f.getMonth()); // 0 (Enero)
-							console.log("year", f.getFullYear());
-							const dia = nombreDelDiaSegunFecha(f);
+			<div>
+				{" "}
+				<h1 className="titulo"> Clases Disponibles</h1>
+			</div>
 
-							return (
-								<tr key={index}>
-									<th scope="row">{index}</th>
-									<td>{classEl.NOMBRE}</td>
-									<td>{date}</td>
-									<td>{classEl.ESPACIOS}</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+			<div className="card-deck">
+				{store.clasesdisponibles.map((classEl, index) => {
+					const f = new Date(classEl.FECHA_INICIO);
+					const date = f.getDate() + "/" + f.getMonth() + "/" + f.getFullYear();
+					const dia = nombreDelDiaSegunFecha(f);
+
+					return (
+						<div className="carta-box" key={index}>
+							<div className="carta" style={{ width: "18rem" }}>
+								<div className="card-body cara">
+									<img
+										src="https://www.pulsorunner.com/wp-content/uploads/2014/10/default-img.gif"
+										className="card-img-top"
+										alt="..."
+									/>
+									<h1 className="card-title caratitulo">{classEl.NOMBRE}</h1>
+								</div>
+								<div className="card-body cara detras">
+									<h1 className="card-title">{classEl.NOMBRE}</h1>
+									<p className="card-text">Descripción: {classEl.DESCRIPCION}</p>
+									<p className="card-text">Día: {classEl.DIA_SEMANA}</p>
+									<p className="card-text">Fecha: {date}</p>
+									<p className="card-text">Duración: {classEl.DURACION}</p>
+									<p className="card-text">Entrenador: {classEl.ENTRENADOR}</p>
+									<p className="card-text">Espacios: {classEl.ESPACIOS}</p>
+									<p className="card-text">Precio: {classEl.PRECIO}</p>
+								</div>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);
