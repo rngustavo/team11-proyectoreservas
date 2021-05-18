@@ -6,33 +6,23 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Usuarios, Empresa, Empresa_Anuncios, Actividades, Actividades_Participantes
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token,  create_refresh_token
-
-
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token
 )
-
-
-
 from api.dataload import list_usuarios,list_empresa,list_anuncios,list_actividades
 import random
 
 api = Blueprint('api', __name__)
 
-
-
-
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
-
     response_body = {
         "message": "Hello! I'm a message that came from the backend"
     }
-
     return jsonify(response_body), 200
 
-#hace una carga inicial de la base de datos
+#hace una carga inicial de la base de datos para hacer el demo
 @api.route('/load', methods=['GET'])
 def load_data():
     for usuario in list_usuarios:
@@ -95,14 +85,12 @@ def load_data():
 @api.route('/register', methods=['POST'])
 def register_user():
     email = request.json.get("email", None)
-    password = request.json.get("password", None)
-   
+    password = request.json.get("password", None)   
     # valida si estan vacios los ingresos
     if not email:
         return jsonify({"msg": "No email was provided"}), 400
     if not password:
-        return jsonify({"msg": "No password was provided"}), 400
-    
+        return jsonify({"msg": "No password was provided"}), 400    
     # busca usuario en BBDD
     user = Usuarios.query.filter_by(USUARIO_EMAIL=email).first()
     if user:
@@ -178,7 +166,6 @@ def getclases(id):
         return jsonify(clase), 200
 
 
-""" 
 
 @api.route('/clases', methods=['POST'])
 @jwt_required()
@@ -202,31 +189,31 @@ def add_clases():
     EMPRESA_ID = request.json.get("EMPRESA_ID", None) 
 
     # valida si estan vacios los ingresos
-    if NOMBRE is None:
+    if  not NOMBRE:
         return jsonify({"msg": "No NOMBRE was provided"}), 400
-    if ENTRENADOR is None:
+    if not ENTRENADOR:
         return jsonify({"msg": "No ENTRENADOR was provided"}), 400
-    if LUGAR is None:
+    if not LUGAR:
         return jsonify({"msg": "No LUGAR was provided"}), 400
-    if PRECIO is None:
+    if not PRECIO:
         return jsonify({"msg": "No PRECIO was provided"}), 400
-    if ESPACIOS is None:
+    if not ESPACIOS:
         return jsonify({"msg": "No ESPACIOS was provided"}), 400
-    if DESCRIPCION is None:
+    if not DESCRIPCION:
         return jsonify({"msg": "No DESCRIPCION was provided"}), 400
-    if ESTADO is None:
+    if not ESTADO:
         return jsonify({"msg": "No ESTADO was provided"}), 400
-    if DIA_SEMANA is None:
+    if not DIA_SEMANA:
         return jsonify({"msg": "No DIA_SEMANA was provided"}), 400
-    if FECHA_INICIO is None:
+    if not FECHA_INICIO:
         return jsonify({"msg": "No FECHA_INICIO was provided"}), 400
-    if HORA_INICIO is None:
+    if not HORA_INICIO:
         return jsonify({"msg": "No HORA_INICIO was provided"}), 400
-    if DURACION is None:
+    if not DURACION:
         return jsonify({"msg": "No DURACION was provided"}), 400    
-    if FOTO:
+    if not FOTO:
         return jsonify({"msg": "No FOTO was provided"}), 400
-    if EMPRESA_ID is None:
+    if not EMPRESA_ID:
         return jsonify({"msg": "No EMPRESA_ID was provided"}), 400 
      
     # busca la identidad del token
@@ -256,9 +243,9 @@ def add_clases():
         db.session.add(new_clase)
         db.session.commit()
         return jsonify({"msg": "Class created successfully"}), 200
- """
- 
 
+ 
+""" 
 @api.route('/clases', methods=['POST'])
 def add_clases():   
     #ID = request.json.get("favorite_id", None) 
@@ -325,7 +312,7 @@ def add_clases():
     db.session.add(new_clase)
     db.session.commit()
     return jsonify({"msg": "Class created successfully"}), 200
-
+ """
 #retorna una empresa determinada
 @api.route('/empresa/<id>', methods=['GET'])
 def getempresa(id):    

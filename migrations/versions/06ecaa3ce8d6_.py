@@ -27,7 +27,7 @@ def upgrade():
     sa.Column('EMPRESA_DESCRIPCION', sa.String(length=200), nullable=True),
     sa.Column('EMPRESA_LATITUD', sa.String(length=50), nullable=True),
     sa.Column('EMPRESA_LONGITUD', sa.String(length=50), nullable=True),
-    sa.Column('EMPRESA_OTROS', sa.String(length=120), nullable=True),
+    sa.Column('EMPRESA_OTROS', sa.String(length=250), nullable=True),
     sa.Column('EMPRESA_FOTO_FONDO', sa.String(length=120), nullable=True),
     sa.Column('EMPRESA_LOGO', sa.String(length=120), nullable=True),
     sa.PrimaryKeyConstraint('EMPRESA_ID'),

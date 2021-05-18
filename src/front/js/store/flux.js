@@ -126,24 +126,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				let fech = fechaini.toString();
 				fech = fech.slice(0, -42);
-
 				const fechaInicio = new Date(fech).toISOString();
-				/* 
-				let fechaInicio = `${fechaini.substring(6, 10)}-${Class.fechaIni.substring(
-					3,
-					5
-				)}-${Class.fechaIni.substring(0, 2)}T${Class.fechaIni.substring(11, 13)}:${Class.fechaIni.substring(
-					14,
-					16
-				)}:00Z`;
-
-				fechaInicio = new Date(fechaInicio); */
 				const dia = actions.nombreDelDiaSegunFecha(fechaini);
-				var myHeaders = new Headers();
-				/* myHeaders.append(
-					"Authorization",
-					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDQzMTE5OCwianRpIjoiZDllYjU1NDAtZTU4MS00NTk4LWE3NzYtMDkzOTM3NWM2ZDEzIiwibmJmIjoxNjIwNDMxMTk4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxLCJleHAiOjE2MjA0MzIwOTh9.thRcfOORtgkTarTFo6AbBmGGpVmC9eWZIMWcg_9rCbo"
-				); */
+				let myHeaders = new Headers();
+				const token = sessionStorage.getItem("my_token");
+				myHeaders.append("Authorization", "Bearer " + token);
 				myHeaders.append("Content-Type", "application/json");
 				const jsonClase = {
 					NOMBRE: Class.nombreClase,
@@ -153,9 +140,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					ESPACIOS: Class.cupo,
 					DESCRIPCION: Class.descripcion,
 					ESTADO: Class.estado,
-					DIA_SEMANA: dia, // "Lunes",
-					FECHA_INICIO: fechaInicio, //"Mon, 03 May 2021 00:00:00 GMT", // Class.fechaIni,
-					HORA_INICIO: fechaini.toLocaleTimeString(), //`${f.getHours()}:${f.getMinutes()}`, //"20:00",
+					DIA_SEMANA: dia,
+					FECHA_INICIO: fechaInicio,
+					HORA_INICIO: fechaini.toLocaleTimeString(),
 					DURACION: Class.duracion,
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1 // por el momento es solo una empresa se debe cambiar a variable de empresa
@@ -334,7 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			updatetoClass: (Class, fechaini) => {
 				const token = sessionStorage.getItem("my_token");
-				const myHeaders = new Headers();
+				let myHeaders = new Headers();
 				const jsonClase = "";
 				myHeaders.append("Authorization", "Bearer " + token);
 				myHeaders.append("Content-Type", "application/json");
@@ -374,7 +361,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			deleteclasscreate: index => {
 				const token = sessionStorage.getItem("my_token");
-				const myHeaders = new Headers();
+				let myHeaders = new Headers();
 				const jsonClase = "";
 				myHeaders.append("Authorization", "Bearer " + token);
 				myHeaders.append("Content-Type", "application/json");
