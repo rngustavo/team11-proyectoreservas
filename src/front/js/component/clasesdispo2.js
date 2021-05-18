@@ -6,8 +6,8 @@ export const Clasedispo = () => {
 	const { clasesdisponibles, misclasesreservadas } = store;
 	const { updateRegisteredClassesAPI, nombreDelDiaSegunFecha, deletereservedclass } = actions;
 
-	const reservar = (id, index) => {
-		updateRegisteredClassesAPI(id);
+	const reservar = (id, classe) => {
+		updateRegisteredClassesAPI(id, classe);
 	};
 
 	const isreservada = clase => {
@@ -72,7 +72,7 @@ export const Clasedispo = () => {
 											className="btn btn-outline-success"
 											disabled={isreservada(classEl) ? true : false}
 											onClick={() => {
-												reservar(classEl.ID, index);
+												reservar(classEl.ID, classEl);
 											}}>
 											{isreservada(classEl) ? "Reservada " : "Reservar"}
 										</button>

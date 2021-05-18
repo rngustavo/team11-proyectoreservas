@@ -182,8 +182,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//clase matriculada por el usuario
-			updateRegisteredClassesAPI: registeredClass => {
+			updateRegisteredClassesAPI: (registeredClass, classe) => {
 				const actions = getActions();
+				const store = getStore();
 				const token = sessionStorage.getItem("my_token");
 				let myHeaders = new Headers();
 				const jsonClase = "";
@@ -218,6 +219,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 								icon: "success",
 								button: "Aceptar"
 							});
+							let fecha = classe.FECHA_INICIO.toString();
+							fecha = fecha.slice(0, -13);
+							emailjs.send(
+								"service_wtt0lhb",
+								"template_ent65tf",
+								{
+									from_name: classe.NOMBRE,
+									message:
+										"Clase: " +
+										classe.NOMBRE +
+										".\n" +
+										"\nEntrenador: " +
+										classe.ENTRENADOR +
+										".\n" +
+										"Dia y Hora: " +
+										fecha +
+										" - " +
+										classe.HORA_INICIO +
+										".\nDescripcion de Clase: " +
+										classe.DESCRIPCION,
+									to_email: store.email
+								},
+								"user_3dwrjmFSnf6PW84NldTVG"
+							);
 						}
 					})
 					.catch(error => {
@@ -300,15 +325,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => setStore({ misclasesreservadas: data.result }))
 					.catch(error => console.log("Error loading message from backend", error));
 			},
-			getclasstoupdate: index => {
+			getclasstoupdate: classe => {
 				const store = getStore();
 				const actions = getActions();
 
-				store.clasesdisponibles.map((elm, i) => {
-					if (i === index) setStore({ classupdate: elm });
-				});
-
-				// actions.updateRegisteredClasses(classRegistration, index);
+				setStore({ classupdate: classe });
 			},
 
 			updatetoClass: (Class, fechaini) => {
@@ -404,17 +425,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => console.log("Error loading message from backend", error));
 			},
-			sendemailcontact: (nombre, email, mensaje, contacto) => {
+			sendemailcontact: (nombre, Email, mensaje, contacto) => {
 				emailjs
 					.send(
 						"service_5nvjbjn",
 						"template_tlhp4ld",
 						{
 							from_name: nombre,
-							cc: email,
+							cc: Email,
 							message: "Mensaje:" + mensaje + "." + "\nTeléfono:" + contacto,
 							from_email: "khalenderclass@gmail.com",
-							reply_to: email
+							reply_to: Email
 						},
 						"user_fxYYnkIXSTkQgA4JhUyfn"
 					)
