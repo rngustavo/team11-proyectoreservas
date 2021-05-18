@@ -1,32 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 
 export const Clasedispo = () => {
 	const { store, actions } = useContext(Context);
 	const { clasesdisponibles, misclasesreservadas } = store;
-	const {
-		getclases,
-		updateRegisteredClassesAPI,
-		registerToClass,
-		nombreDelDiaSegunFecha,
-		getmisclasesreservadas,
-		deletereservedclass
-	} = actions;
-
-	/* useEffect(() => {
-		//getclases();
-		getmisclasesreservadas();
-    }, []); */
+	const { updateRegisteredClassesAPI, nombreDelDiaSegunFecha, deletereservedclass } = actions;
 
 	const reservar = (id, index) => {
 		updateRegisteredClassesAPI(id);
-		//getclases();
 	};
-
-	/* const isreservada = clase => {
-		
-		return misclasesreservadas.includes(clase);
-    }; */
 
 	const isreservada = clase => {
 		let existeclase = misclasesreservadas.map(function(obj) {
@@ -36,7 +18,6 @@ export const Clasedispo = () => {
 		});
 
 		return existeclase.includes(true);
-		//return misclasesreservadas.includes(clase);
 	};
 
 	const borrarclase = id => {

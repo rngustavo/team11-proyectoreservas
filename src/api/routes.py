@@ -137,7 +137,7 @@ def login():
     else:
         # crear token
         my_token = create_access_token(identity=user.USUARIO_ID)
-        print(user.USUARIO_IS_ADMIN)
+        
         if user.USUARIO_IS_ADMIN:
             return jsonify({"token": my_token, "tipoAdmin": 'true'}), 200
         else:
@@ -403,7 +403,7 @@ def matricularclases(id):
     current_id = get_jwt_identity()
     # busca usuario en base de datos
     user = Usuarios.query.get(current_id)
-    print(user.USUARIO_ID)
+    
     if not user:
         # the user was not found on the database
         return jsonify({"msg": "Invalid Token"}), 400
@@ -423,6 +423,7 @@ def matricularclases(id):
 
 
 @api.route('/actualizarclase/<id>', methods=['PUT'])
+@jwt_required()
 def updateclass(id):
     NOMBRE =request.json.get("NOMBRE", None) 
     ENTRENADOR =request.json.get("ENTRENADOR", None) 
@@ -485,6 +486,7 @@ def updateclass(id):
     return jsonify("ok"), 200
 
 @api.route('/eliminarclase/<id>', methods=['DELETE'])
+@jwt_required()
 def deleteclasscreate(id):
     clase =  Actividades.query.get(id)
     if clase is None:

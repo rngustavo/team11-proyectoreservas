@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
 import "../../styles/index.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-// import DropdownButton from "react-bootstrap/DropdownButton";
-// import Dropdown from "react-bootstrap/Dropdown";
-// import { propTypes } from "react-bootstrap/esm/Image";
 import { Redirect } from "react-router-dom";
 
 export const Register = () => {
@@ -17,14 +13,12 @@ export const Register = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		console.log(email, password);
 
 		const body = {
 			email: email,
 			password: password
 		};
-		//setLogin(true);
-		// fetch de LOGIN
+
 		fetch(url_api, {
 			method: "POST",
 			body: JSON.stringify(body),
@@ -76,7 +70,6 @@ export const Register = () => {
 									placeholder="Email@.com"
 									onChange={e => {
 										setEmail(e.target.value);
-										//setmensaje("");
 									}}
 								/>
 							</div>

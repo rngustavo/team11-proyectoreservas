@@ -4,12 +4,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			//classRegistration: [],
-			//classParticipants: [],
 			token: [],
 			login: false,
 			islogin: false,
 			isadmin: false,
+			email: "",
 			dataempresa: {
 				CELULAR: "9999 8888",
 				DESCRIPCION: "del palo de cas 500 varas",
@@ -116,14 +115,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (status > 200) alert("error: " + status);
 			},
 
-			/* updateClassRegistration: (newClass, horaIni) => {
-				console.log("primera clase", newClass);
-				const store = getStore();
-				const actions = getActions();
-				//store.classRegistration.push(newClass);
-				actions.updateClassRegistrationApi(newClass.horaIni);
-			},
- */
 			nombreDelDiaSegunFecha: fecha => {
 				const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
 				return dias[fecha.getDay()];
@@ -169,8 +160,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1 // por el momento es solo una empresa se debe cambiar a variable de empresa
 				};
-				//console.log("ruta", process.env.BACKEND_URL);
-				//console.log("jsonClase", jsonClase);
+
 				fetch(process.env.BACKEND_URL + "/api/clases", {
 					method: "POST",
 					body: JSON.stringify(jsonClase),
@@ -182,7 +172,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						//	console.log("texto SubirClase", resp.text()); // will try return the exact result as string
 						return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
 					})
-					.then(data => setStore({ message: data.msg }))
+					.then(data => {
+						setStore({ message: data.msg });
+						actions.getclases();
+					})
 					.catch(error => {
 						console.log("Error SubirClase", error);
 					});
@@ -196,16 +189,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const jsonClase = "";
 				myHeaders.append("Authorization", "Bearer " + token);
 				myHeaders.append("Content-Type", "application/json");
-				//console.log("headers", myHeaders.get("Authorization"));
 				fetch(process.env.BACKEND_URL + "/api/matricularclase/" + registeredClass, {
 					method: "POST",
 					body: JSON.stringify(jsonClase),
 					headers: myHeaders
 				})
 					.then(resp => {
-						/* console.log("respuesta MatricularClase ", resp.ok);
-						console.log("status MatricularClase", resp.status);
-						console.log("texto MatricularClase", resp.text()); */
 						actions.ErrorApi(resp.status);
 						return resp.json();
 					})
@@ -265,8 +254,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			setIsadmin: tipo => {
 				const store = getStore();
-				console.log("el flux dice que admin es ", tipo);
 				setStore({ isadmin: tipo });
+			},
+
+			setEmailApi: email => {
+				const store = getStore();
+				setStore({ email: email });
 			},
 
 			getempresainfo: () => {
@@ -285,7 +278,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getmisclasesreservadas: () => {
 				const token = sessionStorage.getItem("my_token");
-				console.log("entré");
 				let myHeaders = new Headers();
 				const jsonClase = "";
 				myHeaders.append("Authorization", "Bearer " + token);
@@ -309,19 +301,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// actions.updateRegisteredClasses(classRegistration, index);
 			},
+
 			updatetoClass: (Class, fechaini) => {
+				const token = sessionStorage.getItem("my_token");
+				const myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+
 				const store = getStore();
 				const actions = getActions();
 				let fech = fechaini.toString();
 				fech = fech.slice(0, -42);
-
 				const fechaInicio = new Date(fech).toISOString();
-
 				const dia = actions.nombreDelDiaSegunFecha(fechaini);
-				var myHeaders = new Headers();
-
-				myHeaders.append("Content-Type", "application/json");
-
 				const body = {
 					NOMBRE: Class.nombreClase,
 					ENTRENADOR: Class.instructor,
@@ -341,30 +334,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + "/api/actualizarclase/" + Class.id, {
 					method: "PUT",
 					body: JSON.stringify(body),
-					headers: {
-						"Content-Type": "application/json"
-					}
+					headers: myHeaders
 				})
 					.then(res => res.json())
 					.then(data => {
-						console.log(data);
 						actions.getclases();
 					})
 					.catch(err => console.log(err));
 			},
 			deleteclasscreate: index => {
+				const token = sessionStorage.getItem("my_token");
+				const myHeaders = new Headers();
+				const jsonClase = "";
+				myHeaders.append("Authorization", "Bearer " + token);
+				myHeaders.append("Content-Type", "application/json");
+
 				const store = getStore();
 				const actions = getActions();
 
 				fetch(process.env.BACKEND_URL + "/api/eliminarclase/" + index, {
 					method: "DELETE",
-					headers: {
-						"Content-Type": "application/json"
-					}
+					headers: myHeaders
 				})
 					.then(res => res.json())
 					.then(data => {
-						console.log(data);
 						actions.getclases();
 					})
 					.catch(err => console.log(err));
@@ -379,8 +372,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const jsonClase = "";
 				myHeaders.append("Authorization", "Bearer " + token);
 				myHeaders.append("Content-Type", "application/json");
-				console.log("entré");
-				console.log(index);
 
 				fetch(process.env.BACKEND_URL + "/api/clasereservada/" + index, {
 					method: "DELETE",
@@ -388,7 +379,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 					.then(res => res.json())
 					.then(data => {
-						console.log(data);
 						actions.getmisclasesreservadas();
 						actions.getclases();
 					})
