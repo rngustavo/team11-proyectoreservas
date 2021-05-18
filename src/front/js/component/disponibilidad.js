@@ -33,7 +33,7 @@ export const Disponibilidad = () => {
 						<div className="carta-box" key={index}>
 							<div className="carta" style={{ width: "18rem" }}>
 								<div className="card-body cara">
-									<img src={imgdisponibles[index]} className="card-img-top" alt="..." />
+									<img src={imgdisponibles[index]} className="card-img-top cartaimg" alt="..." />
 									<h1 className="card-title caratitulo">{classEl.NOMBRE}</h1>
 								</div>
 								<div className="card-body cara detras">

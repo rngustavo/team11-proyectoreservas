@@ -28,7 +28,7 @@
 }
 
 .caratitulo {
-    margin-top: 25%;
+    margin-top: 15%;
     margin-left: 25%;
 
 }
@@ -43,4 +43,11 @@
     color:  #3F6FD9;
     padding: 25px;
     padding-left: 25%;
+}
+.cartaimg {
+    height: 200px;
+    width: 250px;
+    display: block;
+    object-fit: cover;
+    border-radius: 15px;
 }
