@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 import "../../styles/navbar.scss";
-import LogoKF from "../../img/LogoKF2.png";
+import LogoKF from "../../img/LogoKFBN.png";
 
 export const Navbar1 = () => {
 	const { store, actions } = useContext(Context);
@@ -15,44 +15,26 @@ export const Navbar1 = () => {
 			<Navbar bg="" expand="lg" className="navcus">
 				<Navbar.Brand href="/">
 					<Link to="/">
-						<img src={LogoKF} width="100" height="100" />
+						<img src={LogoKF} width="50" height="50" />
 					</Link>
 				</Navbar.Brand>
 				<Navbar.Brand className="colortexto">
-					<p className="colortexto"> Kalendar-FIT</p>
+					<p className="colortexto brand"> Kalendar-FIT</p>
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto colortexto">
-						{/* <Nav.Link href="/crearclase">
-							<p className=" botonesnav">Crear clase </p>
-						</Nav.Link>
-						<Nav.Link href="/clasedisponibles">
-							<p className=" botonesnav">Clases disponibles</p>
-						</Nav.Link>
-						<Nav.Link href="/clasescreadas">
-							<p className=" botonesnav">Clases creadas</p>
-						</Nav.Link>
-						<Nav.Link href="/misclases">
-							<p className=" botonesnav"> Mis clases</p>
-						</Nav.Link>
-						<Nav.Link href="/tienda">
-							<p className=" botonesnav">Tienda virtual</p>
-						</Nav.Link>
-						<Nav.Link href="/contact">
-							<p className=" botonesnav">Nosotros</p>
-						</Nav.Link> */}
 						{islogin ? (
 							<>
 								{isadmin ? (
 									<>
 										<Link to="/crearclase">
-											<Button variant="outline-light" className="botones">
+											<Button variant="outline-light" className="botonesnav">
 												Crear clase
 											</Button>
 										</Link>
 										<Link to="/clasescreadas">
-											<Button variant="outline-light" className="botones">
+											<Button variant="outline-light" className="botonesnav">
 												Clases creadas
 											</Button>
 										</Link>
@@ -60,7 +42,7 @@ export const Navbar1 = () => {
 								) : (
 									<>
 										<Link to="/misclases">
-											<Button variant="outline-light" className="botones">
+											<Button variant="outline-light" className="botonesnav">
 												Mis clases
 											</Button>
 										</Link>
@@ -70,17 +52,17 @@ export const Navbar1 = () => {
 						) : null}
 						<>
 							<Link to="/clasedisponibles">
-								<Button variant="outline-light" className="botones">
+								<Button variant="outline-light" className="botonesnav">
 									Clases disponibles
 								</Button>
 							</Link>
 							<Link to="/tienda">
-								<Button variant="outline-light" className="botones">
+								<Button variant="outline-light" className="botonesnav">
 									Tienda virtual
 								</Button>
 							</Link>
 							<Link to="/contact">
-								<Button variant="outline-light" className="botones">
+								<Button variant="outline-light" className="botonesnav">
 									Nosotros
 								</Button>
 							</Link>
@@ -90,7 +72,8 @@ export const Navbar1 = () => {
 						<>
 							<Link to="/">
 								<Button
-									variant="primary buttonspace"
+									className="botones"
+									variant="outline-light"
 									onClick={() => {
 										setLogin(false);
 										setEmailApi("");

@@ -2,31 +2,62 @@
 .navcus {
     border: 1px solid white;
     border-radius: 15px;
-    background-color: white;
+    background-color: #697f45;
     margin-top: 5px;
+    height: 60px;
 
 }
 
-.botonesnav { border-right: 1px solid #3F6FD9;
-    margin-right: 1px;
-    color: #3F6FD9;
-    height: 25px;
-    width: fit-content;
-    padding-right: 7px;
-
-
-}
-
-.botones { border-radius: 1px solid #3F6FD9;
-    color: white;
-    background-color: #3F6FD9 ;
+.botonesnav {
+    background-color: #697f45;
+    margin-right: 5px;
+    color: #e6e6e6;
+    border: #697f45;
     height: fit-content;
     width: fit-content;
-    margin-bottom: 15px;
+}
+
+.botones { border-radius: 1px solid #687284;
+    color: white;
+    background-color: #69776f ;
+    height: fit-content;
+    width: fit-content;
+    margin: 2px;
 }
 
 
 .colortexto {
-color: #3F6FD9;
- ;
+color: #e6e6e6;
 }
+
+.brand {
+    margin-top: 15px;
+}
+
+/* 
+    Inicio footer
+*/
+
+.footercust {
+    background-color: #697f45;
+    color: #e6e6e6;
+    height: 250px;
+}
+.footertext {
+    color: #e6e6e6;
+}
+ .footernames {
+margin-bottom: 5px;
+ }
+
+ .fimg {
+     width: 100px;
+     height: auto;
+ }
+  .fimg2 {
+     width: 100px;
+     height: auto;
+ }
+/* 
+    Fin footer
+*/

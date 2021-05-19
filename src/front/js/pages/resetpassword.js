@@ -107,7 +107,7 @@ export const Resetpassword = () => {
 							</div>
 
 							<div className="form-group">
-								<button type="submit" className="btn float-right login_btn">
+								<button type="submit" className="btn float-right login_btn botones">
 									Aceptar
 								</button>
 							</div>

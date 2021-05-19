@@ -10,25 +10,43 @@
 */
 
 .cardformulario { 
-    background-color: #3f6fd9;
+    background-color: #69776f;
     width: 250px;
     height: 450px;
     margin-left: 0;
     color: white;
+    background: linear-gradient(to bottom right, #697f45, #69776f)
 
 }
 .cardinfo { 
     background-color: white ;
     width: 750px;
     height: 450px;
-    color: #3f6fd9;
+    color: #686e99;
     margin-left: 50px;
+
+}
+.infologo {
+    width: 200px;
+    height: 200px;
+    //margin-left: 55%;
+    display: inline-flex;
+}
+.infotexto {
+    width: 500px;
+    height: 500px;
+    display: inline-block;
+
+}
+.inforrss {
+    position: absolute ;
+    bottom: 100px;
 
 }
 
 .buttforms {
     background-color: white;
-    color: #3f6fd9;
+    color: #687284;
     margin: auto;
     display: block;
 
@@ -43,6 +61,23 @@
     Fin contacto
 */
 
+/* 
+    Inicio ver-reservar clases
+*/
+.navpillsclass {
+    padding-top: 10px;
+    color: #686e99 ;
+}
+.navicons { color: #697f45;
+    //background-color: #e6e6e6;
+}
+
+.tablareservas {
+    background-color: #e6e6e6;
+    border: solid 1px #e6e6e6;
+    color: #686e99 ;
+
+}
 .buttonspace {
     padding: 5px;
     margin: 2px;
@@ -50,17 +85,91 @@
 
 .tabpadding {
     padding-left: 10%;
-
-}
-.navpillsclass {
-    padding-top: 10px;
-}
-
-.posTit{
-text-align: center;
-margin: auto;
 }
 
 #clasesDisp{
 margin: auto;
 }
+
+/* 
+    Fin ver-reservar clases
+*/
+/* 
+    Inicio crear clases ADMI
+*/
+.botones { border-radius: 1px solid #687284;
+    color: white;
+    background-color: #69776f ;
+    height: fit-content;
+    width: fit-content;
+    margin: 2px;
+}
+
+.titulo {
+    //margin: auto;
+    color:  #687284;
+    //padding: 25px;
+    //padding-left: 30%;
+}
+
+/* 
+    Fin crear clases ADMI
+*/
+
+/* 
+    Inicio  clases creadas ADMI
+*/
+
+.posTit{
+text-align: center;
+color:  #687284;
+}
+.botones2 { border-radius: 1px solid #687284;
+    color: white;
+    background-color: #69776f ;
+    height: fit-content;
+    width: fit-content;
+    margin-left: 25%;
+}
+.botoncc {
+    color: white;
+    height: fit-content;
+    width: fit-content;
+   float: inline-end;
+}
+
+.tablareservas {
+    background-color: #e6e6e6;
+    border: solid 1px #e6e6e6;
+    color: #686e99 ;
+
+}
+
+.tabpadding2 {
+    margin-left: 5%;
+}
+.encabezado {
+    display: flex !important;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    justify-content: center;
+    width: 1200px;
+}
+
+
+/* 
+    Fin crear clases creadas ADMI
+*/
+
+/* 
+    Fin modificar clase  ADMI
+*/
+.titulo2 {
+    margin: 10%;
+    align-items: center;
+    color:  #687284;
+}
+
+/* 
+    Fin modificar clases creadas ADMI
+*/

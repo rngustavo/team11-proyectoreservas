@@ -22,7 +22,7 @@
 .cara {
   position: absolute;
   backface-visibility: hidden;
-  border: 1px solid  #3F6FD9;
+  border: 1px solid  #687284;
   border-radius: 15px;
   height: 400px;
 }
@@ -30,19 +30,28 @@
 .caratitulo {
     margin-top: 15%;
     margin-left: 25%;
+    color: #686e99
 
 }
 .cara.detras {
   transform: rotateY(180deg);
-   border: 1px solid  #3F6FD9;
+   border: 1px solid  #687284;
    border-radius: 15px;
+   width: fit-content;
+   height: fit-content;
 }
 
 .titulo {
     margin: auto;
-    color:  #3F6FD9;
+    color:  #687284;
     padding: 25px;
     padding-left: 25%;
+}
+.titulocarta {
+    //margin-left: 25%;
+    color:  #697F45;
+    height: fit-content;
+    width: fit-content;
 }
 .cartaimg {
     height: 200px;

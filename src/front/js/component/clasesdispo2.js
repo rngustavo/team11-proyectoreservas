@@ -27,16 +27,16 @@ export const Clasedispo = () => {
 	return (
 		<div className="container ">
 			<nav className="nav nav-pills justify-content-center navpillsclass">
-				<a className="nav-item nav-link active" href="#clasesDisp" data-toggle="tab">
+				<a className="nav-item nav-link active navicons" href="#clasesDisp" data-toggle="tab">
 					<i className="fas fa-calendar-alt" /> Clases Disponibles
 				</a>
-				<a className="nav-item nav-link" href="#clasesRes" data-toggle="tab">
+				<a className="nav-item nav-link navicons" href="#clasesRes" data-toggle="tab">
 					<i className="fas fa-calendar-check" /> Clases Reservadas
 				</a>
 			</nav>
 			<div className="tab-content mt-4 tabpadding">
-				<table id="clasesDisp" className="table table-striped no-pad tab-pane active">
-					<thead>
+				<table id="clasesDisp" className="table no-pad tab-pane active">
+					<thead className="tablareservas">
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Nombre</th>
@@ -82,8 +82,8 @@ export const Clasedispo = () => {
 						})}
 					</tbody>
 				</table>
-				<table id="clasesRes" className="table table-striped no-pad tab-pane">
-					<thead>
+				<table id="clasesRes" className="table no-pad tab-pane">
+					<thead className="tablareservas">
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Nombre de la Clase</th>
