@@ -12,10 +12,24 @@ export const Clasescreadascomp = () => {
 
 	return (
 		<div className="container ">
-			<h2 className="posTit">Clases Creadas</h2>
-			<div className="tab-content mt-4 tabpadding">
-				<table id="clasesDisp" className="table table-striped no-pad tab-pane active posTit">
-					<thead>
+			<div className="encabezado posTit">
+				<div className="container">
+					<div className="row">
+						<div className="col-sm" />
+						<div className="col-sm">
+							<h2 className="posTit">CLASES CREADAS</h2>
+						</div>
+						<div className="col-sm">
+							<Link to="/crearclase">
+								<button className="btn botones2">Crear una clase</button>
+							</Link>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="tab-content mt-4 tabpadding2">
+				<table id="clasesDisp" className="table no-pad tab-pane active ">
+					<thead className="tablareservas">
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Nombre</th>
@@ -65,12 +79,11 @@ export const Clasescreadascomp = () => {
 									<td>
 										<button
 											type="button"
-											className="btn btn-danger"
+											className="btn botones2"
 											onClick={() => {
 												swal({
-													title: "Are you sure?",
-													text:
-														"Once deleted, you will not be able to recover this imaginary file!",
+													title: "¿Desea eliminarlo?",
+													text: "Si elimina esta clase, no podrá recuperarla.",
 													icon: "warning",
 													buttons: true,
 													dangerMode: true
@@ -96,9 +109,6 @@ export const Clasescreadascomp = () => {
 						})}
 					</tbody>
 				</table>
-				<Link to="/crearclase">
-					<button className="btn btn-primary">Crear una clase</button>
-				</Link>
 			</div>
 		</div>
 	);

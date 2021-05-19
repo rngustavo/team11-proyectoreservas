@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState, useForm } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
-import { Row, Col, Form, Container, Card } from "react-bootstrap";
+import { Row, Col, Form, Container, Card, Button } from "react-bootstrap";
+import LogoKF from "../../img/LogoKFBN.png";
 //import { Link } from "react-router-dom";
 //import { useParams } from "react-router-dom";
 //import swal from "sweetalert";
@@ -33,22 +34,33 @@ export const Contact = () => {
 				<Col style={{ marginTop: "40px" }}>
 					<Card className="cardinfo">
 						<Card.Body>
-							<Card.Title>{dataempresa.NOMBRE}</Card.Title>
-							<Card.Text>Descripción: {dataempresa.DESCRIPCION}</Card.Text>
-							<Card.Subtitle className="mb-2 text-muted">Teléfono: {dataempresa.TELEFONO}</Card.Subtitle>
-							<Card.Subtitle className="mb-2 text-muted">Celular: {dataempresa.CELULAR}</Card.Subtitle>
-							<Card.Text>Ubicación {dataempresa.UBICACION};</Card.Text>
-							<p>Buscanos en nuestras redes sociales</p>
-							<Card.Link href="#">
-								<i
-									className="fab fa-facebook-square fa-2x d-inline-block align-top"
-									width="30"
-									height="30"
-								/>
-							</Card.Link>
-							<Card.Link href="#">
-								<i className="fab fa-instagram fa-2x d-inline-block align-top" width="30" height="30" />
-							</Card.Link>
+							<div className="infotexto">
+								<Card.Title>{dataempresa.NOMBRE}</Card.Title>
+								<Card.Text>Descripción: {dataempresa.DESCRIPCION}</Card.Text>
+								<Card.Text className="mb-2">Teléfono: {dataempresa.TELEFONO}</Card.Text>
+								<Card.Text className="mb-2">Celular: {dataempresa.CELULAR}</Card.Text>
+								<Card.Text>Ubicación: {dataempresa.UBICACION};</Card.Text>
+							</div>
+							<div className="infologo">
+								<img src={LogoKF} />
+							</div>
+							<div className="inforrss">
+								<p>Buscanos en nuestras redes sociales</p>
+								<Card.Link href="https://www.facebook.com/isabelino.garcia.921">
+									<i
+										className="fab fa-facebook-square fa-2x d-inline-block align-top"
+										width="30"
+										height="30"
+									/>
+								</Card.Link>
+								<Card.Link href="#">
+									<i
+										className="fab fa-instagram fa-2x d-inline-block align-top"
+										width="30"
+										height="30"
+									/>
+								</Card.Link>
+							</div>
 						</Card.Body>
 					</Card>
 				</Col>
@@ -90,7 +102,8 @@ export const Contact = () => {
 									}}
 								/>
 							</Form.Group>
-							<button
+							<Button
+								variant="outline-light"
 								formMethod="submit"
 								type="button"
 								className="btn btn-primary buttforms"
@@ -98,7 +111,7 @@ export const Contact = () => {
 								data-toggle="modal"
 								data-target="#exampleModal">
 								Enviar Mensaje
-							</button>
+							</Button>
 						</Card.Body>
 					</Card>
 				</Col>

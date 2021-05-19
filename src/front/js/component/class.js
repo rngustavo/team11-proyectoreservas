@@ -4,6 +4,7 @@ import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import { Redirect } from "react-router-dom";
+import "../../styles/index.scss";
 
 export const Class = () => {
 	registerLocale("es", es);
@@ -41,6 +42,13 @@ export const Class = () => {
 	return (
 		<div className="container">
 			<form>
+				<div className="row">
+					<div className="col" />
+					<div className="col-6">
+						<h1 className="titulo">REGISTRAR CLASE</h1>
+					</div>
+					<div className="col" />
+				</div>
 				<div className="form-group">
 					<h6>Nombre de la Clase</h6>
 					<input
@@ -166,7 +174,7 @@ export const Class = () => {
 				<button
 					formMethod="submit"
 					type="button"
-					className="btn btn-primary"
+					className="btn botones"
 					onClick={handleChange}
 					data-toggle="modal"
 					data-target="#exampleModal">
@@ -234,7 +242,7 @@ export const Class = () => {
 
 							<button
 								type="button"
-								className="btn btn-primary"
+								className="btn botones"
 								data-dismiss="modal"
 								onClick={() => actions.updateClassRegistrationApi(classes, startDate) + setUpd(true)}>
 								¿Desea mantener los cambios?
