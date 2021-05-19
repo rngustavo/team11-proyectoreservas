@@ -28,8 +28,9 @@ def load_data():
     for usuario in list_usuarios:
         new_usuario=Usuarios()
         new_usuario.USUARIO_EMAIL=usuario["USUARIO_EMAIL"]
-        new_usuario.USUARIO_PASSWORD=usuario["USUARIO_PASSWORD"]
-        new_usuario.USUARIO_IS_ACTIVE=True
+        new_usuario.USUARIO_PASSWORD=usuario["USUARIO_PASSWORD"]        
+        new_usuario.USUARIO_IS_ACTIVE=bool(usuario["USUARIO_IS_ACTIVE"])
+        new_usuario.USUARIO_IS_ADMIN=bool(usuario["USUARIO_IS_ADMIN"])
         db.session.add(new_usuario)
         db.session.commit()
    

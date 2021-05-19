@@ -6,7 +6,7 @@ list_usuarios=[
         "USUARIO_EMAIL" : "prueba1@gmail.com",
         "USUARIO_PASSWORD":"123",
         "USUARIO_IS_ACTIVE": "True",
-        "USUARIO_IS_ADMIN": "False" 
+        "USUARIO_IS_ADMIN": "" 
         },
     {        
         "USUARIO_EMAIL" : "prueba2@gmail.com",
@@ -22,7 +22,7 @@ list_empresa=[
         "EMPRESA_UBICACION":"Cartago Centro, 250 metros norte de Almacenes el Rey " ,
         "EMPRESA_TELEFONO":"2550 4613" ,
         "EMPRESA_CELULAR":"8745 2218" ,
-        "EMPRESA_DESCRIPCION":"Aplicacion para reservar clases Cartago Centro, 250 metros norte de Almacenes el Rey  Cartago Centro, 250 metros norte de Almacenes el Rey " ,
+        "EMPRESA_DESCRIPCION":"Aplicacion para reservar clases Cartago Centro",
         "EMPRESA_LATITUD":"10 10 10" ,
         "EMPRESA_LONGITUD":"20 20 20" ,
         "EMPRESA_OTROS":"¿Estás buscando en donde entrenar de forma segura? Nosotros tenemos la solución." ,
